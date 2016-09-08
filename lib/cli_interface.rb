@@ -12,7 +12,7 @@ class CliInterface
 
   def display_line(row)
     row.each do |e|
-      if e % row.size == 0
+      if e % row.size == row.size - 1
         @output.print(" #{e} \n")
       else
         @output.print(" #{e} |")

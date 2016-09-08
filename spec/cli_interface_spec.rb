@@ -2,8 +2,8 @@ require 'cli_interface'
 
 RSpec.describe CliInterface do
   it "should display the line" do
-    board = [1, 2, 3]
-    board_result = " 1 | 2 | 3 \n"
+    board = [0, 1, 2]
+    board_result = " 0 | 1 | 2 \n"
     @input = StringIO.new
     @output = StringIO.new
     @interface = CliInterface.new(@input, @output)
@@ -14,8 +14,8 @@ RSpec.describe CliInterface do
   end
 
   it "should display the board" do
-    board = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
-    board_result = " 1 | 2 | 3 \n 4 | 5 | 6 \n 7 | 8 | 9 \n"
+    board = [[0, 1, 2], [3, 4, 5], [6, 7, 8]]
+    board_result = " 0 | 1 | 2 \n 3 | 4 | 5 \n 6 | 7 | 8 \n"
     @input = StringIO.new
     @output = StringIO.new
     @interface = CliInterface.new(@input, @output)
