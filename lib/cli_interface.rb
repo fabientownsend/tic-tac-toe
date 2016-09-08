@@ -5,8 +5,14 @@ class CliInterface
   end
 
   def display_board(board)
-    board.each do |e|
-      if e % 3 == 0
+    board.each do |line|
+      display_line(line)
+    end
+  end
+
+  def display_line(row)
+    row.each do |e|
+      if e % row.size == 0
         @output.print(" #{e} \n")
       else
         @output.print(" #{e} |")
