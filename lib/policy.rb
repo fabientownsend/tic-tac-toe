@@ -4,15 +4,7 @@ class Policy
   end
 
   def win_each_colum(board)
-    result = false
-
-    board.transpose.each do |a|
-      if win_row?(a)
-        result = true
-      end
-    end
-
-    result
+    board.transpose.any? { |a| win_row?(a) }
   end
 
   def win_diagonal(board)
