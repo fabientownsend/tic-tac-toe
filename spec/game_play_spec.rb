@@ -5,7 +5,7 @@ RSpec.describe GamePlay do
   before(:all) do
     @player_one = Player.new
     @player_one = Player.new
-    @game_play = GamePlay.new(@player_one, @player_one, nil)
+    @game_play = GamePlay.new(@player_one, @player_one, nil, nil)
   end
 
   it "should be player one the current first player" do
