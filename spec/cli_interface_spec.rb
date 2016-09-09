@@ -2,7 +2,7 @@ require 'cli_interface'
 
 RSpec.describe CliInterface do
   before(:each) do
-    @input = StringIO.new
+    @input = StringIO.new("1\n")
     @output = StringIO.new
     @interface = CliInterface.new(@input, @output)
   end
@@ -25,8 +25,12 @@ RSpec.describe CliInterface do
     expect(@output.string).to eq(board_result)
   end
 
-  it "should give the next move of a player" do
+  it "should display text when ask for the next move" do
     @interface.next_move
     expect(@output.string).to eq("What is your next move?")
+  end
+
+  it "should return the next move of the player" do
+    expect(@interface.next_move).to eq("1\n")
   end
 end
