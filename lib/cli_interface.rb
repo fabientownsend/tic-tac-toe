@@ -19,4 +19,8 @@ class CliInterface
       end
     end
   end
+
+  def next_move
+    @output.print("What is your next move?")
+  end
 end
