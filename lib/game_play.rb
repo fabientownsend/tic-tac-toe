@@ -1,12 +1,13 @@
 class GamePlay
   attr_reader :current_player
 
-  def initialize(player_one, player_two, board, ui)
+  def initialize(player_one, player_two, board, ui, policy)
     @current_player = player_one
     @player_one = player_one
     @player_two = player_two
     @board = board
     @ui = ui
+    @policy = policy
   end
 
   def switch_player

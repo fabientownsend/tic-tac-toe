@@ -1,10 +1,19 @@
 class Policy
-  def win_row?(line)
+
+  def win?(mark)
+    @mark = mark
+  end
+
+  def same_symbole?(line)
     line.all? { |row| row == "X" }
   end
 
-  def win_each_colum(board)
-    board.transpose.any? { |a| win_row?(a) }
+  def win_columns?(board)
+    board.transpose.any? { |column| same_symbole?(column) }
+  end
+
+  def win_rows?(board)
+    board.any? { |row| same_symbole?(row) }
   end
 
   def win_diagonal(board)
