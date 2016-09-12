@@ -20,6 +20,8 @@ class GamePlay
     display_board
   end
 
+  private
+
   def game_over
     @board.win?(@current_player.mark)
   end
