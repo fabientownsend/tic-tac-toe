@@ -10,6 +10,20 @@ class GamePlay
     @policy = policy
   end
 
+  def play
+    until game_over
+      switch_player
+      display_board
+      play_move
+    end
+
+    display_board
+  end
+
+  def game_over
+    @policy.win?(@board.board, @current_player.mark)
+  end
+
   def switch_player
     @current_player =
       if @current_player == @player_one
@@ -17,5 +31,19 @@ class GamePlay
       else
         @player_one
       end
+  end
+
+  def display_board
+    @ui.display_board(@board.board)
+  end
+
+  def play_move
+      position = @ui.next_move
+
+      until @board.is_valid?(position) && @board.is_free?(position)
+        position = @ui.next_move
+      end
+
+      @board.set_mark(@current_player.mark, position)
   end
 end

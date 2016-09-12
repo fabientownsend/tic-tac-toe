@@ -3,9 +3,9 @@ require 'player'
 
 RSpec.describe GamePlay do
   before(:all) do
-    @player_one = Player.new
-    @player_one = Player.new
-    @game_play = GamePlay.new(@player_one, @player_one, nil, nil)
+    @player_one = Player.new("X")
+    @player_one = Player.new("O")
+    @game_play = GamePlay.new(@player_one, @player_one, nil, nil, nil)
   end
 
   it "should be player one the current first player" do
@@ -17,7 +17,7 @@ RSpec.describe GamePlay do
 
     expect(@game_play.current_player).to eq(@player_one)
   end
-  
+
   it "should be player when two switch" do
     @game_play.switch_player
     @game_play.switch_player
