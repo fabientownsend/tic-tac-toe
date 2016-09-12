@@ -8,6 +8,13 @@ class CliInterface
     board.each { |line| display_line(line) }
   end
 
+  def next_move
+    @output.print("What is your next move? ")
+    @input.gets.to_i
+  end
+
+  private
+
   def display_line(row)
     row.each_with_index do |e, index|
       if index == row.size - 1
@@ -16,10 +23,5 @@ class CliInterface
         @output.print(" #{e} |")
       end
     end
-  end
-
-  def next_move
-    @output.print("What is your next move? ")
-    @input.gets.to_i
   end
 end

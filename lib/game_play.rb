@@ -1,13 +1,13 @@
 class GamePlay
   attr_reader :current_player
 
-  def initialize(player_one, player_two, board, ui, policy)
+  def initialize(player_one, player_two, board, ui)
     @current_player = player_one
     @player_one = player_one
     @player_two = player_two
+    @players = [player_one, player_two]
     @board = board
     @ui = ui
-    @policy = policy
   end
 
   def play
@@ -21,7 +21,7 @@ class GamePlay
   end
 
   def game_over
-    @policy.win?(@board.board, @current_player.mark)
+    @board.win?(@current_player.mark)
   end
 
   def switch_player
@@ -31,6 +31,7 @@ class GamePlay
       else
         @player_one
       end
+    #@players.flip!.first
   end
 
   def display_board
