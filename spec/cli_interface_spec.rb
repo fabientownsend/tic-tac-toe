@@ -27,10 +27,10 @@ RSpec.describe CliInterface do
 
   it "should display text when ask for the next move" do
     @interface.next_move
-    expect(@output.string).to eq("What is your next move?")
+    expect(@output.string).to eq("What is your next move? ")
   end
 
   it "should return the next move of the player" do
-    expect(@interface.next_move).to eq("1\n")
+    expect(@interface.next_move).to eq(1)
   end
 end
