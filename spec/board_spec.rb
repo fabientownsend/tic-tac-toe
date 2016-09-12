@@ -27,19 +27,46 @@ RSpec.describe BoardGame do
 
   it "should set the mark at the position 8" do
     board_expected = [[0, 1, "X"], [3, 4, 5], [6, 7, 8]]
+
     @board_game.set_mark("X", 2)
+
     expect(@board_game.board).to eq(board_expected)
   end
 
   it "should set the mark at the position 4" do
     board_expected = [[0, 1, 2], [3, "X", 5], [6, 7, 8]]
+
     @board_game.set_mark("X", 4)
+
     expect(@board_game.board).to eq(board_expected)
   end
 
   it "should set the mark at the position 0" do
     board_expected = [["X", 1, 2], [3, 4, 5], [6, 7, 8]]
+
     @board_game.set_mark("X", 0)
+
     expect(@board_game.board).to eq(board_expected)
+  end
+
+  it "should tell the position isn't free" do
+    position = 0
+    @board_game.set_mark("X", position)
+
+    expect(@board_game.is_free?(position)).to be false
+  end
+
+  it "should tell the position is free" do
+    position = 0
+
+    expect(@board_game.is_free?(position)).to be true
+  end
+
+  it "should tell false when it lower than 0" do
+    expect(@board_game.is_valid?(-1)).to be false
+  end
+
+  it "should tell false when it bigger than sqr(board)" do
+    expect(@board_game.is_valid?(9)).to be false
   end
 end
