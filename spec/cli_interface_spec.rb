@@ -16,11 +16,31 @@ RSpec.describe CliInterface do
   end
 
   it "should display text when ask for the next move" do
-    interface.next_move
-    expect(output.string).to eq("What is your next move? ")
+    interface.next_move("X")
+    expect(output.string).to eq("What is your next move? X")
   end
 
   it "should return the next move of the player" do
-    expect(interface.next_move).to eq(1)
+    expect(interface.next_move("X")).to eq(1)
+  end
+
+  it "should display the message when position occupied" do
+    interface.occupied_position
+    expect(output.string).to eq("This position isn't free\n")
+  end
+
+  it "should display the message when position out of range" do
+    interface.position_range
+    expect(output.string).to eq("The position should be between 0 and 8\n")
+  end
+
+  it "should display the winner" do
+    interface.winner("X")
+    expect(output.string).to eq("It's a win! X is the winner")
+  end
+
+  it "should display tie result" do
+    interface.tie
+    expect(output.string).to eq("It's a tie!")
   end
 end

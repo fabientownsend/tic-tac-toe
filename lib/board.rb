@@ -5,31 +5,47 @@ class Board
     @board = [[0, 1, 2], [3, 4, 5], [6, 7, 8]]
     @POSITION_MIN = 0
     @POSITION_MAX = @board.size ** 2
-    @empty = true
-  end
-
-  def is_valid?(position)
-    position >= @POSITION_MIN && position < @POSITION_MAX
-  end
-
-  def is_free?(position)
-    @board[get_row(position)][get_column(position)].is_a? Integer
+    @counter = 0
   end
 
   def set_mark(mark, position)
+    begin
+      position = Integer(position)
+      valid?(position)
+      free?(position)
+    rescue
+      raise
+    end
+
     @board[get_row(position)][get_column(position)] = mark
-    @empty = false
+    @counter += 1
   end
 
   def empty?
-    @empty
+    @counter == 0
   end
 
   def win?(mark)
     win_with_columns?(mark) || win_with_rows?(mark) || win_with_diagonal?(mark)
   end
 
+  def tie?
+    @counter == @POSITION_MAX && !win?("X") && !win?("O")
+  end
+
   private
+
+  def free?(position)
+    if not @board[get_row(position)][get_column(position)].is_a? Integer
+      raise OccupiedSpotError
+    end
+  end
+
+  def valid?(position)
+    if position < @POSITION_MIN || position >= @POSITION_MAX
+      raise OutOfRangeError
+    end
+  end
 
   def get_column(position)
     position % @board.size
@@ -60,4 +76,10 @@ class Board
       false
     end
   end
+end
+
+class OutOfRangeError < Exception
+end
+
+class OccupiedSpotError < Exception
 end

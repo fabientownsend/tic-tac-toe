@@ -8,9 +8,25 @@ class CliInterface
     board.each { |line| display_line(line) }
   end
 
-  def next_move
-    @output.print("What is your next move? ")
-    @input.gets.to_i
+  def next_move(mark)
+    @output.print("What is your next move? #{mark}")
+    @input.gets
+  end
+
+  def occupied_position
+    @output.print("This position isn't free\n")
+  end
+
+  def position_range
+    @output.print("The position should be between 0 and 8\n")
+  end
+
+  def winner(mark)
+      @output.print("It's a win! #{mark} is the winner")
+  end
+
+  def tie
+      @output.print("It's a tie!")
   end
 
   private

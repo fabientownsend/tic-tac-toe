@@ -3,8 +3,6 @@ class GamePlay
 
   def initialize(player_one, player_two, board, ui)
     @current_player = player_one
-    @player_one = player_one
-    @player_two = player_two
     @players = [player_one, player_two]
     @board = board
     @ui = ui
@@ -18,22 +16,25 @@ class GamePlay
     end
 
     display_board
+    display_result
   end
 
   private
 
-  def game_over
-    @board.win?(@current_player.mark)
+  def display_result
+    if @board.win?(@current_player.mark)
+      @ui.winner(@current_player.mark)
+    elsif @board.tie?
+      @ui.tie
+    end
   end
 
   def switch_player
-    @current_player =
-      if @current_player == @player_one
-        @player_two
-      else
-        @player_one
-      end
-    #@players.flip!.first
+    @current_player = @players.reverse!.first
+  end
+
+  def game_over
+    @board.win?(@current_player.mark) || @board.tie?
   end
 
   def display_board
@@ -41,12 +42,19 @@ class GamePlay
   end
 
   def play_move
-      position = @ui.next_move
+    position = @ui.next_move(@current_player.mark)
 
-      until @board.is_valid?(position) && @board.is_free?(position)
-        position = @ui.next_move
-      end
-
+    begin
       @board.set_mark(@current_player.mark, position)
+    rescue OccupiedSpotError
+      @ui.occupied_position
+      play_move
+    rescue OutOfRangeError
+      @ui.position_range
+      play_move
+    rescue ArgumentError
+      @ui.position_range
+      play_move
+    end
   end
 end

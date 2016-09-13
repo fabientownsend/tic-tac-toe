@@ -13,25 +13,27 @@ RSpec.describe Board do
     expect(board.empty?).to be false
   end
 
+  it "should raise an error when it's not a int" do
+    expect { board.set_mark("X", "a string") }.to raise_error(ArgumentError)
+  end
+
+  it "should raise an argument error" do
+    expect { board.set_mark("X", "3") }.to raise_error(ArgumentError)
+  end
+
   it "should tell the position isn't free" do
     position = 0
     board.set_mark("X", position)
 
-    expect(board.is_free?(position)).to be false
+    expect { board.set_mark("X", position) }.to raise_error(OccupiedSpotError)
   end
 
-  it "should tell the position is free" do
-    position = 0
-
-    expect(board.is_free?(position)).to be true
+  it "should raise an error when position lower than expected" do
+    expect { board.set_mark("X", -1) }.to raise_error(OutOfRangeError)
   end
 
-  it "should tell false when it lower than 0" do
-    expect(board.is_valid?(-1)).to be false
-  end
-
-  it "should tell false when it bigger than sqr(board)" do
-    expect(board.is_valid?(9)).to be false
+  it "should raise an error when position bigger than expected" do
+    expect { board.set_mark("X", 9) }.to raise_error(OutOfRangeError)
   end
 
   it "should be a win_colum for colum 1" do
@@ -99,5 +101,33 @@ RSpec.describe Board do
     board.set_mark("X", 6)
 
     expect(board.win?("X")).to be true
+  end
+
+  it "shoud be a tie" do
+    board.set_mark("X", 0)
+    board.set_mark("O", 1)
+    board.set_mark("X", 2)
+    board.set_mark("X", 3)
+    board.set_mark("O", 4)
+    board.set_mark("X", 5)
+    board.set_mark("O", 6)
+    board.set_mark("X", 7)
+    board.set_mark("O", 8)
+
+    expect(board.tie?).to be true
+  end
+
+  it "shoud not be a tie" do
+    board.set_mark("X", 0)
+    board.set_mark("X", 1)
+    board.set_mark("X", 2)
+    board.set_mark("X", 3)
+    board.set_mark("O", 4)
+    board.set_mark("X", 5)
+    board.set_mark("O", 6)
+    board.set_mark("X", 7)
+    board.set_mark("O", 8)
+
+    expect(board.tie?).to be false
   end
 end
