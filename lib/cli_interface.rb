@@ -9,7 +9,7 @@ class CliInterface
   end
 
   def next_move(mark)
-    @output.print("What is your next move? #{mark}")
+    @output.print("#{mark} what is your next move? ")
     @input.gets
   end
 
@@ -18,15 +18,15 @@ class CliInterface
   end
 
   def position_range
-    @output.print("The position should be between 0 and 8\n")
+    @output.print("The value have to be an integer between 0 and 8\n")
   end
 
   def winner(mark)
-      @output.print("It's a win! #{mark} is the winner")
+      @output.print("The winner is: #{mark}!\n")
   end
 
   def tie
-      @output.print("It's a tie!")
+      @output.print("It's a tie!\n")
   end
 
   private
