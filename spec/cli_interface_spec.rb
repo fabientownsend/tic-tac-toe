@@ -21,7 +21,7 @@ RSpec.describe CliInterface do
   end
 
   it "should return the next move of the player" do
-    expect(interface.next_move("X")).to eq(1)
+    expect(interface.next_move("X")).to eq("1\n")
   end
 
   it "should display the message when position occupied" do

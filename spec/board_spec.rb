@@ -17,10 +17,6 @@ RSpec.describe Board do
     expect { board.set_mark("X", "a string") }.to raise_error(ArgumentError)
   end
 
-  it "should raise an argument error" do
-    expect { board.set_mark("X", "3") }.to raise_error(ArgumentError)
-  end
-
   it "should tell the position isn't free" do
     position = 0
     board.set_mark("X", position)
