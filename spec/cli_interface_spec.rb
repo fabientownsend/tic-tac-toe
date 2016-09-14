@@ -21,10 +21,6 @@ RSpec.describe CliInterface do
     expect(output.string).to eq("X what is your next move? ")
   end
 
-  it "should return the next move of the player" do
-    expect(interface.next_move("X")).to eq("1\n")
-  end
-
   it "should display the message when position occupied" do
     interface.occupied_position
     expect(output.string).to eq("This position isn't free\n")
@@ -48,5 +44,9 @@ RSpec.describe CliInterface do
   it "should display computer move" do
     interface.computer_move
     expect(output.string).to eq("The computer will play its next move\n")
+  end
+
+  it "should return the next move of the player" do
+    expect(interface.next_move("X")).to eq("1\n")
   end
 end

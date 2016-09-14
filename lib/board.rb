@@ -33,6 +33,10 @@ class Board
     @counter == @POSITION_MAX && !win?("X") && !win?("O")
   end
 
+  def is_free?(position)
+    @board[get_row(position)][get_column(position)].is_a? Integer
+  end
+
   private
 
   def free?(position)
