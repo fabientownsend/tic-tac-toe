@@ -44,4 +44,9 @@ RSpec.describe CliInterface do
     interface.tie
     expect(output.string).to eq("It's a tie!\n")
   end
+
+  it "should display computer move" do
+    interface.computer_move
+    expect(output.string).to eq("The computer will play its next move\n")
+  end
 end

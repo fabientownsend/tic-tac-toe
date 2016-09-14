@@ -3,7 +3,10 @@ require 'computer'
 
 RSpec.describe Computer do
   it "should give a random number" do
-    computer = Computer.new("X")
+    input = StringIO.new("1\n")
+    output = StringIO.new
+    ui = CliInterface.new(input, output)
+    computer = Computer.new("X", ui)
     
     move = computer.next_move
 
