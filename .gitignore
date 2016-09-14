@@ -1,3 +1,5 @@
 *.lock
 tictactoe.rb
-spec/spec_helper.rb
+.bundle/
+bin/
+coverage/
