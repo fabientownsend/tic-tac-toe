@@ -8,6 +8,13 @@ class Computer < Player
 
   def next_move
     @ui.computer_move
-    rand(8)
+    free_positions.shuffle.first
   end
+
+  private
+
+  def free_positions
+    @board.board.flatten.select { |cell| cell.is_a?(Integer) }
+  end
+
 end
