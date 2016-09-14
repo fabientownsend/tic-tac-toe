@@ -1,3 +1,4 @@
+require 'spec_helper'
 require 'cli_interface'
 require 'board'
 
