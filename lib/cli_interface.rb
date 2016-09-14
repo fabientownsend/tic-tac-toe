@@ -22,11 +22,15 @@ class CliInterface
   end
 
   def winner(mark)
-      @output.print("The winner is: #{mark}!\n")
+    @output.print("The winner is: #{mark}!\n")
   end
 
   def tie
-      @output.print("It's a tie!\n")
+    @output.print("It's a tie!\n")
+  end
+
+  def computer_move
+    @output.print("The computer will play its next move\n")
   end
 
   private

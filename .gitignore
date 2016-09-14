@@ -2,4 +2,4 @@
 tictactoe.rb
 .bundle/
 bin/
-coverage
+coverage/

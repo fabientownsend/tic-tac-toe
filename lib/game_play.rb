@@ -42,7 +42,7 @@ class GamePlay
   end
 
   def play_move
-    position = @ui.next_move(@current_player.mark)
+    position = @current_player.next_move
 
     begin
       @board.set_mark(@current_player.mark, position)
