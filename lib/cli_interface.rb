@@ -43,13 +43,20 @@ class CliInterface
 
   def menu_game
     output.print("Select your game:\n 1 - Human vs. Human\n 2 - Human vs. Computer\n 3 - Computer vs. Computer\n")
-    input.gets
   end
 
   def menu_first_player
     output.print("Select the first player:\n 1 - Player one\n 2 - Player two\n")
+  end
+
+  def get_value
     input.gets
   end
+
+  def must_be_integer
+    output.print("The value must be an integer")
+  end
+
   private
 
   def display_line(row)

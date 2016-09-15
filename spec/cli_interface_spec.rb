@@ -16,6 +16,10 @@ RSpec.describe CliInterface do
     expect(output.string).to eq(board_result)
   end
 
+  it "should return a value" do
+    expect(interface.get_value).to eq("1\n")
+  end
+
   it "should display text when ask for the next move" do
     interface.next_move("X")
     expect(output.string).to eq("X what is your next move? ")
@@ -52,7 +56,7 @@ RSpec.describe CliInterface do
 
   it "should display a menu with different game" do
     menu = "Select your game:\n 1 - Human vs. Human\n 2 - Human vs. Computer\n 3 - Computer vs. Computer\n"
-    expect(interface.menu_game).to eq("1\n")
+    interface.menu_game
     expect(output.string).to eq(menu)
   end
 
@@ -63,7 +67,7 @@ RSpec.describe CliInterface do
 
   it "should display the menu for the first player selection" do
     menu = "Select the first player:\n 1 - Player one\n 2 - Player two\n"
-    expect(interface.menu_first_player).to eq("1\n")
+    interface.menu_first_player
     expect(output.string).to eq (menu)
   end
 end

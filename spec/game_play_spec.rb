@@ -11,42 +11,48 @@ RSpec.describe GamePlay do
 
   it "should finish the game displaying a tie" do
     type_game = "1\n"
+    first_player = "1\n"
     moves = "0\n1\n2\n4\n3\n6\n5\n8\n7\n"
-    input = StringIO.new("#{type_game}#{moves}")
+    input = StringIO.new("#{type_game}#{first_player}#{moves}")
     output = StringIO.new
     interface = CliInterface.new(input, output)
 
     game_play = GamePlay.new(Board.new, interface)
 
     game_play.game_selection
+    game_play.select_first_player
     game_play.play
     expect(output.string).to include("It's a tie!\n")
   end
 
   it "should finish the game displaying a tie" do
     type_game = "1\n"
-    moves = "1\n4\n7\n0\n2\n8\n"
-    input = StringIO.new("#{type_game}#{moves}")
+    first_player = "1\n"
+    moves = "0\n1\n3\n2\n6\n"
+    input = StringIO.new("#{type_game}#{first_player}#{moves}")
     output = StringIO.new
     interface = CliInterface.new(input, output)
 
 
     game_play = GamePlay.new(Board.new, interface)
     game_play.game_selection
+    game_play.select_first_player
     game_play.play
     expect(output.string).to include("The winner is: X")
   end
 
   it "should be win by the player two" do
     type_game = "1\n"
+    first_player = "2\n"
     moves = "0\n1\n3\n2\n6\n"
-    input = StringIO.new("#{type_game}#{moves}")
+    input = StringIO.new("#{type_game}#{first_player}#{moves}")
     output = StringIO.new
     interface = CliInterface.new(input, output)
 
     game_play = GamePlay.new(Board.new, interface)
 
     game_play.game_selection
+    game_play.select_first_player
     game_play.play
     expect(output.string).to include("The winner is: O")
   end

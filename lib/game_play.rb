@@ -12,29 +12,24 @@ class GamePlay
   end
 
   def game_selection
-    selection = @ui.menu_game
+    @ui.menu_game
+    selection = get_user_selection
 
-    begin
-    selection = Integer(selection)
-    rescue
+    if selection.between?(1, 3)
+      creation_type_game(selection)
+    else
       game_selection
     end
-
-    creation_type_game(selection)
   end
 
   def select_first_player
-    selection = @ui.menu_first_player
+    @ui.menu_first_player
+    selection = get_user_selection
 
-    begin
-      selection = Integer(selection)
-    rescue
+    if selection.between?(1, 2)
+      create_players(selection)
+    else
       select_first_player
-    end
-
-    if selection == 1
-      @current_player = @player_two
-      @players = [@player_two, @player_one]
     end
   end
 
@@ -54,6 +49,25 @@ class GamePlay
   attr_reader :board
   attr_reader :ui
 
+  def create_players(selection)
+    if selection == 1
+      @current_player = @player_two
+      @players = [@player_two, @player_one]
+    else
+      @current_player = @player_one
+      @players = [@player_one, @player_two]
+    end
+  end
+
+  def get_user_selection
+    begin
+      Integer(@ui.get_value)
+    rescue
+      @ui.must_be_integer
+      get_user_selection
+    end
+  end
+
   def creation_type_game(type_game)
     if type_game == 1
       @player_one = Human.new("X", ui)
@@ -65,9 +79,6 @@ class GamePlay
       @player_one = Computer.new("X", ui, board)
       @player_two = Computer.new("O", ui, board)
     end
-
-    @current_player = player_one
-    @players = [player_one, player_two]
   end
 
   def display_result
