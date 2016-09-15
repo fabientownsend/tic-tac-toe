@@ -52,7 +52,7 @@ RSpec.describe CliInterface do
 
   it "should display a menu with different game" do
     menu = "Select your game:\n 1 - Human vs. Human\n 2 - Human vs. Computer\n 3 - Computer vs. Computer\n"
-    interface.menu_game
+    expect(interface.menu_game).to eq("1\n")
     expect(output.string).to eq(menu)
   end
 
