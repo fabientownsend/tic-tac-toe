@@ -13,6 +13,11 @@ class CliInterface
     @input.gets
   end
 
+  def type_game
+    @output.print("Which game do you want?\n")
+    @input.gets
+  end
+
   def occupied_position
     @output.print("This position isn't free\n")
   end
@@ -31,6 +36,11 @@ class CliInterface
 
   def computer_move
     @output.print("The computer will play its next move\n")
+  end
+
+  def menu_game
+    @output.print("Select your game:\n 1 - Human vs. Human\n 2 - Human vs. Computer\n 3 - Computer vs. Computer\n")
+    @input.gets
   end
 
   private

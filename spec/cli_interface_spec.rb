@@ -49,4 +49,15 @@ RSpec.describe CliInterface do
   it "should return the next move of the player" do
     expect(interface.next_move("X")).to eq("1\n")
   end
+
+  it "should display a menu with different game" do
+    menu = "Select your game:\n 1 - Human vs. Human\n 2 - Human vs. Computer\n 3 - Computer vs. Computer\n"
+    interface.menu_game
+    expect(output.string).to eq(menu)
+  end
+
+  it "should return the next move of the player" do
+    expect(interface.type_game).to eq("1\n")
+    expect(output.string).to eq("Which game do you want?\n")
+  end
 end
