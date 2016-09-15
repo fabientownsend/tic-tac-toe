@@ -37,78 +37,48 @@ RSpec.describe Board do
     expect(board.win?("X")).to be false
   end
 
-  it "should be a win_colum for colum 1" do
-    board.set_mark("X", 0)
-    board.set_mark("X", 3)
-    board.set_mark("X", 6)
+  it "should win for each columns" do
+    [[0, 3, 6], [1, 4, 7], [2, 5, 8]].each do |array|
+      board = Board.new
 
-    expect(board.win?("X")).to be true
+      array.each { |a| board.set_mark("X", a) }
+
+      expect(board.win?("X")).to be true
+    end
   end
 
-  it "should be a win_colum for colum 2" do
-    board.set_mark("X", 1)
-    board.set_mark("X", 4)
-    board.set_mark("X", 7)
+  it "should win for each lines" do
+    [[0, 1, 2], [3, 4, 5], [6, 7, 8]].each do |array|
+      board = Board.new
 
-    expect(board.win?("X")).to be true
-  end
+      array.each { |a| board.set_mark("X", a) }
 
-  it "should be a win_colum for colum 3" do
-    board.set_mark("X", 2)
-    board.set_mark("X", 5)
-    board.set_mark("X", 8)
-
-    expect(board.win?("X")).to be true
-  end
-
-  it "should be a for line 1" do
-    board.set_mark("X", 0)
-    board.set_mark("X", 1)
-    board.set_mark("X", 2)
-
-    expect(board.win?("X")).to be true
-  end
-
-  it "should be a for line 2" do
-    board.set_mark("X", 3)
-    board.set_mark("X", 4)
-    board.set_mark("X", 5)
-
-    expect(board.win?("X")).to be true
-  end
-
-  it "should be a for line 3" do
-    board.set_mark("X", 6)
-    board.set_mark("X", 7)
-    board.set_mark("X", 8)
-
-    expect(board.win?("X")).to be true
+      expect(board.win?("X")).to be true
+    end
   end
 
   it "should be a for diagonal 1" do
-    board.set_mark("X", 0)
-    board.set_mark("X", 4)
-    board.set_mark("X", 8)
+    [0, 4, 8].each { |a| board.set_mark("X", a) }
 
     expect(board.win?("X")).to be true
   end
+
   it "should be a for diagonal 2" do
-    board.set_mark("X", 2)
-    board.set_mark("X", 4)
-    board.set_mark("X", 6)
+    [2, 4, 6].each { |a| board.set_mark("X", a) }
 
     expect(board.win?("X")).to be true
   end
 
   it "shoud be a tie" do
     board.set_mark("X", 0)
-    board.set_mark("O", 1)
     board.set_mark("X", 2)
     board.set_mark("X", 3)
-    board.set_mark("O", 4)
     board.set_mark("X", 5)
-    board.set_mark("O", 6)
     board.set_mark("X", 7)
+
+    board.set_mark("O", 1)
+    board.set_mark("O", 4)
+    board.set_mark("O", 6)
     board.set_mark("O", 8)
 
     expect(board.tie?).to be true
