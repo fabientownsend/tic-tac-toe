@@ -10,7 +10,9 @@ RSpec.describe GamePlay do
   let(:board) {Board.new}
 
   it "should finish the game displaying a tie" do
-    input = StringIO.new("1\n0\n1\n2\n4\n3\n6\n5\n8\n7\n")
+    type_game = "1\n"
+    moves = "0\n1\n2\n4\n3\n6\n5\n8\n7\n"
+    input = StringIO.new("#{type_game}#{moves}")
     output = StringIO.new
     interface = CliInterface.new(input, output)
 
@@ -22,7 +24,9 @@ RSpec.describe GamePlay do
   end
 
   it "should finish the game displaying a tie" do
-    input = StringIO.new("1\n1\n4\n7\n0\n2\n8\n")
+    type_game = "1\n"
+    moves = "1\n4\n7\n0\n2\n8\n"
+    input = StringIO.new("#{type_game}#{moves}")
     output = StringIO.new
     interface = CliInterface.new(input, output)
 
@@ -34,7 +38,9 @@ RSpec.describe GamePlay do
   end
 
   it "should be win by the player two" do
-    input = StringIO.new("1\n0\n1\n3\n2\n6\n")
+    type_game = "1\n"
+    moves = "0\n1\n3\n2\n6\n"
+    input = StringIO.new("#{type_game}#{moves}")
     output = StringIO.new
     interface = CliInterface.new(input, output)
 
