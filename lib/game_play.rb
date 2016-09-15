@@ -4,8 +4,6 @@ require_relative 'computer'
 class GamePlay
   attr_reader :player_one
   attr_reader :player_two
-  attr_reader :players
-  attr_reader :current_player
 
   def initialize(board, ui)
     @board = board
@@ -14,6 +12,7 @@ class GamePlay
 
   def game_selection
     selection = @ui.menu_game
+
     begin
     selection = Integer(selection)
     rescue
@@ -58,9 +57,9 @@ class GamePlay
 
   def display_result
     if board.win?(@current_player.mark)
-      @ui.winner(@current_player.mark)
+      ui.winner(@current_player.mark)
     elsif board.tie?
-      @ui.tie
+      ui.tie
     end
   end
 
@@ -69,26 +68,26 @@ class GamePlay
   end
 
   def game_over
-    @board.win?(@current_player.mark) || @board.tie?
+    board.win?(@current_player.mark) || board.tie?
   end
 
   def display_board
-    @ui.display_board(@board.board)
+    @ui.display_board(board.board)
   end
 
   def play_move
     position = @current_player.next_move
 
     begin
-      @board.set_mark(@current_player.mark, position)
+      board.set_mark(@current_player.mark, position)
     rescue OccupiedSpotError
-      @ui.occupied_position
+      ui.occupied_position
       play_move
     rescue OutOfRangeError
-      @ui.position_range
+      ui.position_range
       play_move
     rescue ArgumentError
-      @ui.position_range
+      ui.position_range
       play_move
     end
   end
