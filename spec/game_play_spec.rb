@@ -83,6 +83,36 @@ RSpec.describe GamePlay do
     expect(game_play.player_two).to be_a(Computer)
   end
 
+  it "should set player one as first player" do
+    type_game = "1\n"
+    first_player = "1\n"
+    input = StringIO.new("#{type_game}#{first_player}")
+    output = StringIO.new
+    interface = CliInterface.new(input, output)
+
+    game_play = GamePlay.new(Board.new, interface)
+
+    game_play.game_selection
+    game_play.select_first_player
+
+    expect(game_play.current_player).to eq(game_play.player_two)
+  end
+
+  it "should set player two as first player" do
+    type_game = "1\n"
+    first_player = "2\n"
+    input = StringIO.new("#{type_game}#{first_player}")
+    output = StringIO.new
+    interface = CliInterface.new(input, output)
+
+    game_play = GamePlay.new(Board.new, interface)
+
+    game_play.game_selection
+    game_play.select_first_player
+
+    expect(game_play.current_player).to eq(game_play.player_one)
+  end
+
   def create_type_game(type)
     input = StringIO.new(type)
     output = StringIO.new

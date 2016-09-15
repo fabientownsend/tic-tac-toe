@@ -4,6 +4,7 @@ require_relative 'computer'
 class GamePlay
   attr_reader :player_one
   attr_reader :player_two
+  attr_reader :current_player
 
   def initialize(board, ui)
     @board = board
@@ -22,9 +23,24 @@ class GamePlay
     creation_type_game(selection)
   end
 
+  def select_first_player
+    selection = @ui.menu_first_player
+
+    begin
+      selection = Integer(selection)
+    rescue
+      select_first_player
+    end
+
+    if selection == 1
+      @current_player = @player_two
+      @players = [@player_two, @player_one]
+    end
+  end
+
   def play
     until game_over
-      switch_player
+      set_net_player
       display_board
       play_move
     end
@@ -43,7 +59,6 @@ class GamePlay
       @player_one = Human.new("X", ui)
       @player_two = Human.new("O", ui)
     elsif type_game == 2
-      puts "trace"
       @player_one = Human.new("X", ui)
       @player_two = Computer.new("O", ui, board)
     elsif type_game == 3
@@ -63,7 +78,7 @@ class GamePlay
     end
   end
 
-  def switch_player
+  def set_net_player
     @current_player = @players.reverse!.first
   end
 
