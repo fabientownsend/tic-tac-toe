@@ -60,4 +60,10 @@ RSpec.describe CliInterface do
     expect(interface.type_game).to eq("1\n")
     expect(output.string).to eq("Which game do you want?\n")
   end
+
+  it "should display the menu for the first player selection" do
+    menu = "Select the first player:\n 1 - Player one\n 2 - Player two\n"
+    interface.menu_first_player
+    expect(output.string).to eq (menu)
+  end
 end

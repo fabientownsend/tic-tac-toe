@@ -46,6 +46,9 @@ class CliInterface
     input.gets
   end
 
+  def menu_first_player
+    output.print("Select the first player:\n 1 - Player one\n 2 - Player two\n")
+  end
   private
 
   def display_line(row)
