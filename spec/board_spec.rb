@@ -8,7 +8,7 @@ RSpec.describe Board do
     expect(board.empty?).to be true
   end
 
-  it "should set the mark at the position 8" do
+  it "should no be empty" do
     board.set_mark(Mark::CROSS, 2)
 
     expect(board.empty?).to be false
@@ -18,7 +18,7 @@ RSpec.describe Board do
     expect { board.set_mark(Mark::CROSS, "a string") }.to raise_error(ArgumentError)
   end
 
-  it "should raise an error after using a position twice at the same place" do
+  it "should raise an error when you set a mark to an occupied position" do
     position = 0
     board.set_mark(Mark::CROSS, position)
 
@@ -34,7 +34,9 @@ RSpec.describe Board do
   end
 
   it "should win for each columns" do
-    [[0, 3, 6], [1, 4, 7], [2, 5, 8]].each do |array|
+    columns = [[0, 3, 6], [1, 4, 7], [2, 5, 8]]
+
+    columns.each do |array|
       board = Board.new
 
       array.each { |spot| board.set_mark(Mark::CROSS, spot) }
@@ -44,7 +46,9 @@ RSpec.describe Board do
   end
 
   it "should win for each lines" do
-    [[0, 1, 2], [3, 4, 5], [6, 7, 8]].each do |array|
+    lines = [[0, 1, 2], [3, 4, 5], [6, 7, 8]]
+
+    lines.each do |array|
       board = Board.new
 
       array.each { |spot| board.set_mark(Mark::CROSS, spot) }

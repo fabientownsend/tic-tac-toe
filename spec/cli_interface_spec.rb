@@ -30,11 +30,6 @@ RSpec.describe CliInterface do
     expect(output.string).to eq("This position isn't free\n")
   end
 
-  it "should display the message when position out of range" do
-    interface.position_range
-    expect(output.string).to eq("The value have to be an integer between 0 and 8\n")
-  end
-
   it "should display the winner" do
     interface.winner(Mark::CROSS)
     expect(output.string).to eq("The winner is: X!\n")
@@ -52,6 +47,11 @@ RSpec.describe CliInterface do
 
   it "should return the next move of the player" do
     expect(interface.next_move(Mark::CROSS)).to eq("1\n")
+  end
+
+  it "should display computer move" do
+    interface.between(1, 2)
+    expect(output.string).to eq("The value should be between 1 and 2\n")
   end
 
   it "should display a menu with different game" do

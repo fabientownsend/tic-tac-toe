@@ -29,6 +29,7 @@ class GamePlay
     if selection.between?(1, 3)
       creation_type_game(selection)
     else
+      @ui.between(1, 3)
       game_selection
     end
   end
@@ -40,6 +41,7 @@ class GamePlay
     if selection.between?(1, 2)
       set_next_player(selection)
     else
+      @ui.between(1, 2)
       select_first_player
     end
   end
@@ -121,10 +123,10 @@ class GamePlay
       ui.occupied_position
       play_move
     rescue OutOfRangeError
-      ui.position_range
+      ui.between(board.POSITION_MIN, board.POSITION_MAX)
       play_move
     rescue ArgumentError
-      ui.position_range
+      ui.must_be_integer
       play_move
     end
   end

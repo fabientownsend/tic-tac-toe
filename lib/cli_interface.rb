@@ -28,12 +28,8 @@ class CliInterface
     output.puts("#{@file['not_free']}")
   end
 
-  def position_range
-    output.puts("#{@file['limit_board']}")
-  end
-
   def winner(mark)
-    output.print("#{@file['winner']}: #{mark}!\n")
+    output.puts("#{@file['winner']}: #{mark}!")
   end
 
   def tie
@@ -57,7 +53,11 @@ class CliInterface
   end
 
   def must_be_integer
-    output.print("#{@file['integer']}")
+    output.print("#{@file['integer']}: ")
+  end
+
+  def between(min, max)
+    output.puts("#{@file['between']} #{min} #{@file['and']} #{max}")
   end
 
   private
@@ -65,7 +65,7 @@ class CliInterface
   def display_line(row)
     row.each_with_index do |e, index|
       if index == row.size - 1
-        output.print(" #{e} \n")
+        output.puts(" #{e} ")
       else
         output.print(" #{e} |")
       end
