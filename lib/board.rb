@@ -32,7 +32,7 @@ class Board
   end
 
   def tie?
-    @counter == @POSITION_MAX && !win?("X") && !win?("O")
+    @counter == @POSITION_MAX && !win?(Mark::CROSS) && !win?(Mark::ROUND)
   end
 
   private
