@@ -24,26 +24,14 @@ class GamePlay
 
   def game_selection
     @ui.menu_game
-    selection = get_user_selection
-
-    if selection.between?(1, 3)
-      creation_type_game(selection)
-    else
-      @ui.between(1, 3)
-      game_selection
-    end
+    selection = get_user_selection_between(1, 3)
+    creation_type_game(selection)
   end
 
   def select_first_player
     @ui.menu_first_player
-    selection = get_user_selection
-
-    if selection.between?(1, 2)
-      set_next_player(selection)
-    else
-      @ui.between(1, 2)
-      select_first_player
-    end
+    selection = get_user_selection_between(1, 2)
+    set_next_player(selection)
   end
 
   def play
@@ -72,13 +60,25 @@ class GamePlay
     end
   end
 
+  def get_user_selection_between(min, max)
+    value = get_user_selection
+    if !value.between?(min, max)
+      @ui.between(min, max)
+      value = get_user_selection_between(min, max)
+    end
+
+    value
+  end
+
   def get_user_selection
     begin
-      Integer(@ui.get_value)
+      selection = Integer(@ui.get_value)
     rescue
       @ui.must_be_integer
-      get_user_selection
+      selection = get_user_selection
     end
+
+    selection
   end
 
   def creation_type_game(type_selected)

@@ -264,4 +264,24 @@ RSpec.describe GamePlay do
 
     expect(game_play.current_player).to eq(game_play.player_two)
   end
+
+  # take a look for testing private method, because test everything only 
+  # in integration test don't seems to be the best to me
+  xit "should return me the value when it is between min and max" do
+    input = StringIO.new("4\n1\n")
+    output = StringIO.new
+    interface = CliInterface.new(input, output)
+    game_play = GamePlay.new(Board.new, interface)
+
+    expect(game_play.get_user_selection_between(1, 3)).to eq(1)
+  end
+
+  xit "should return me the value when it is between min and max and an integer" do
+    input = StringIO.new("sdfhhjkl\n1\n")
+    output = StringIO.new
+    interface = CliInterface.new(input, output)
+    game_play = GamePlay.new(Board.new, interface)
+
+    expect(game_play.get_user_selection_between(1, 3)).to eq(1)
+  end
 end
