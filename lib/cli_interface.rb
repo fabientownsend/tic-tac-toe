@@ -1,3 +1,5 @@
+require 'yaml'
+
 class CliInterface
   attr_accessor :input
   attr_accessor :output
@@ -5,6 +7,7 @@ class CliInterface
   def initialize(input, output)
     @input = input
     @output = output
+    @file = YAML::load(File.open('en_text.yml'))
   end
 
   def display_board(board)
@@ -12,41 +15,41 @@ class CliInterface
   end
 
   def next_move(mark)
-    output.print("#{mark} what is your next move? ")
+    output.print("#{mark} #{@file['next_move']} ")
     input.gets
   end
 
   def type_game
-    output.print("Which game do you want?\n")
+    output.puts("#{@file['which_game']}")
     input.gets
   end
 
   def occupied_position
-    output.print("This position isn't free\n")
+    output.puts("#{@file['not_free']}")
   end
 
   def position_range
-    output.print("The value have to be an integer between 0 and 8\n")
+    output.puts("#{@file['limit_board']}")
   end
 
   def winner(mark)
-    output.print("The winner is: #{mark}!\n")
+    output.print("#{@file['winner']}: #{mark}!\n")
   end
 
   def tie
-    output.print("It's a tie!\n")
+    output.puts("#{@file['tie']}")
   end
 
   def computer_move
-    output.print("The computer will play its next move\n")
+    output.puts("#{@file['computer_move']}")
   end
 
   def menu_game
-    output.print("Select your game:\n 1 - Human vs. Human\n 2 - Human vs. Computer\n 3 - Computer vs. Computer\n")
+    output.print("#{@file['menu_type_games']}")
   end
 
   def menu_first_player
-    output.print("Select the first player:\n 1 - Player one\n 2 - Player two\n")
+    output.print("#{@file['menu_first_player']}")
   end
 
   def get_value
@@ -54,7 +57,7 @@ class CliInterface
   end
 
   def must_be_integer
-    output.print("The value must be an integer")
+    output.print("#{@file['integer']}")
   end
 
   private
