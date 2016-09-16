@@ -1,6 +1,12 @@
 require_relative 'human'
 require_relative 'computer'
 
+module GameType
+  HUMAN_VS_HUMAN = 1
+  HUMAN_VS_COMPUTER= 2
+  COMPUTER_VS_COMPUTER = 3
+end
+
 class GamePlay
   attr_reader :player_one
   attr_reader :player_two
@@ -68,14 +74,14 @@ class GamePlay
     end
   end
 
-  def creation_type_game(type_game)
-    if type_game == 1
+  def creation_type_game(type_selected)
+    if type_selected == GameType::HUMAN_VS_HUMAN
       @player_one = Human.new("X", ui)
       @player_two = Human.new("O", ui)
-    elsif type_game == 2
+    elsif type_selected == GameType::HUMAN_VS_COMPUTER
       @player_one = Human.new("X", ui)
       @player_two = Computer.new("O", ui, board)
-    elsif type_game == 3
+    elsif type_selected == GameType::COMPUTER_VS_COMPUTER
       @player_one = Computer.new("X", ui, board)
       @player_two = Computer.new("O", ui, board)
     end
