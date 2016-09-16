@@ -8,7 +8,7 @@ RSpec.describe Computer do
     output = StringIO.new
     ui = CliInterface.new(input, output)
     board = Board.new
-    computer = Computer.new("X", ui, board)
+    computer = Computer.new(Mark::CROSS, ui, board)
 
     move = computer.next_move
 
@@ -21,15 +21,15 @@ RSpec.describe Computer do
     output = StringIO.new
     ui = CliInterface.new(input, output)
     board = Board.new
-    board.set_mark("X", 0)
-    board.set_mark("X", 1)
-    board.set_mark("X", 2)
-    board.set_mark("X", 3)
-    board.set_mark("X", 4)
-    board.set_mark("X", 5)
-    board.set_mark("X", 6)
-    board.set_mark("X", 7)
-    computer = Computer.new("X", ui, board)
+    board.set_mark(Mark::CROSS, 0)
+    board.set_mark(Mark::CROSS, 1)
+    board.set_mark(Mark::CROSS, 2)
+    board.set_mark(Mark::CROSS, 3)
+    board.set_mark(Mark::CROSS, 4)
+    board.set_mark(Mark::CROSS, 5)
+    board.set_mark(Mark::CROSS, 6)
+    board.set_mark(Mark::CROSS, 7)
+    computer = Computer.new(Mark::CROSS, ui, board)
 
     expect(computer.next_move).to eq(8)
   end
@@ -40,16 +40,16 @@ RSpec.describe Computer do
     output = StringIO.new
     ui = CliInterface.new(input, output)
     board = Board.new
-    board.set_mark("X", 0)
-    board.set_mark("X", 1)
-    board.set_mark("X", 2)
-    board.set_mark("X", 3)
-    board.set_mark("X", 4)
-    board.set_mark("X", 5)
-    board.set_mark("X", 6)
-    board.set_mark("X", 7)
-    board.set_mark("X", 8)
-    computer = Computer.new("X", ui, board)
+    board.set_mark(Mark::CROSS, 0)
+    board.set_mark(Mark::CROSS, 1)
+    board.set_mark(Mark::CROSS, 2)
+    board.set_mark(Mark::CROSS, 3)
+    board.set_mark(Mark::CROSS, 4)
+    board.set_mark(Mark::CROSS, 5)
+    board.set_mark(Mark::CROSS, 6)
+    board.set_mark(Mark::CROSS, 7)
+    board.set_mark(Mark::CROSS, 8)
+    computer = Computer.new(Mark::CROSS, ui, board)
 
     expect(computer.next_move).to eq(nil)
   end

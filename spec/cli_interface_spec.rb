@@ -21,7 +21,7 @@ RSpec.describe CliInterface do
   end
 
   it "should display text when ask for the next move" do
-    interface.next_move("X")
+    interface.next_move(Mark::CROSS)
     expect(output.string).to eq("X what is your next move? ")
   end
 
@@ -36,7 +36,7 @@ RSpec.describe CliInterface do
   end
 
   it "should display the winner" do
-    interface.winner("X")
+    interface.winner(Mark::CROSS)
     expect(output.string).to eq("The winner is: X!\n")
   end
 
@@ -51,7 +51,7 @@ RSpec.describe CliInterface do
   end
 
   it "should return the next move of the player" do
-    expect(interface.next_move("X")).to eq("1\n")
+    expect(interface.next_move(Mark::CROSS)).to eq("1\n")
   end
 
   it "should display a menu with different game" do
