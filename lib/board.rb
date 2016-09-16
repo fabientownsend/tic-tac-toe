@@ -1,5 +1,7 @@
 class Board
   attr_reader :board
+  attr_reader :POSITION_MIN
+  attr_reader :POSITION_MAX
 
   def initialize
     @board = [[0, 1, 2], [3, 4, 5], [6, 7, 8]]
@@ -35,7 +37,6 @@ class Board
 
   private
 
-
   def free?(position)
     if not board[get_row(position)][get_column(position)].is_a? Integer
       raise OccupiedSpotError
@@ -69,13 +70,31 @@ class Board
   end
 
   def win_with_diagonal?(mark)
-    if board[0][0] == mark && board[1][1] == mark && board[2][2] == mark
-      true
-    elsif board[0][2] == mark && board[1][1] == mark && board[2][0] == mark
-      true
-    else
-      false
+    check_diag_one(mark) || check_diag_two(mark)
+  end
+
+  def check_diag_one(mark)
+    result = true
+
+    board.each_with_index do |value, index|
+      if board[index][index] != mark
+        result = false
+      end
     end
+
+    result
+  end
+
+  def check_diag_two(mark)
+    result = true
+
+    board.each_with_index do |value, index|
+      if board[index][board.size - index - 1] != mark
+        result = false
+      end
+    end
+
+    result
   end
 end
 

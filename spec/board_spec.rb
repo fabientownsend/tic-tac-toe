@@ -18,7 +18,7 @@ RSpec.describe Board do
     expect { board.set_mark("X", "a string") }.to raise_error(ArgumentError)
   end
 
-  it "should tell the position isn't free" do
+  it "should raise an error after using a position twice at the same place" do
     position = 0
     board.set_mark("X", position)
 
@@ -26,22 +26,18 @@ RSpec.describe Board do
   end
 
   it "should raise an error when position lower than expected" do
-    expect { board.set_mark("X", -1) }.to raise_error(OutOfRangeError)
+    expect { board.set_mark("X", board.POSITION_MIN - 1) }.to raise_error(OutOfRangeError)
   end
 
   it "should raise an error when position bigger than expected" do
-    expect { board.set_mark("X", 9) }.to raise_error(OutOfRangeError)
-  end
-
-  it "should be a win_colum for colum 1" do
-    expect(board.win?("X")).to be false
+    expect { board.set_mark("X", board.POSITION_MAX + 1) }.to raise_error(OutOfRangeError)
   end
 
   it "should win for each columns" do
     [[0, 3, 6], [1, 4, 7], [2, 5, 8]].each do |array|
       board = Board.new
 
-      array.each { |a| board.set_mark("X", a) }
+      array.each { |spot| board.set_mark("X", spot) }
 
       expect(board.win?("X")).to be true
     end
@@ -51,20 +47,20 @@ RSpec.describe Board do
     [[0, 1, 2], [3, 4, 5], [6, 7, 8]].each do |array|
       board = Board.new
 
-      array.each { |a| board.set_mark("X", a) }
+      array.each { |spot| board.set_mark("X", spot) }
 
       expect(board.win?("X")).to be true
     end
   end
 
-  it "should be a for diagonal 1" do
-    [0, 4, 8].each { |a| board.set_mark("X", a) }
+  it "should be a win for diagonal one" do
+    [0, 4, 8].each { |spot| board.set_mark("X", spot) }
 
     expect(board.win?("X")).to be true
   end
 
-  it "should be a for diagonal 2" do
-    [2, 4, 6].each { |a| board.set_mark("X", a) }
+  it "should be a win for diagonal two" do
+    [2, 4, 6].each { |spot| board.set_mark("X", spot) }
 
     expect(board.win?("X")).to be true
   end
