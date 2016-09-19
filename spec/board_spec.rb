@@ -22,7 +22,7 @@ RSpec.describe Board do
     position = 0
     board.set_mark(Mark::CROSS, position)
 
-    expect { board.set_mark(Mark::CROSS, position) }.to raise_error(OccupiedSpotError)
+    expect { board.set_mark(Mark::CROSS, position) }.to raise_error(OccupiedPositionError)
   end
 
   it "should raise an error when position lower than expected" do
@@ -39,7 +39,7 @@ RSpec.describe Board do
     columns.each do |array|
       board = Board.new
 
-      array.each { |spot| board.set_mark(Mark::CROSS, spot) }
+      array.each { |position| board.set_mark(Mark::CROSS, position) }
 
       expect(board.win?(Mark::CROSS)).to be true
     end
@@ -51,34 +51,34 @@ RSpec.describe Board do
     lines.each do |array|
       board = Board.new
 
-      array.each { |spot| board.set_mark(Mark::CROSS, spot) }
+      array.each { |position| board.set_mark(Mark::CROSS, position) }
 
       expect(board.win?(Mark::CROSS)).to be true
     end
   end
 
   it "should be a win for forward diagonal" do
-    [0, 4, 8].each { |spot| board.set_mark(Mark::CROSS, spot) }
+    [0, 4, 8].each { |position| board.set_mark(Mark::CROSS, position) }
 
     expect(board.win?(Mark::CROSS)).to be true
   end
 
   it "should be a win for backward diagonal" do
-    [2, 4, 6].each { |spot| board.set_mark(Mark::CROSS, spot) }
+    [2, 4, 6].each { |position| board.set_mark(Mark::CROSS, position) }
 
     expect(board.win?(Mark::CROSS)).to be true
   end
 
   it "shoud be a tie" do
-    [0, 2, 3, 5, 7].each { |spot| board.set_mark(Mark::CROSS, spot) }
-    [1, 4, 6, 8].each { |spot| board.set_mark(Mark::ROUND, spot) }
+    [0, 2, 3, 5, 7].each { |position| board.set_mark(Mark::CROSS, position) }
+    [1, 4, 6, 8].each { |position| board.set_mark(Mark::ROUND, position) }
 
     expect(board.tie?).to be true
   end
 
   it "shoud not be a tie" do
-    [0, 1, 2, 3, 5, 7].each { |mark| board.set_mark(Mark::CROSS, mark) }
-    [4, 6, 8].each { |mark| board.set_mark(Mark::CROSS, mark) }
+    [0, 1, 2, 3, 5, 7].each { |position| board.set_mark(Mark::CROSS, position) }
+    [4, 6, 8].each { |position| board.set_mark(Mark::CROSS, position) }
 
     expect(board.tie?).to be false
   end

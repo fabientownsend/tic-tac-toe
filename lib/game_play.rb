@@ -120,7 +120,7 @@ class GamePlay
 
     begin
       board.set_mark(@current_player.mark, position)
-    rescue OccupiedSpotError
+    rescue OccupiedPositionError
       ui.occupied_position
       play_move
     rescue OutOfRangeError

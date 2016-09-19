@@ -39,7 +39,7 @@ class Board
 
   def free?(position)
     if not board[get_row(position)][get_column(position)].is_a? Integer
-      raise OccupiedSpotError
+      raise OccupiedPositionError
     end
   end
 
@@ -101,5 +101,5 @@ end
 class OutOfRangeError < Exception
 end
 
-class OccupiedSpotError < Exception
+class OccupiedPositionError < Exception
 end
