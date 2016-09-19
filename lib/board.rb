@@ -11,13 +11,9 @@ class Board
   end
 
   def set_mark(mark, position)
-    begin
-      position = Integer(position)
-      valid?(position)
-      free?(position)
-    rescue
-      raise
-    end
+    position = Integer(position)
+    valid?(position)
+    free?(position)
 
     board[get_row(position)][get_column(position)] = mark
     @counter += 1
