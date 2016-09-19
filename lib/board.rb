@@ -70,10 +70,10 @@ class Board
   end
 
   def win_with_diagonal?(mark)
-    check_diag_one(mark) || check_diag_two(mark)
+    check_forward_diagonal(mark) || check_backward_diagonal(mark)
   end
 
-  def check_diag_one(mark)
+  def check_forward_diagonal(mark)
     result = true
 
     board.each_with_index do |value, index|
@@ -85,7 +85,7 @@ class Board
     result
   end
 
-  def check_diag_two(mark)
+  def check_backward_diagonal(mark)
     result = true
 
     board.each_with_index do |value, index|

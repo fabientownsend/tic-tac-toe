@@ -57,13 +57,13 @@ RSpec.describe Board do
     end
   end
 
-  it "should be a win for diagonal one" do
+  it "should be a win for forward diagonal" do
     [0, 4, 8].each { |spot| board.set_mark(Mark::CROSS, spot) }
 
     expect(board.win?(Mark::CROSS)).to be true
   end
 
-  it "should be a win for diagonal two" do
+  it "should be a win for backward diagonal" do
     [2, 4, 6].each { |spot| board.set_mark(Mark::CROSS, spot) }
 
     expect(board.win?(Mark::CROSS)).to be true
