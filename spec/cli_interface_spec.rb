@@ -17,7 +17,7 @@ RSpec.describe CliInterface do
   end
 
   it "should return a value" do
-    expect(interface.get_value).to eq("1\n")
+    expect(interface.read).to eq("1\n")
   end
 
   it "should display text when ask for the next move" do

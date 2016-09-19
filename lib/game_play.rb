@@ -73,7 +73,7 @@ class GamePlay
 
   def get_user_selection
     begin
-      selection = Integer(@ui.get_value)
+      selection = Integer(@ui.read)
     rescue
       @ui.must_be_integer
       selection = get_user_selection
