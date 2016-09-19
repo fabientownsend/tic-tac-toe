@@ -74,27 +74,15 @@ class Board
   end
 
   def check_forward_diagonal?(mark)
-    result = true
-
-    board.each_with_index do |value, index|
-      if board[index][index] != mark
-        result = false
-      end
-    end
-
-    result
+    [0, 1, 2].all? { |index| board[index][index] == mark }
   end
 
   def check_backward_diagonal?(mark)
-    result = true
+    [0, 1, 2].all? { |index| board[index][backward_index(index)] == mark }
+  end
 
-    board.each_with_index do |value, index|
-      if board[index][board.size - index - 1] != mark
-        result = false
-      end
-    end
-
-    result
+  def backward_index(index)
+    board.size - index - 1
   end
 end
 
