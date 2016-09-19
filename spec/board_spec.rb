@@ -8,7 +8,7 @@ RSpec.describe Board do
     expect(board.empty?).to be true
   end
 
-  it "should no be empty" do
+  it "should not be empty" do
     board.set_mark(Mark::CROSS, 2)
 
     expect(board.empty?).to be false
