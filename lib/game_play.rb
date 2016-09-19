@@ -3,7 +3,7 @@ require_relative 'computer'
 
 module GameType
   HUMAN_VS_HUMAN = 1
-  HUMAN_VS_COMPUTER= 2
+  HUMAN_VS_COMPUTER = 2
   COMPUTER_VS_COMPUTER = 3
 end
 
@@ -62,6 +62,7 @@ class GamePlay
 
   def get_user_selection_between(min, max)
     value = get_user_selection
+
     if !value.between?(min, max)
       @ui.between(min, max)
       value = get_user_selection_between(min, max)
