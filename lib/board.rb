@@ -1,5 +1,7 @@
 class Board
   attr_reader :board
+  attr_reader :POSITION_MIN
+  attr_reader :POSITION_MAX
 
   def initialize
     @board = [[0, 1, 2], [3, 4, 5], [6, 7, 8]]
@@ -30,15 +32,14 @@ class Board
   end
 
   def tie?
-    @counter == @POSITION_MAX && !win?("X") && !win?("O")
+    @counter == @POSITION_MAX && !win?(Mark::CROSS) && !win?(Mark::ROUND)
   end
 
   private
 
-
   def free?(position)
     if not board[get_row(position)][get_column(position)].is_a? Integer
-      raise OccupiedSpotError
+      raise OccupiedPositionError
     end
   end
 
@@ -69,18 +70,24 @@ class Board
   end
 
   def win_with_diagonal?(mark)
-    if board[0][0] == mark && board[1][1] == mark && board[2][2] == mark
-      true
-    elsif board[0][2] == mark && board[1][1] == mark && board[2][0] == mark
-      true
-    else
-      false
-    end
+    check_forward_diagonal?(mark) || check_backward_diagonal?(mark)
+  end
+
+  def check_forward_diagonal?(mark)
+    [0, 1, 2].all? { |index| board[index][index] == mark }
+  end
+
+  def check_backward_diagonal?(mark)
+    [0, 1, 2].all? { |index| board[index][backward_index(index)] == mark }
+  end
+
+  def backward_index(index)
+    board.size - index - 1
   end
 end
 
 class OutOfRangeError < Exception
 end
 
-class OccupiedSpotError < Exception
+class OccupiedPositionError < Exception
 end

@@ -8,122 +8,77 @@ RSpec.describe Board do
     expect(board.empty?).to be true
   end
 
-  it "should set the mark at the position 8" do
-    board.set_mark("X", 2)
+  it "should not be empty" do
+    board.set_mark(Mark::CROSS, 2)
 
     expect(board.empty?).to be false
   end
 
   it "should raise an error when it's not a int" do
-    expect { board.set_mark("X", "a string") }.to raise_error(ArgumentError)
+    expect { board.set_mark(Mark::CROSS, "a string") }.to raise_error(ArgumentError)
   end
 
-  it "should tell the position isn't free" do
+  it "should raise an error when you set a mark to an occupied position" do
     position = 0
-    board.set_mark("X", position)
+    board.set_mark(Mark::CROSS, position)
 
-    expect { board.set_mark("X", position) }.to raise_error(OccupiedSpotError)
+    expect { board.set_mark(Mark::CROSS, position) }.to raise_error(OccupiedPositionError)
   end
 
   it "should raise an error when position lower than expected" do
-    expect { board.set_mark("X", -1) }.to raise_error(OutOfRangeError)
+    expect { board.set_mark(Mark::CROSS, board.POSITION_MIN - 1) }.to raise_error(OutOfRangeError)
   end
 
   it "should raise an error when position bigger than expected" do
-    expect { board.set_mark("X", 9) }.to raise_error(OutOfRangeError)
+    expect { board.set_mark(Mark::CROSS, board.POSITION_MAX + 1) }.to raise_error(OutOfRangeError)
   end
 
-  it "should be a win_colum for colum 1" do
-    expect(board.win?("X")).to be false
+  it "should win for each columns" do
+    columns = [[0, 3, 6], [1, 4, 7], [2, 5, 8]]
+
+    columns.each do |array|
+      board = Board.new
+
+      array.each { |position| board.set_mark(Mark::CROSS, position) }
+
+      expect(board.win?(Mark::CROSS)).to be true
+    end
   end
 
-  it "should be a win_colum for colum 1" do
-    board.set_mark("X", 0)
-    board.set_mark("X", 3)
-    board.set_mark("X", 6)
+  it "should win for each lines" do
+    lines = [[0, 1, 2], [3, 4, 5], [6, 7, 8]]
 
-    expect(board.win?("X")).to be true
+    lines.each do |array|
+      board = Board.new
+
+      array.each { |position| board.set_mark(Mark::CROSS, position) }
+
+      expect(board.win?(Mark::CROSS)).to be true
+    end
   end
 
-  it "should be a win_colum for colum 2" do
-    board.set_mark("X", 1)
-    board.set_mark("X", 4)
-    board.set_mark("X", 7)
+  it "should be a win for forward diagonal" do
+    [0, 4, 8].each { |position| board.set_mark(Mark::CROSS, position) }
 
-    expect(board.win?("X")).to be true
+    expect(board.win?(Mark::CROSS)).to be true
   end
 
-  it "should be a win_colum for colum 3" do
-    board.set_mark("X", 2)
-    board.set_mark("X", 5)
-    board.set_mark("X", 8)
+  it "should be a win for backward diagonal" do
+    [2, 4, 6].each { |position| board.set_mark(Mark::CROSS, position) }
 
-    expect(board.win?("X")).to be true
-  end
-
-  it "should be a for line 1" do
-    board.set_mark("X", 0)
-    board.set_mark("X", 1)
-    board.set_mark("X", 2)
-
-    expect(board.win?("X")).to be true
-  end
-
-  it "should be a for line 2" do
-    board.set_mark("X", 3)
-    board.set_mark("X", 4)
-    board.set_mark("X", 5)
-
-    expect(board.win?("X")).to be true
-  end
-
-  it "should be a for line 3" do
-    board.set_mark("X", 6)
-    board.set_mark("X", 7)
-    board.set_mark("X", 8)
-
-    expect(board.win?("X")).to be true
-  end
-
-  it "should be a for diagonal 1" do
-    board.set_mark("X", 0)
-    board.set_mark("X", 4)
-    board.set_mark("X", 8)
-
-    expect(board.win?("X")).to be true
-  end
-  it "should be a for diagonal 2" do
-    board.set_mark("X", 2)
-    board.set_mark("X", 4)
-    board.set_mark("X", 6)
-
-    expect(board.win?("X")).to be true
+    expect(board.win?(Mark::CROSS)).to be true
   end
 
   it "shoud be a tie" do
-    board.set_mark("X", 0)
-    board.set_mark("O", 1)
-    board.set_mark("X", 2)
-    board.set_mark("X", 3)
-    board.set_mark("O", 4)
-    board.set_mark("X", 5)
-    board.set_mark("O", 6)
-    board.set_mark("X", 7)
-    board.set_mark("O", 8)
+    [0, 2, 3, 5, 7].each { |position| board.set_mark(Mark::CROSS, position) }
+    [1, 4, 6, 8].each { |position| board.set_mark(Mark::ROUND, position) }
 
     expect(board.tie?).to be true
   end
 
   it "shoud not be a tie" do
-    board.set_mark("X", 0)
-    board.set_mark("X", 1)
-    board.set_mark("X", 2)
-    board.set_mark("X", 3)
-    board.set_mark("O", 4)
-    board.set_mark("X", 5)
-    board.set_mark("O", 6)
-    board.set_mark("X", 7)
-    board.set_mark("O", 8)
+    [0, 1, 2, 3, 5, 7].each { |position| board.set_mark(Mark::CROSS, position) }
+    [4, 6, 8].each { |position| board.set_mark(Mark::CROSS, position) }
 
     expect(board.tie?).to be false
   end

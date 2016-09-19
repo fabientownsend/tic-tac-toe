@@ -1,3 +1,5 @@
+require 'yaml'
+
 class CliInterface
   attr_accessor :input
   attr_accessor :output
@@ -5,6 +7,7 @@ class CliInterface
   def initialize(input, output)
     @input = input
     @output = output
+    @text_file = YAML::load(File.open('en_text.yml'))
   end
 
   def display_board(board)
@@ -12,59 +15,65 @@ class CliInterface
   end
 
   def next_move(mark)
-    output.print("#{mark} what is your next move? ")
-    input.gets
+    write("#{mark} #{text_file['next_move']} ")
+    read
   end
 
   def type_game
-    output.print("Which game do you want?\n")
-    input.gets
+    write("#{text_file['which_game']}\n")
+    read
   end
 
   def occupied_position
-    output.print("This position isn't free\n")
-  end
-
-  def position_range
-    output.print("The value have to be an integer between 0 and 8\n")
+    write("#{text_file['not_free']}\n")
   end
 
   def winner(mark)
-    output.print("The winner is: #{mark}!\n")
+    write("#{text_file['winner']}: #{mark}!\n")
   end
 
   def tie
-    output.print("It's a tie!\n")
+    write("#{text_file['tie']}\n")
   end
 
   def computer_move
-    output.print("The computer will play its next move\n")
+    write("#{text_file['computer_move']}\n")
   end
 
   def menu_game
-    output.print("Select your game:\n 1 - Human vs. Human\n 2 - Human vs. Computer\n 3 - Computer vs. Computer\n")
+    write("#{text_file['menu_type_games']}")
   end
 
   def menu_first_player
-    output.print("Select the first player:\n 1 - Player one\n 2 - Player two\n")
-  end
-
-  def get_value
-    input.gets
+    write("#{text_file['menu_first_player']}")
   end
 
   def must_be_integer
-    output.print("The value must be an integer")
+    write("#{text_file['integer']}: ")
+  end
+
+  def between(min, max)
+    write("#{text_file['between']} #{min} #{@text_file['and']} #{max}\n")
+  end
+
+  def read
+    input.gets
   end
 
   private
 
+  attr_reader :text_file
+
+  def write(text)
+    output.print(text)
+  end
+  
   def display_line(row)
     row.each_with_index do |e, index|
       if index == row.size - 1
-        output.print(" #{e} \n")
+        write(" #{e} \n")
       else
-        output.print(" #{e} |")
+        write(" #{e} |")
       end
     end
   end

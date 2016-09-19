@@ -1,6 +1,17 @@
 require_relative 'human'
 require_relative 'computer'
 
+module GameType
+  HUMAN_VS_HUMAN = 1
+  HUMAN_VS_COMPUTER = 2
+  COMPUTER_VS_COMPUTER = 3
+end
+
+module Mark
+  ROUND = "O"
+  CROSS = "X"
+end
+
 class GamePlay
   attr_reader :player_one
   attr_reader :player_two
@@ -13,29 +24,19 @@ class GamePlay
 
   def game_selection
     @ui.menu_game
-    selection = get_user_selection
-
-    if selection.between?(1, 3)
-      creation_type_game(selection)
-    else
-      game_selection
-    end
+    selection = get_user_selection_between(1, 3)
+    creation_type_game(selection)
   end
 
   def select_first_player
     @ui.menu_first_player
-    selection = get_user_selection
-
-    if selection.between?(1, 2)
-      create_players(selection)
-    else
-      select_first_player
-    end
+    selection = get_user_selection_between(1, 2)
+    set_next_player(selection)
   end
 
   def play
     until game_over
-      set_net_player
+      get_next_player
       display_board
       play_move
     end
@@ -49,7 +50,7 @@ class GamePlay
   attr_reader :board
   attr_reader :ui
 
-  def create_players(selection)
+  def set_next_player(selection)
     if selection == 1
       @current_player = @player_two
       @players = [@player_two, @player_one]
@@ -59,25 +60,38 @@ class GamePlay
     end
   end
 
-  def get_user_selection
-    begin
-      Integer(@ui.get_value)
-    rescue
-      @ui.must_be_integer
-      get_user_selection
+  def get_user_selection_between(min, max)
+    value = get_user_selection
+
+    if !value.between?(min, max)
+      @ui.between(min, max)
+      value = get_user_selection_between(min, max)
     end
+
+    value
   end
 
-  def creation_type_game(type_game)
-    if type_game == 1
-      @player_one = Human.new("X", ui)
-      @player_two = Human.new("O", ui)
-    elsif type_game == 2
-      @player_one = Human.new("X", ui)
-      @player_two = Computer.new("O", ui, board)
-    elsif type_game == 3
-      @player_one = Computer.new("X", ui, board)
-      @player_two = Computer.new("O", ui, board)
+  def get_user_selection
+    begin
+      selection = Integer(@ui.read)
+    rescue
+      @ui.must_be_integer
+      selection = get_user_selection
+    end
+
+    selection
+  end
+
+  def creation_type_game(type_selected)
+    if type_selected == GameType::HUMAN_VS_HUMAN
+      @player_one = Human.new(Mark::CROSS, ui)
+      @player_two = Human.new(Mark::ROUND, ui)
+    elsif type_selected == GameType::HUMAN_VS_COMPUTER
+      @player_one = Human.new(Mark::CROSS, ui)
+      @player_two = Computer.new(Mark::ROUND, ui, board)
+    elsif type_selected == GameType::COMPUTER_VS_COMPUTER
+      @player_one = Computer.new(Mark::CROSS, ui, board)
+      @player_two = Computer.new(Mark::ROUND, ui, board)
     end
   end
 
@@ -89,7 +103,7 @@ class GamePlay
     end
   end
 
-  def set_net_player
+  def get_next_player
     @current_player = @players.reverse!.first
   end
 
@@ -106,14 +120,14 @@ class GamePlay
 
     begin
       board.set_mark(@current_player.mark, position)
-    rescue OccupiedSpotError
+    rescue OccupiedPositionError
       ui.occupied_position
       play_move
     rescue OutOfRangeError
-      ui.position_range
+      ui.between(board.POSITION_MIN, board.POSITION_MAX)
       play_move
     rescue ArgumentError
-      ui.position_range
+      ui.must_be_integer
       play_move
     end
   end
