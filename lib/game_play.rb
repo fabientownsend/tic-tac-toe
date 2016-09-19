@@ -124,7 +124,7 @@ class GamePlay
       ui.occupied_position
       play_move
     rescue OutOfRangeError
-      ui.between(board.POSITION_MIN, board.POSITION_MAX)
+      ui.between(board.POSITION_MIN, board.POSITION_MAX - 1)
       play_move
     rescue ArgumentError
       ui.must_be_integer
