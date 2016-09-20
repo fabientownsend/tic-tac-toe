@@ -22,7 +22,7 @@ class Computer < Player
 
     free_positions.each do |position|
       board.set_mark(mark, position)
-      result = alphabeta(board, mark, -1000, 1000)
+      result = alphabeta(mark, -1000, 1000)
       board.remove_mark(position, position)
 
       if result > best_value
@@ -34,7 +34,7 @@ class Computer < Player
     best_move
   end
 
-  def alphabeta(board, current_mark, alpha, beta)
+  def alphabeta(current_mark, alpha, beta)
     if board.win?(switch_mark(mark))
       return -1
     elsif board.win?(mark)
@@ -47,17 +47,14 @@ class Computer < Player
 
         free_positions.each do |position|
           board.set_mark(switch_mark(current_mark), position)
-
-          result = alphabeta(board, switch_mark(current_mark), alpha, beta)
-
+          result = alphabeta(switch_mark(current_mark), alpha, beta)
           board.remove_mark(position, position)
-
           best_value = min(best_value, result)
           beta = min(beta, best_value)
+
           if alpha >= beta
             break
           end
-
         end
 
         return best_value
@@ -66,14 +63,11 @@ class Computer < Player
 
         free_positions.each do |position|
           board.set_mark(switch_mark(current_mark), position)
-
-          result = alphabeta(board, switch_mark(current_mark), alpha, beta)
-
+          result = alphabeta(switch_mark(current_mark), alpha, beta)
           board.remove_mark(position, position)
-
           best_value = max(result, best_value)
-
           alpha = max(alpha, best_value)
+
           if alpha >= beta
             break
           end
