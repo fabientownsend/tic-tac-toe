@@ -22,7 +22,7 @@ class Computer < Player
 
     free_positions.each do |position|
       board.set_mark(mark, position)
-      result = minimax(board, mark)
+      result = alphabeta(board, mark, -1000, 1000)
       board.remove_mark(position, position)
 
       if result > best_value
@@ -34,7 +34,7 @@ class Computer < Player
     best_move
   end
 
-  def minimax(board, current_mark)
+  def alphabeta(board, current_mark, alpha, beta)
     if board.win?(switch_mark(mark))
       return -1
     elsif board.win?(mark)
@@ -48,11 +48,16 @@ class Computer < Player
         free_positions.each do |position|
           board.set_mark(switch_mark(current_mark), position)
 
-          result = minimax(board, switch_mark(current_mark))
+          result = alphabeta(board, switch_mark(current_mark), alpha, beta)
 
           board.remove_mark(position, position)
 
-          best_value = best_value > result ? result : best_value
+          best_value = min(best_value, result)
+          beta = min(beta, best_value)
+          if alpha >= beta
+            break
+          end
+
         end
 
         return best_value
@@ -62,25 +67,31 @@ class Computer < Player
         free_positions.each do |position|
           board.set_mark(switch_mark(current_mark), position)
 
-          result = minimax(board, switch_mark(current_mark))
+          result = alphabeta(board, switch_mark(current_mark), alpha, beta)
 
           board.remove_mark(position, position)
 
-          best_value = best_value < result ? result : best_value
+          best_value = max(result, best_value)
+
+          alpha = max(alpha, best_value)
+          if alpha >= beta
+            break
+          end
         end
 
         return best_value
       end
     end
-
   end
 
+  private
+
   def min(first, second)
-    if first < second
-      first
-    else
-      second
-    end
+    first > second ? second : first
+  end
+
+  def max(first, second)
+    first < second ? second : first
   end
 
   def switch_mark(mark)
@@ -90,8 +101,6 @@ class Computer < Player
       Mark::ROUND
     end
   end
-
-  private
 
   def free_positions
     board.board.flatten.select { |cell| cell.is_a?(Integer) }
