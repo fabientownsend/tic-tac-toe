@@ -36,10 +36,14 @@ class Board
     @counter == @POSITION_MAX && !win?(Mark::CROSS) && !win?(Mark::ROUND)
   end
 
+  def free_positions
+    board.flatten.select { |cell| cell.is_a?(Integer) }
+  end
+
   private
 
   def free?(position)
-    if not board[get_row(position)][get_column(position)].is_a? Integer
+    if !free_positions.include? position
       raise OccupiedPositionError
     end
   end

@@ -20,7 +20,7 @@ class Computer < Player
     best_value = -100
     best_move = -1
 
-    free_positions.each do |position|
+    board.free_positions.each do |position|
       board.set_mark(mark, position)
       result = alphabeta(mark, -1000, 1000)
       board.remove_mark(position, position)
@@ -43,50 +43,14 @@ class Computer < Player
       return 0
     else
       if current_mark == mark
-        best_value = 100
-
-        free_positions.each do |position|
-          board.set_mark(switch_mark(current_mark), position)
-          result = alphabeta(switch_mark(current_mark), alpha, beta)
-          board.remove_mark(position, position)
-          best_value = min(best_value, result)
-          beta = min(beta, best_value)
-
-          if alpha >= beta
-            break
-          end
-        end
-
-        return best_value
+        miniming_player(switch_mark(current_mark), alpha, beta)
       else
-        best_value = -100
-
-        free_positions.each do |position|
-          board.set_mark(switch_mark(current_mark), position)
-          result = alphabeta(switch_mark(current_mark), alpha, beta)
-          board.remove_mark(position, position)
-          best_value = max(result, best_value)
-          alpha = max(alpha, best_value)
-
-          if alpha >= beta
-            break
-          end
-        end
-
-        return best_value
+        maximing_player(switch_mark(current_mark), alpha, beta)
       end
     end
   end
 
   private
-
-  def min(first, second)
-    first > second ? second : first
-  end
-
-  def max(first, second)
-    first < second ? second : first
-  end
 
   def switch_mark(mark)
     if mark == Mark::ROUND
@@ -96,7 +60,52 @@ class Computer < Player
     end
   end
 
-  def free_positions
-    board.board.flatten.select { |cell| cell.is_a?(Integer) }
+  def maximing_player(current_mark, alpha, beta)
+    maximum_value = -100
+
+    board.free_positions.each do |position|
+      new_value = get_value_move(current_mark, alpha, beta, position)
+
+      maximum_value = max(maximum_value, new_value)
+      alpha = max(alpha, maximum_value)
+
+      if alpha >= beta
+        break
+      end
+    end
+
+    return maximum_value
+  end
+
+  def max(first, second)
+    first < second ? second : first
+  end
+
+  def miniming_player(current_mark, alpha, beta)
+    minimum_value = 100
+
+    board.free_positions.each do |position|
+      new_value = get_value_move(current_mark, alpha, beta, position)
+
+      minimum_value = min(minimum_value, new_value)
+      beta = min(beta, minimum_value)
+
+      if alpha >= beta
+        break
+      end
+    end
+
+    return minimum_value
+  end
+
+  def min(first, second)
+    first > second ? second : first
+  end
+
+  def get_value_move(current_mark, alpha, beta,  position)
+    board.set_mark(current_mark, position)
+    result = alphabeta(current_mark, alpha, beta)
+    board.remove_mark(position, position)
+    result
   end
 end
