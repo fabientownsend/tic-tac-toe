@@ -19,6 +19,11 @@ class Board
     @counter += 1
   end
 
+  def remove_mark(mark, position)
+    board[get_row(position)][get_column(position)] = mark
+    @counter -= 1
+  end
+
   def empty?
     @counter == 0
   end

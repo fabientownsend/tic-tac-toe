@@ -13,28 +13,13 @@ class Computer < Player
 
   def next_move
     ui.computer_move
-
-    best_value = -100
-    best_move = -1
-
-    free_positions.each do |position|
-      board.set_mark(mark, position)
-      result = minimax(board, mark)
-      board.remove_mark(position, position)
-
-      if result > best_value
-        best_value = result
-        best_move = position
-      end
-    end
-
-    best_move
+    free_positions.shuffle.first
   end
 
   def minimax(board, current_mark)
-    if board.win?(switch_mark(mark))
+    if board.win?(switch_mark(current_mark))
       return -1
-    elsif board.win?(mark)
+    elsif board.win?(current_mark)
       return 1
     elsif board.tie?
       return 0
@@ -45,9 +30,15 @@ class Computer < Player
         free_positions.each do |position|
           board.set_mark(switch_mark(current_mark), position)
 
-          result = minimax(board, switch_mark(current_mark))
+          result = minimax(new_board, switch_mark(current_mark))
+          puts "trace"
 
-          board.remove_mark(position, position)
+          @ui.display_board(board.board)
+          puts "result #{result}"
+
+          puts "trace"
+
+          board.set_mark(position, position)
 
           best_value = best_value > result ? result : best_value
         end
@@ -57,11 +48,11 @@ class Computer < Player
         best_value = -100
 
         free_positions.each do |position|
-          board.set_mark(switch_mark(current_mark), position)
+          new_board = Board.new
+          new_board = board
+          new_board.set_mark(switch_mark(current_mark), position)
 
-          result = minimax(board, switch_mark(current_mark))
-
-          board.remove_mark(position, position)
+          result = minimax(new_board, switch_mark(current_mark))
 
           best_value = best_value < result ? result : best_value
         end

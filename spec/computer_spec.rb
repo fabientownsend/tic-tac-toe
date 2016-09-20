@@ -3,54 +3,72 @@ require 'computer'
 require 'board'
 
 RSpec.describe Computer do
-  it "should give a random number" do
-    input = StringIO.new("1\n")
-    output = StringIO.new
-    ui = CliInterface.new(input, output)
-    board = Board.new
-    computer = Computer.new(Mark::CROSS, ui, board)
+  let (:input) { StringIO.new("1\n") }
+  let (:output) { StringIO.new }
+  let (:ui) { CliInterface.new(input, output) }
+  let (:board) { Board.new }
 
-    move = computer.next_move
+  it "should return -1 when it is lose" do
+    [0, 3, 6].each { |position| board.set_mark(Mark::CROSS, position) }
+    [1, 2].each { |position| board.set_mark(Mark::ROUND, position) }
+    computer = Computer.new(Mark::ROUND, ui, board)
 
-    expect(move).to be >= 0
-    expect(move).to be <= 8
+    expect(computer.minimax(board, Mark::ROUND)).to eq(-1)
   end
 
-  it "should give a array with free position" do
-    input = StringIO.new("1\n")
-    output = StringIO.new
-    ui = CliInterface.new(input, output)
-    board = Board.new
-    board.set_mark(Mark::CROSS, 0)
-    board.set_mark(Mark::CROSS, 1)
-    board.set_mark(Mark::CROSS, 2)
-    board.set_mark(Mark::CROSS, 3)
-    board.set_mark(Mark::CROSS, 4)
-    board.set_mark(Mark::CROSS, 5)
-    board.set_mark(Mark::CROSS, 6)
-    board.set_mark(Mark::CROSS, 7)
-    computer = Computer.new(Mark::CROSS, ui, board)
+  it "should return 1 when it is win" do
+    [1, 2].each { |position| board.set_mark(Mark::CROSS, position) }
+    [3, 0, 6].each { |position| board.set_mark(Mark::ROUND, position) }
+    computer = Computer.new(Mark::ROUND, ui, board)
 
-    expect(computer.next_move).to eq(8)
+    expect(computer.minimax(board, Mark::ROUND)).to eq(1)
   end
 
+  it "should return 0 when it is a tie" do
+    [0, 2, 3, 5, 7].each { |position| board.set_mark(Mark::CROSS, position) }
+    [1, 4, 6, 8].each { |position| board.set_mark(Mark::ROUND, position) }
+    computer = Computer.new(Mark::ROUND, ui, board)
 
-  it "should be nil when these is any spot free" do
-    input = StringIO.new("1\n")
-    output = StringIO.new
-    ui = CliInterface.new(input, output)
-    board = Board.new
-    board.set_mark(Mark::CROSS, 0)
-    board.set_mark(Mark::CROSS, 1)
-    board.set_mark(Mark::CROSS, 2)
-    board.set_mark(Mark::CROSS, 3)
-    board.set_mark(Mark::CROSS, 4)
-    board.set_mark(Mark::CROSS, 5)
-    board.set_mark(Mark::CROSS, 6)
-    board.set_mark(Mark::CROSS, 7)
-    board.set_mark(Mark::CROSS, 8)
-    computer = Computer.new(Mark::CROSS, ui, board)
+    expect(computer.minimax(board, Mark::ROUND)).to eq(0)
+  end
 
-    expect(computer.next_move).to eq(nil)
+  it "should return -1 when the other player have the possibility to win" do
+    [0, 2, 4].each { |position| board.set_mark(Mark::CROSS, position) }
+    [1, 3, 5].each { |position| board.set_mark(Mark::ROUND, position) }
+    computer = Computer.new(Mark::ROUND, ui, board)
+
+    expect(computer.minimax(board, Mark::ROUND)).to eq(-1)
+  end
+
+  it "should return 0 when any players can win" do
+    [0, 1, 5].each { |position| board.set_mark(Mark::CROSS, position) }
+    [2, 3, 4].each { |position| board.set_mark(Mark::ROUND, position) }
+    computer = Computer.new(Mark::ROUND, ui, board)
+
+    expect(computer.minimax(board, Mark::ROUND)).to eq(0)
+  end
+
+  it "should return 1 when computer will win in all solution" do
+    [1, 3, 5].each { |position| board.set_mark(Mark::CROSS, position) }
+    [0, 2, 4].each { |position| board.set_mark(Mark::ROUND, position) }
+    computer = Computer.new(Mark::ROUND, ui, board)
+
+    expect(computer.minimax(board, Mark::CROSS)).to eq(1)
+  end
+
+  it "should return position that make the computer win" do
+    [0, 1, 5].each { |position| board.set_mark(Mark::CROSS, position) }
+    [2, 3, 4].each { |position| board.set_mark(Mark::ROUND, position) }
+    computer = Computer.new(Mark::ROUND, ui, board)
+
+    expect(computer.next_move).to eq(6)
+  end
+
+  it "shoudl return position that avoid computer to lose" do
+    [0, 4, 2].each { |position| board.set_mark(Mark::CROSS, position) }
+    [8, 3].each { |position| board.set_mark(Mark::ROUND, position) }
+    computer = Computer.new(Mark::ROUND, ui, board)
+
+    expect(computer.next_move).to eq(1)
   end
 end
