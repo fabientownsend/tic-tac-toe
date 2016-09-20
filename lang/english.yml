@@ -1,0 +1,22 @@
+next_move: what is your next move?
+which_game: Which game do you want?
+not_free: This position isn't free
+winner: The winner is
+integer: The value must be an integer
+computer_move: The computer will play its next move
+tie: It's a tie!
+between: The value should be between
+and: and
+menu_type_games: |
+  Select your game:
+   1 - Human vs. Human
+   2 - Human vs. Computer
+   3 - Computer vs. Computer
+menu_first_player: |
+  Select the first player:
+   1 - Player one
+   2 - Player two
+menu_lang: |
+  Select the language:
+   1 - Francais
+   2 - English

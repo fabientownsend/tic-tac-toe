@@ -7,7 +7,8 @@ class CliInterface
   def initialize(input, output)
     @input = input
     @output = output
-    @text_file = YAML::load(File.open('en_text.yml'))
+    @default_file = YAML::load(File.open('en_text.yml'))
+    @text_file = @default_file
   end
 
   def set_lang(input)
@@ -16,6 +17,23 @@ class CliInterface
     elsif input == 2
       @text_file = YAML::load(File.open('en_text.yml'))
     end
+  end
+
+  def menu_game
+    write("#{get_text('menu_type_games')}")
+  end
+
+  def menu_lang
+    Dir.entries("lang").each_with_index do |item, i|
+      next if item == "." || item == ".."
+      puts("#{i - 2} - #{item.chomp(".yml").capitalize}")
+    end
+
+    write("#{get_text('menu_lang')}")
+  end
+
+  def menu_first_player
+    write("#{get_text('menu_first_player')}")
   end
 
   def display_board(board)
@@ -48,18 +66,6 @@ class CliInterface
     write("#{get_text('computer_move')}\n")
   end
 
-  def menu_game
-    write("#{get_text('menu_type_games')}")
-  end
-
-  def menu_lang
-    write("#{get_text('menu_lang')}")
-  end
-
-  def menu_first_player
-    write("#{get_text('menu_first_player')}")
-  end
-
   def must_be_integer
     write("#{get_text('integer')}: ")
   end
@@ -84,8 +90,10 @@ class CliInterface
     result = text_file[text]
 
     if result == nil
-      en_file = YAML::load(File.open('en_text.yml'))
-      result = en_file[text]
+      result = @default_file[text]
+      if result == nil
+        raise InexistentText
+      end
     end
 
     result
@@ -100,4 +108,7 @@ class CliInterface
       end
     end
   end
+end
+
+class InexistentText < Exception
 end
