@@ -264,4 +264,20 @@ RSpec.describe GamePlay do
 
     expect(game_play.current_player).to eq(game_play.player_two)
   end
+
+  it "should be a tie when computer vs computer" do
+    type_game = "3\n"
+    first_player = "1\n"
+    input = StringIO.new("#{type_game}#{first_player}")
+    output = StringIO.new
+    interface = CliInterface.new(input, output)
+
+    game_play = GamePlay.new(Board.new, interface)
+
+    game_play.game_selection
+    game_play.select_first_player
+    game_play.play
+
+    expect(output.string).to include("It's a tie!\n")
+  end
 end

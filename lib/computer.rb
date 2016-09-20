@@ -13,7 +13,10 @@ class Computer < Player
 
   def next_move
     ui.computer_move
+    best_move
+  end
 
+  def best_move
     best_value = -100
     best_move = -1
 

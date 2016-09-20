@@ -61,7 +61,7 @@ RSpec.describe Computer do
     [2, 3, 4].each { |position| board.set_mark(Mark::ROUND, position) }
     computer = Computer.new(Mark::ROUND, ui, board)
 
-    expect(computer.next_move).to eq(6)
+    expect(computer.best_move).to eq(6)
   end
 
   it "shoudl return position that avoid computer to lose" do
@@ -69,6 +69,6 @@ RSpec.describe Computer do
     [8, 3].each { |position| board.set_mark(Mark::ROUND, position) }
     computer = Computer.new(Mark::ROUND, ui, board)
 
-    expect(computer.next_move).to eq(1)
+    expect(computer.best_move).to eq(1)
   end
 end
