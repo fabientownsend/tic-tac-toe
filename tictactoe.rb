@@ -8,6 +8,7 @@ ui = CliInterface.new(Kernel, Kernel)
 board = Board.new
 game_play = GamePlay.new(board, ui)
 
+game_play.language
 game_play.game_selection
 game_play.select_first_player
 game_play.play

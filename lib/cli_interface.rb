@@ -10,6 +10,14 @@ class CliInterface
     @text_file = YAML::load(File.open('en_text.yml'))
   end
 
+  def set_lang(input)
+    if input == 1
+      @text_file = YAML::load(File.open('fr_text.yml'))
+    elsif input == 2
+      @text_file = YAML::load(File.open('en_text.yml'))
+    end
+  end
+
   def display_board(board)
     board.each { |line| display_line(line) }
   end
@@ -44,6 +52,10 @@ class CliInterface
     write("#{text_file['menu_type_games']}")
   end
 
+  def menu_lang
+    write("#{text_file['menu_lang']}")
+  end
+
   def menu_first_player
     write("#{text_file['menu_first_player']}")
   end
@@ -67,7 +79,7 @@ class CliInterface
   def write(text)
     output.print(text)
   end
-  
+
   def display_line(row)
     row.each_with_index do |e, index|
       if index == row.size - 1

@@ -264,4 +264,19 @@ RSpec.describe GamePlay do
 
     expect(game_play.current_player).to eq(game_play.player_two)
   end
+
+  it "should display the menu in French" do
+    lang = "1\n"
+    type_game = "2\n"
+    input = StringIO.new("#{lang}#{type_game}")
+    output = StringIO.new
+    interface = CliInterface.new(input, output)
+
+    game_play = GamePlay.new(Board.new, interface)
+
+    game_play.language
+    game_play.game_selection
+
+    expect(output.string).to include("Humain vs. Humain")
+  end
 end
