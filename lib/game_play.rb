@@ -1,5 +1,6 @@
 require_relative 'human'
 require_relative 'computer'
+require_relative 'players_factory'
 
 module GameType
   HUMAN_VS_HUMAN = 1
@@ -58,11 +59,11 @@ class GamePlay
 
   def set_next_player(selection)
     if selection == 1
-      @current_player = @player_two
-      @players = [@player_two, @player_one]
+      @current_player = @players[1]
+      @players.reverse!
     else
       @current_player = @player_one
-      @players = [@player_one, @player_two]
+      @current_player = @players[0]
     end
   end
 
@@ -89,15 +90,14 @@ class GamePlay
   end
 
   def creation_type_game(type_selected)
+    players_factory = PlayersFactory.new(ui, board)
+
     if type_selected == GameType::HUMAN_VS_HUMAN
-      @player_one = Human.new(Mark::CROSS, ui)
-      @player_two = Human.new(Mark::ROUND, ui)
+      @players = players_factory.create_human_vs_human
     elsif type_selected == GameType::HUMAN_VS_COMPUTER
-      @player_one = Human.new(Mark::CROSS, ui)
-      @player_two = Computer.new(Mark::ROUND, ui, board)
+      @players = players_factory.create_human_vs_computer
     elsif type_selected == GameType::COMPUTER_VS_COMPUTER
-      @player_one = Computer.new(Mark::CROSS, ui, board)
-      @player_two = Computer.new(Mark::ROUND, ui, board)
+      @players = players_factory.create_computer_vs_computer
     end
   end
 
