@@ -3,7 +3,6 @@ require 'yaml'
 class CliInterface
   attr_accessor :input
   attr_accessor :output
-  attr_reader :source
 
   def initialize(input, output, source)
     @input = input
@@ -25,11 +24,11 @@ class CliInterface
   end
 
   def menu_game
-    write("#{get_text('menu_type_games')}")
+    write("#{get_from_file('menu_type_games')}")
   end
 
   def menu_lang
-    write("#{get_text('menu_lang')}\n")
+    write("#{get_from_file('menu_lang')}\n")
 
     Dir.entries("lang").each_with_index do |item, i|
       next if item == "." || item == ".."
@@ -38,7 +37,7 @@ class CliInterface
   end
 
   def menu_first_player
-    write("#{get_text('menu_first_player')}")
+    write("#{get_from_file('menu_first_player')}")
   end
 
   def display_board(board)
@@ -46,37 +45,37 @@ class CliInterface
   end
 
   def next_move(mark)
-    write("#{mark} #{get_text('next_move')} ")
+    write("#{mark} #{get_from_file('next_move')} ")
     read
   end
 
   def type_game
-    write("#{get_text('which_game')}\n")
+    write("#{get_from_file('which_game')}\n")
     read
   end
 
   def occupied_position
-    write("#{get_text('not_free')}\n")
+    write("#{get_from_file('not_free')}\n")
   end
 
   def winner(mark)
-    write("#{get_text('winner')}: #{mark}!\n")
+    write("#{get_from_file('winner')}: #{mark}!\n")
   end
 
   def tie
-    write("#{get_text('tie')}\n")
+    write("#{get_from_file('tie')}\n")
   end
 
   def computer_move
-    write("#{get_text('computer_move')}\n")
+    write("#{get_from_file('computer_move')}\n")
   end
 
   def must_be_integer
-    write("#{get_text('integer')}: ")
+    write("#{get_from_file('integer')}: ")
   end
 
   def between(min, max)
-    write("#{get_text('between')} #{min} #{get_text('and')} #{max}\n")
+    write("#{get_from_file('between')} #{min} #{get_from_file('and')} #{max}\n")
   end
 
   def read
@@ -91,7 +90,7 @@ class CliInterface
 
   attr_reader :text_file
 
-  def get_text(text)
+  def get_from_file(text)
     result = text_file[text]
 
     if result == nil
