@@ -5,7 +5,7 @@ require 'board'
 RSpec.describe CliInterface do
   let(:input) {StringIO.new("1\n")}
   let(:output) {StringIO.new}
-  let(:interface) {CliInterface.new(input, output)}
+  let(:interface) {CliInterface.new(input, output, nil)}
 
   it "should display the board" do
     board = Board.new

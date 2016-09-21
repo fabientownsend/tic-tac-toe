@@ -6,7 +6,7 @@ RSpec.describe Human do
   it "should give the human number" do
     input = StringIO.new("1\n")
     output = StringIO.new
-    ui = CliInterface.new(input, output)
+    ui = CliInterface.new(input, output, nil)
     human = Human.new(Mark::CROSS, ui)
 
     expect(human.next_move).to eq("1\n")

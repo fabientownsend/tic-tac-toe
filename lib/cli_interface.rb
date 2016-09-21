@@ -4,7 +4,7 @@ class CliInterface
   attr_accessor :input
   attr_accessor :output
 
-  def initialize(input, output)
+  def initialize(input, output, source)
     @input = input
     @output = output
     @default_file = YAML::load(File.open('en_text.yml'))
@@ -12,11 +12,8 @@ class CliInterface
   end
 
   def set_lang(input)
-    if input == 1
-      @text_file = YAML::load(File.open('fr_text.yml'))
-    elsif input == 2
-      @text_file = YAML::load(File.open('en_text.yml'))
-    end
+    file = Dir.glob('lang/*')[input - 1].to_s
+    @text_file = YAML::load(File.open(file))
   end
 
   def menu_game
@@ -24,12 +21,12 @@ class CliInterface
   end
 
   def menu_lang
+    write("#{get_text('menu_lang')}\n")
+
     Dir.entries("lang").each_with_index do |item, i|
       next if item == "." || item == ".."
-      puts("#{i - 2} - #{item.chomp(".yml").capitalize}")
+      write("#{i - 1} - #{item.chomp(".yml").capitalize}\n")
     end
-
-    write("#{get_text('menu_lang')}")
   end
 
   def menu_first_player
