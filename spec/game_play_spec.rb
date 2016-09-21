@@ -25,7 +25,7 @@ RSpec.describe GamePlay do
     expect(output.string).to include("It's a tie!\n")
   end
 
-  it "should finish the game displaying a tie" do
+  it "should finish the game with X as a winner" do
     type_game = "1\n"
     first_player = "1\n"
     moves = "0\n1\n3\n2\n6\n"
@@ -41,7 +41,7 @@ RSpec.describe GamePlay do
     expect(output.string).to include("The winner is: X")
   end
 
-  it "should be win by the player two" do
+  it "should finish the game with O as a winner" do
     type_game = "1\n"
     first_player = "2\n"
     moves = "0\n1\n3\n2\n6\n"
@@ -95,7 +95,7 @@ RSpec.describe GamePlay do
     expect(output.string).to include("The winner is: O")
   end
 
-  it "should be win by the player two with the second move too low" do
+  it "should be win by the player two (round) with the second move too low" do
     type_game = "1\n"
     first_player = "2\n"
 
@@ -114,14 +114,14 @@ RSpec.describe GamePlay do
     expect(output.string).to include("The winner is: O")
   end
 
-  it "should be win by the player two with the second invalid" do
+  it "should be win by the player two (round) with the second move invalid" do
     type_game = "1\n"
     first_player = "2\n"
 
     moves_part_one = "0\n"
-    invalid = "fdhasjfjd\n"
+    invalid_move = "fdhasjfjd\n"
     moves_part_two = "1\n3\n2\n6\n"
-    input = StringIO.new("#{type_game}#{first_player}#{moves_part_one}#{invalid}#{moves_part_two}")
+    input = StringIO.new("#{type_game}#{first_player}#{moves_part_one}#{invalid_move}#{moves_part_two}")
     output = StringIO.new
     interface = CliInterface.new(input, output, "spec/lang/")
 
@@ -155,5 +155,21 @@ RSpec.describe GamePlay do
     game_play.play
 
     expect(output.string).to include("It's a tie!\n")
+  end
+
+  it "should display the next menu in another language" do
+    lang = "2\n"
+    type_game = "3\n"
+
+    input = StringIO.new("#{lang}#{type_game}")
+    output = StringIO.new
+    interface = CliInterface.new(input, output, "spec/lang/")
+
+    game_play = GamePlay.new(Board.new, interface)
+
+    game_play.language
+    game_play.game_selection
+
+    expect(output.string).to include("Ordinateur vs. Ordinateur")
   end
 end

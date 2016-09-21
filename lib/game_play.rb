@@ -1,5 +1,3 @@
-require_relative 'human'
-require_relative 'computer'
 require_relative 'players_factory'
 
 module GameType

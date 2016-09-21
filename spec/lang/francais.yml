@@ -10,7 +10,7 @@ menu_type_games: |
   Selectionnez votre type de jeux:
    1 - Humain vs. Humain
    2 - Humain vs. Ordinateur
-   3 - Ordinateur vs. Ordianateur
+   3 - Ordinateur vs. Ordinateur
 menu_first_player: |
   Selectionnez le premier joueur:
    1 - Joueur un
