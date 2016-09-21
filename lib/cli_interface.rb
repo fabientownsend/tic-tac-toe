@@ -3,16 +3,24 @@ require 'yaml'
 class CliInterface
   attr_accessor :input
   attr_accessor :output
+  attr_reader :source
 
   def initialize(input, output, source)
     @input = input
     @output = output
-    @default_file = YAML::load(File.open('en_text.yml'))
+    @source = source
+
+    begin
+      @default_file = YAML::load(File.open("#{source}english.yml"))
+    rescue
+      raise NoDefaultLangError
+    end
+
     @text_file = @default_file
   end
 
   def set_lang(input)
-    file = Dir.glob('lang/*')[input - 1].to_s
+    file = Dir.glob("#{@source}*")[input - 1].to_s
     @text_file = YAML::load(File.open(file))
   end
 
@@ -25,7 +33,7 @@ class CliInterface
 
     Dir.entries("lang").each_with_index do |item, i|
       next if item == "." || item == ".."
-      write("#{i - 1} - #{item.chomp(".yml").capitalize}\n")
+      write(" #{i - 1} - #{item.chomp(".yml").capitalize}\n")
     end
   end
 
@@ -75,13 +83,13 @@ class CliInterface
     input.gets
   end
 
-  private
-
-  attr_reader :text_file
-
   def write(text)
     output.print(text)
   end
+
+  private
+
+  attr_reader :text_file
 
   def get_text(text)
     result = text_file[text]
@@ -107,5 +115,5 @@ class CliInterface
   end
 end
 
-class InexistentText < Exception
+class NoDefaultLangError < Exception
 end

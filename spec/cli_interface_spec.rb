@@ -5,7 +5,7 @@ require 'board'
 RSpec.describe CliInterface do
   let(:input) {StringIO.new("1\n")}
   let(:output) {StringIO.new}
-  let(:interface) {CliInterface.new(input, output, nil)}
+  let(:interface) {CliInterface.new(input, output, "spec/lang/")}
 
   it "should display the board" do
     board = Board.new
@@ -20,54 +20,38 @@ RSpec.describe CliInterface do
     expect(interface.read).to eq("1\n")
   end
 
-  it "should display text when ask for the next move" do
-    interface.next_move(Mark::CROSS)
-    expect(output.string).to eq("X what is your next move? ")
+  it "should print text" do
+    interface.write("test")
+    expect(output.string).to eq("test")
   end
 
-  it "should display the message when position occupied" do
+  it "shoudl raise an exception when file doesn't exist" do
+    expect {  CliInterface.new(input, output, "random/link") }.to raise_error(NoDefaultLangError)
+  end
+
+  it "should display a menu with the diferent lang find in the lang folder" do
+    menu = "Select the language\n 1 - English\n 2 - Francais\n"
+
+    interface.menu_lang
+    expect(output.string).to eq(menu)
+  end
+
+  it "shoud be english language by default" do
     interface.occupied_position
     expect(output.string).to eq("This position isn't free\n")
   end
 
-  it "should display the winner" do
-    interface.winner(Mark::CROSS)
-    expect(output.string).to eq("The winner is: X!\n")
+  it "shoud display in french when you select french" do
+    french = 2
+    interface.set_lang(french)
+    interface.occupied_position
+    expect(output.string).to eq("Cette position n'est pas libre\n")
   end
 
-  it "should display tie result" do
-    interface.tie
-    expect(output.string).to eq("It's a tie!\n")
-  end
-
-  it "should display computer move" do
-    interface.computer_move
-    expect(output.string).to eq("The computer will play its next move\n")
-  end
-
-  it "should return the next move of the player" do
-    expect(interface.next_move(Mark::CROSS)).to eq("1\n")
-  end
-
-  it "should display computer move" do
-    interface.between(1, 2)
-    expect(output.string).to eq("The value should be between 1 and 2\n")
-  end
-
-  it "should display a menu with different game" do
-    menu = "Select your game:\n 1 - Human vs. Human\n 2 - Human vs. Computer\n 3 - Computer vs. Computer\n"
-    interface.menu_game
-    expect(output.string).to eq(menu)
-  end
-
-  it "should return the next move of the player" do
-    expect(interface.type_game).to eq("1\n")
-    expect(output.string).to eq("Which game do you want?\n")
-  end
-
-  it "should display the menu for the first player selection" do
-    menu = "Select the first player:\n 1 - Player one\n 2 - Player two\n"
-    interface.menu_first_player
-    expect(output.string).to eq (menu)
+  it "should use the default language when a sentence is missed in the curent file" do
+    french = 2
+    interface.set_lang(french)
+    interface.must_be_integer
+    expect(output.string).to eq("The value must be an integer: ")
   end
 end

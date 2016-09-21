@@ -15,7 +15,7 @@ RSpec.describe GamePlay do
     moves = "0\n1\n2\n4\n3\n6\n5\n8\n7\n"
     input = StringIO.new("#{type_game}#{first_player}#{moves}")
     output = StringIO.new
-    interface = CliInterface.new(input, output, nil)
+    interface = CliInterface.new(input, output, "spec/lang/")
 
     game_play = GamePlay.new(Board.new, interface)
 
@@ -31,7 +31,7 @@ RSpec.describe GamePlay do
     moves = "0\n1\n3\n2\n6\n"
     input = StringIO.new("#{type_game}#{first_player}#{moves}")
     output = StringIO.new
-    interface = CliInterface.new(input, output, nil)
+    interface = CliInterface.new(input, output, "spec/lang/")
 
 
     game_play = GamePlay.new(Board.new, interface)
@@ -47,7 +47,7 @@ RSpec.describe GamePlay do
     moves = "0\n1\n3\n2\n6\n"
     input = StringIO.new("#{type_game}#{first_player}#{moves}")
     output = StringIO.new
-    interface = CliInterface.new(input, output, nil)
+    interface = CliInterface.new(input, output, "spec/lang/")
 
     game_play = GamePlay.new(Board.new, interface)
 
@@ -66,7 +66,7 @@ RSpec.describe GamePlay do
     moves_part_two = "1\n3\n2\n6\n"
     input = StringIO.new("#{type_game}#{first_player}#{moves_part_one}#{already_played}#{moves_part_two}")
     output = StringIO.new
-    interface = CliInterface.new(input, output, nil)
+    interface = CliInterface.new(input, output, "spec/lang/")
 
     game_play = GamePlay.new(Board.new, interface)
 
@@ -85,7 +85,7 @@ RSpec.describe GamePlay do
     moves_part_two = "1\n3\n2\n6\n"
     input = StringIO.new("#{type_game}#{first_player}#{moves_part_one}#{too_hight}#{moves_part_two}")
     output = StringIO.new
-    interface = CliInterface.new(input, output, nil)
+    interface = CliInterface.new(input, output, "spec/lang/")
 
     game_play = GamePlay.new(Board.new, interface)
 
@@ -104,7 +104,7 @@ RSpec.describe GamePlay do
     moves_part_two = "1\n3\n2\n6\n"
     input = StringIO.new("#{type_game}#{first_player}#{moves_part_one}#{too_low}#{moves_part_two}")
     output = StringIO.new
-    interface = CliInterface.new(input, output, nil)
+    interface = CliInterface.new(input, output, "spec/lang/")
 
     game_play = GamePlay.new(Board.new, interface)
 
@@ -123,7 +123,7 @@ RSpec.describe GamePlay do
     moves_part_two = "1\n3\n2\n6\n"
     input = StringIO.new("#{type_game}#{first_player}#{moves_part_one}#{invalid}#{moves_part_two}")
     output = StringIO.new
-    interface = CliInterface.new(input, output, nil)
+    interface = CliInterface.new(input, output, "spec/lang/")
 
     game_play = GamePlay.new(Board.new, interface)
 
@@ -185,7 +185,7 @@ RSpec.describe GamePlay do
   def create_type_game(type)
     input = StringIO.new(type)
     output = StringIO.new
-    interface = CliInterface.new(input, output, nil)
+    interface = CliInterface.new(input, output, "spec/lang/")
 
     GamePlay.new(Board.new, interface)
   end
@@ -195,7 +195,7 @@ RSpec.describe GamePlay do
     first_player = "1\n"
     input = StringIO.new("#{type_game}#{first_player}")
     output = StringIO.new
-    interface = CliInterface.new(input, output, nil)
+    interface = CliInterface.new(input, output, "spec/lang/")
 
     game_play = GamePlay.new(Board.new, interface)
 
@@ -210,7 +210,7 @@ RSpec.describe GamePlay do
     first_player = "2\n"
     input = StringIO.new("#{type_game}#{first_player}")
     output = StringIO.new
-    interface = CliInterface.new(input, output, nil)
+    interface = CliInterface.new(input, output, "spec/lang/")
 
     game_play = GamePlay.new(Board.new, interface)
 
@@ -225,7 +225,7 @@ RSpec.describe GamePlay do
     first_player = "-1\n1\n"
     input = StringIO.new("#{type_game}#{first_player}")
     output = StringIO.new
-    interface = CliInterface.new(input, output, nil)
+    interface = CliInterface.new(input, output, "spec/lang/")
 
     game_play = GamePlay.new(Board.new, interface)
 
@@ -240,7 +240,7 @@ RSpec.describe GamePlay do
     first_player = "5\n1\n"
     input = StringIO.new("#{type_game}#{first_player}")
     output = StringIO.new
-    interface = CliInterface.new(input, output, nil)
+    interface = CliInterface.new(input, output, "spec/lang/")
 
     game_play = GamePlay.new(Board.new, interface)
 
@@ -255,7 +255,7 @@ RSpec.describe GamePlay do
     first_player = "asdfjkl;df\n1\n"
     input = StringIO.new("#{type_game}#{first_player}")
     output = StringIO.new
-    interface = CliInterface.new(input, output, nil)
+    interface = CliInterface.new(input, output, "spec/lang/")
 
     game_play = GamePlay.new(Board.new, interface)
 
@@ -270,7 +270,7 @@ RSpec.describe GamePlay do
     type_game = "2\n"
     input = StringIO.new("#{lang}#{type_game}")
     output = StringIO.new
-    interface = CliInterface.new(input, output, nil)
+    interface = CliInterface.new(input, output, "spec/lang/")
 
     game_play = GamePlay.new(Board.new, interface)
 
