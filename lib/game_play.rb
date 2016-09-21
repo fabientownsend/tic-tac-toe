@@ -9,8 +9,6 @@ module GameType
 end
 
 class GamePlay
-  attr_reader :player_one
-  attr_reader :player_two
   attr_reader :current_player
 
   def initialize(board, ui)
