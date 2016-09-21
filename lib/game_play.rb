@@ -8,11 +8,6 @@ module GameType
   COMPUTER_VS_COMPUTER = 3
 end
 
-module Mark
-  ROUND = "O"
-  CROSS = "X"
-end
-
 class GamePlay
   attr_reader :player_one
   attr_reader :player_two

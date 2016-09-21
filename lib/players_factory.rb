@@ -1,5 +1,5 @@
-require 'human'
-require 'computer'
+require_relative 'human'
+require_relative 'computer'
 
 module Mark
   ROUND = "O"
