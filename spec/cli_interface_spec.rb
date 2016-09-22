@@ -66,4 +66,16 @@ RSpec.describe CliInterface do
       interface.must_be_integer
     end.to change { output.string }.to eq("The value must be an integer: ")
   end
+
+  it "should return the next move of the player" do
+    expect do
+    expect(interface.type_game).to eq("1\n")
+    end.to change { output.string }.to eq("Which game do you want?\n")
+  end
+
+  it "should displaly blank when the text isn't find in any files" do
+    expect do
+    expect(interface.menu_first_player)
+    end.to change { output.string }.to eq("blank")
+  end
 end

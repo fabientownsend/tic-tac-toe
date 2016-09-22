@@ -99,7 +99,7 @@ class CliInterface
     if result == nil
       result = @default_file[text]
       if result == nil
-        raise InexistentText
+        result = "blank"
       end
     end
 
