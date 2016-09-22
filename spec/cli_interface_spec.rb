@@ -2,6 +2,10 @@ require 'spec_helper'
 require 'cli_interface'
 require 'board'
 
+module Lang
+  FRENCH = 2
+end
+
 RSpec.describe CliInterface do
   let(:input) {StringIO.new("1\n")}
   let(:output) {StringIO.new}
@@ -22,6 +26,7 @@ RSpec.describe CliInterface do
 
   it "should print text" do
     interface.write("test")
+
     expect(output.string).to eq("test")
   end
 
@@ -33,25 +38,27 @@ RSpec.describe CliInterface do
     menu = "Select the language\n 1 - English\n 2 - Francais\n"
 
     interface.menu_lang
+
     expect(output.string).to eq(menu)
   end
 
   it "shoud be english language by default" do
     interface.occupied_position
+
     expect(output.string).to eq("This position isn't free\n")
   end
 
   it "shoud display in french when you select french" do
-    french = 2
-    interface.set_lang(french)
-    interface.occupied_position
-    expect(output.string).to eq("Cette position n'est pas libre\n")
+    expect do
+      interface.set_lang(Lang::FRENCH)
+      interface.occupied_position
+    end.to change { output.string }.to eq("Cette position n'est pas libre\n")
   end
 
   it "should use the default language when a sentence is missed in the curent file" do
-    french = 2
-    interface.set_lang(french)
-    interface.must_be_integer
-    expect(output.string).to eq("The value must be an integer: ")
+    expect do
+      interface.set_lang(Lang::FRENCH)
+      interface.must_be_integer
+    end.to change { output.string }.to eq("The value must be an integer: ")
   end
 end
