@@ -10,27 +10,25 @@ class PlayersFactory
   def initialize(ui, board)
     @ui = ui
     @board = board
+    @players = []
   end
 
   def create_human_vs_human
-    players = []
-    players << create_human(Mark::CROSS)
-    players << create_human(Mark::ROUND)
-    players
+    @players << create_human(Mark::CROSS)
+    @players << create_human(Mark::ROUND)
+    @players
   end
 
   def create_computer_vs_computer
-    players = []
-    players << create_computer(Mark::CROSS)
-    players << create_computer(Mark::ROUND)
-    players
+    @players << create_computer(Mark::CROSS)
+    @players << create_computer(Mark::ROUND)
+    @players
   end
 
   def create_human_vs_computer
-    players = []
-    players << create_human(Mark::CROSS)
-    players << create_computer(Mark::ROUND)
-    players
+    @players << create_human(Mark::CROSS)
+    @players << create_computer(Mark::ROUND)
+    @players
   end
 
   private
