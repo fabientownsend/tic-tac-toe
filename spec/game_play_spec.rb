@@ -23,6 +23,16 @@ RSpec.describe GamePlay do
     end.to change { output.string }.to include("It's a tie!\n")
   end
 
+  it "should be a computer as first player" do
+    type_game = "2\n"
+    first_player = "1\n"
+    game_play = create_game_play("#{type_game}#{first_player}")
+
+    game_play.game_selection
+    game_play.select_first_player
+    expect(game_play.current_player).to be_a(Computer)
+  end
+
   it "should finish the game with X as a winner" do
     type_game = "1\n"
     first_player = "1\n"
@@ -124,6 +134,39 @@ RSpec.describe GamePlay do
 
   it "should display the next menu in another language" do
     lang = "2\n"
+    type_game = "3\n"
+    game_play = create_game_play("#{lang}#{type_game}")
+
+    expect do
+      game_play.language
+      game_play.game_selection
+    end.to change { output.string }.to include("Ordinateur vs. Ordinateur")
+  end
+
+  it "shoudl ask a second time when value is too hight with menus" do
+    lang = "100\n2\n"
+    type_game = "3\n"
+    game_play = create_game_play("#{lang}#{type_game}")
+
+    expect do
+      game_play.language
+      game_play.game_selection
+    end.to change { output.string }.to include("Ordinateur vs. Ordinateur")
+  end
+
+  it "shoudl ask a second time when value is too low with menus" do
+    lang = "-100\n2\n"
+    type_game = "3\n"
+    game_play = create_game_play("#{lang}#{type_game}")
+
+    expect do
+      game_play.language
+      game_play.game_selection
+    end.to change { output.string }.to include("Ordinateur vs. Ordinateur")
+  end
+
+  it "shoudl ask a second time when value is too low with menus" do
+    lang = "asdfdsafhjkl\n2\n"
     type_game = "3\n"
     game_play = create_game_play("#{lang}#{type_game}")
 

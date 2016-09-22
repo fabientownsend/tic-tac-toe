@@ -23,7 +23,7 @@ class GamePlay
   def game_selection
     @ui.menu_game
     selection = get_user_selection_between(1, 3)
-    creation_type_game(selection)
+    create_players_for_game(selection)
   end
 
   def select_first_player
@@ -80,7 +80,7 @@ class GamePlay
     selection
   end
 
-  def creation_type_game(type_selected)
+  def create_players_for_game(type_selected)
     players_factory = PlayersFactory.new(ui, board)
 
     if type_selected == GameType::HUMAN_VS_HUMAN
