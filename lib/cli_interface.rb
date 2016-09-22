@@ -30,7 +30,7 @@ class CliInterface
   def menu_lang
     write("#{get_from_file('menu_lang')}\n")
 
-    Dir.entries("lang").each_with_index do |item, i|
+    Dir.entries(@source).each_with_index do |item, i|
       next if item == "." || item == ".."
       write(" #{i - 1} - #{item.chomp(".yml").capitalize}\n")
     end
