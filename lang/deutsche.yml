@@ -1,0 +1,19 @@
+next_move: Was ist Ihr nächster Schritt
+which_game: Welches Spiel wollen Sie?
+not_free: Diese Position ist nicht frei
+winner: der Gewinner ist
+integer: der Wert muss eine ganze Zahl sein
+computer_move: der Computer wird seine nächsten Zug spielen
+tie: es ist eine Krawatte!
+between: der Wert sollte zwischen sein
+and: und
+menu_type_games: |
+  Wählen Sie Ihr Spiel:
+   1 - Mensch vs. Mensch
+   2 - Mensch vs. Computer
+   3 - Computer vs. Computer
+menu_first_player: |
+  wählen Sie den ersten Spieler:
+   1 - Spieler ein
+   2 - Spieler zwei
+menu_lang: wählen Sie die Sprache
