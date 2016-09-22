@@ -16,7 +16,7 @@ class GamePlay
 
   def language
     @ui.menu_lang
-    selection = get_user_selection_between(1, 2)
+    selection = get_user_selection_between(1, @ui.count_lang)
     @ui.set_lang(selection)
   end
 

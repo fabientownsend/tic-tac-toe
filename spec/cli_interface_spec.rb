@@ -34,12 +34,17 @@ RSpec.describe CliInterface do
     expect {  CliInterface.new(input, output, "random/link") }.to raise_error(NoDefaultLangError)
   end
 
-  it "should display a menu with the diferent lang find in the lang folder" do
-    menu = "Select the language\n 1 - English\n 2 - Francais\n"
+  it "should display lang based on .yml files in the folder lang" do
+    menu = "Select the language\n 1 - English\n 2 - Francais\n 3 - Z_last_yml\n"
 
     interface.menu_lang
 
     expect(output.string).to eq(menu)
+  end
+
+  it "should return the total of yml file in the folder lang" do
+    interface.menu_lang
+    expect(interface.count_lang).to eq(3)
   end
 
   it "shoud be english language by default" do
