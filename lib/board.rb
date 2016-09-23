@@ -20,10 +20,6 @@ class Board
     @counter -= 1
   end
 
-  def empty?
-    @counter == 0
-  end
-
   def win?(mark)
     win_with_columns?(mark) || win_with_rows?(mark) || win_with_diagonal?(mark)
   end
