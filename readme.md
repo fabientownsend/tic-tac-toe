@@ -8,7 +8,12 @@ $ gem install bundle
 $ bundle install --binstubs
 ```
 
-## how to test it
+## how to run the tests
 ```bash
 $ rspec
+```
+
+## how run the game
+```bash
+$ ruby tictactoe.rb
 ```
