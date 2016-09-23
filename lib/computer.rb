@@ -33,6 +33,8 @@ class Computer < Player
     best_move
   end
 
+  private
+
   def alphabeta(current_mark, alpha, beta)
     if board.win?(switch_mark(mark))
       return -1
@@ -48,8 +50,6 @@ class Computer < Player
       end
     end
   end
-
-  private
 
   def switch_mark(mark)
     if mark == Mark::ROUND
