@@ -105,10 +105,10 @@ class GamePlay
     position = @current_player.next_move
 
     if position > board.POSITION_MAX - 1 || position < board.POSITION_MIN
-      ui.occupied_position
+      ui.between(board.POSITION_MIN, board.POSITION_MAX - 1)
       play_move
     elsif !@board.free_positions.include?(position)
-      ui.between(board.POSITION_MIN, board.POSITION_MAX - 1)
+      ui.occupied_position
       play_move
     else
       board.set_mark(@current_player.mark, position)
