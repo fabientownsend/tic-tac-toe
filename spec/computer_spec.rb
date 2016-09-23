@@ -8,6 +8,22 @@ RSpec.describe Computer do
   let (:ui) { CliInterface.new(input, output, "spec/lang/") }
   let (:board) { Board.new }
 
+  it "should return position that make the computer win" do
+    [0, 1, 5].each { |position| board.set_mark(Mark::CROSS, position) }
+    [2, 3, 4].each { |position| board.set_mark(Mark::ROUND, position) }
+    computer = Computer.new(Mark::ROUND, ui, board)
+
+    expect(computer.send(:best_move)).to eq(6)
+  end
+
+  it "shoudl return position that avoid computer to lose" do
+    [0, 4, 2].each { |position| board.set_mark(Mark::CROSS, position) }
+    [8, 3].each { |position| board.set_mark(Mark::ROUND, position) }
+    computer = Computer.new(Mark::ROUND, ui, board)
+
+    expect(computer.send(:best_move)).to eq(1)
+  end
+
   it "should return -1 when it is lose" do
     [0, 3, 6].each { |position| board.set_mark(Mark::CROSS, position) }
     [1, 2].each { |position| board.set_mark(Mark::ROUND, position) }
@@ -54,21 +70,5 @@ RSpec.describe Computer do
     computer = Computer.new(Mark::ROUND, ui, board)
 
     expect(computer.send(:alphabeta, Mark::CROSS, -1000, 1000)).to eq(1)
-  end
-
-  it "should return position that make the computer win" do
-    [0, 1, 5].each { |position| board.set_mark(Mark::CROSS, position) }
-    [2, 3, 4].each { |position| board.set_mark(Mark::ROUND, position) }
-    computer = Computer.new(Mark::ROUND, ui, board)
-
-    expect(computer.best_move).to eq(6)
-  end
-
-  it "shoudl return position that avoid computer to lose" do
-    [0, 4, 2].each { |position| board.set_mark(Mark::CROSS, position) }
-    [8, 3].each { |position| board.set_mark(Mark::ROUND, position) }
-    computer = Computer.new(Mark::ROUND, ui, board)
-
-    expect(computer.best_move).to eq(1)
   end
 end

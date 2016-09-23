@@ -10,6 +10,7 @@ class CliInterface
     @output = output
     @source = source
     @count_lang = 0
+    @FILE_EXTENTION = ".yml"
 
     begin
       @default_file = YAML::load(File.open("#{source}english.yml"))
@@ -21,7 +22,7 @@ class CliInterface
   end
 
   def set_lang(input)
-    file = Dir.glob("#{@source}*.yml")[input - 1].to_s
+    file = Dir.glob("#{@source}*#{@FILE_EXTENTION}")[input - 1].to_s
     @text_file = YAML::load(File.open(file))
   end
 
@@ -31,12 +32,7 @@ class CliInterface
 
   def menu_lang
     write("#{get_from_file('menu_lang')}\n")
-
-    Dir.entries(@source).each_with_index do |item, i|
-      next if item == "." || item == ".." || !item.end_with?(".yml")
-      @count_lang += 1
-      write(" #{@count_lang} - #{item.chomp(".yml").capitalize}\n")
-    end
+    display_lang_files
   end
 
   def menu_first_player
@@ -122,6 +118,15 @@ class CliInterface
         write(" #{e} \n")
       else
         write(" #{e} |")
+      end
+    end
+  end
+
+  def display_lang_files
+    Dir.entries(@source).each do |item, i|
+      if item.end_with?("#{@FILE_EXTENTION}")
+        @count_lang += 1
+        write(" #{@count_lang} - #{item.chomp("#{@FILE_EXTENTION}").capitalize}\n")
       end
     end
   end

@@ -15,6 +15,8 @@ class Computer < Player
     best_move
   end
 
+  private
+
   def best_move
     best_value = -100
     best_move = -1
@@ -32,8 +34,6 @@ class Computer < Player
 
     best_move
   end
-
-  private
 
   def alphabeta(current_mark, alpha, beta)
     if board.win?(switch_mark(mark))

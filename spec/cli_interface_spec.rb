@@ -20,11 +20,11 @@ RSpec.describe CliInterface do
     expect(output.string).to eq(board_result)
   end
 
-  it "should return a value" do
+  it "should return a value input" do
     expect(interface.read).to eq("1\n")
   end
 
-  it "should print text" do
+  it "should print text from output interface" do
     interface.write("test")
 
     expect(output.string).to eq("test")
@@ -53,7 +53,7 @@ RSpec.describe CliInterface do
     expect(output.string).to eq("This position isn't free\n")
   end
 
-  it "shoud display in french when you select french" do
+  it "shoud display in french when you selected french" do
     expect do
       interface.set_lang(Lang::FRENCH)
       interface.occupied_position
@@ -67,7 +67,7 @@ RSpec.describe CliInterface do
     end.to change { output.string }.to eq("The value must be an integer: ")
   end
 
-  it "should return the next move of the player" do
+  it "should return the next move from the player" do
     expect do
     expect(interface.type_game).to eq("1\n")
     end.to change { output.string }.to eq("Which game do you want?\n")
