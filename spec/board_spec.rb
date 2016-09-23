@@ -14,25 +14,6 @@ RSpec.describe Board do
     expect(board.empty?).to be false
   end
 
-  it "should raise an error when it's not a int" do
-    expect { board.set_mark(Mark::CROSS, "a string") }.to raise_error(ArgumentError)
-  end
-
-  it "should raise an error when you set a mark to an occupied position" do
-    position = 0
-    board.set_mark(Mark::CROSS, position)
-
-    expect { board.set_mark(Mark::CROSS, position) }.to raise_error(OccupiedPositionError)
-  end
-
-  it "should raise an error when position lower than expected" do
-    expect { board.set_mark(Mark::CROSS, board.POSITION_MIN - 1) }.to raise_error(OutOfRangeError)
-  end
-
-  it "should raise an error when position bigger than expected" do
-    expect { board.set_mark(Mark::CROSS, board.POSITION_MAX + 1) }.to raise_error(OutOfRangeError)
-  end
-
   it "should win for each columns" do
     columns = [[0, 3, 6], [1, 4, 7], [2, 5, 8]]
 

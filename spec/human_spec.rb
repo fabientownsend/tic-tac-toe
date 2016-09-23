@@ -9,6 +9,15 @@ RSpec.describe Human do
     ui = CliInterface.new(input, output, "spec/lang/")
     human = Human.new(Mark::CROSS, ui)
 
-    expect(human.next_move).to eq("1\n")
+    expect(human.next_move).to eq(1)
+  end
+
+  it "should do a second attempt when the first isn't int" do
+    input = StringIO.new("asdfhj\n1\n")
+    output = StringIO.new
+    ui = CliInterface.new(input, output, "spec/lang/")
+    human = Human.new(Mark::CROSS, ui)
+
+    expect(human.next_move).to eq(1)
   end
 end

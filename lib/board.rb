@@ -11,10 +11,6 @@ class Board
   end
 
   def set_mark(mark, position)
-    position = Integer(position)
-    valid?(position)
-    free?(position)
-
     board[get_row(position)][get_column(position)] = mark
     @counter += 1
   end
@@ -41,18 +37,6 @@ class Board
   end
 
   private
-
-  def free?(position)
-    if !free_positions.include? position
-      raise OccupiedPositionError
-    end
-  end
-
-  def valid?(position)
-    if position < @POSITION_MIN || position >= @POSITION_MAX
-      raise OutOfRangeError
-    end
-  end
 
   def get_column(position)
     position % board.size
@@ -89,10 +73,4 @@ class Board
   def backward_index(index)
     board.size - index - 1
   end
-end
-
-class OutOfRangeError < Exception
-end
-
-class OccupiedPositionError < Exception
 end

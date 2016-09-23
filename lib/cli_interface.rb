@@ -49,7 +49,6 @@ class CliInterface
 
   def next_move(mark)
     write("#{mark} #{get_from_file('next_move')} ")
-    read
   end
 
   def type_game
@@ -87,6 +86,17 @@ class CliInterface
 
   def write(text)
     output.print(text)
+  end
+
+  def get_int
+    begin
+      selection = Integer(read)
+    rescue
+      must_be_integer
+      selection = get_int
+    end
+
+    selection
   end
 
   private

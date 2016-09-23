@@ -59,7 +59,7 @@ class GamePlay
   end
 
   def get_user_selection_between(min, max)
-    value = get_user_selection
+    value = @ui.get_int
 
     if !value.between?(min, max)
       @ui.between(min, max)
@@ -67,17 +67,6 @@ class GamePlay
     end
 
     value
-  end
-
-  def get_user_selection
-    begin
-      selection = Integer(@ui.read)
-    rescue
-      @ui.must_be_integer
-      selection = get_user_selection
-    end
-
-    selection
   end
 
   def create_players_for_game(type_selected)
@@ -115,17 +104,14 @@ class GamePlay
   def play_move
     position = @current_player.next_move
 
-    begin
-      board.set_mark(@current_player.mark, position)
-    rescue OccupiedPositionError
+    if position > board.POSITION_MAX - 1 || position < board.POSITION_MIN
       ui.occupied_position
       play_move
-    rescue OutOfRangeError
+    elsif !@board.free_positions.include?(position)
       ui.between(board.POSITION_MIN, board.POSITION_MAX - 1)
       play_move
-    rescue ArgumentError
-      ui.must_be_integer
-      play_move
+    else
+      board.set_mark(@current_player.mark, position)
     end
   end
 end
