@@ -2,7 +2,6 @@ next_move: Prochaine position ?
 which_game: Choisir un type de jeux
 not_free: Cette position n'est pas libre
 winner: Le gagnant est
-computer_move: L'ordinateur va jouer le prochain tour
 tie: aexeco
 between: La valeur doit etre entre
 and: et

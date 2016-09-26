@@ -3,7 +3,6 @@ which_game: Bitte wählen Sie ein Spiel
 not_free: Diese Position ist nicht frei
 winner: Der Gewinner ist
 integer: Der Wert muss eine ganze Zahl sein
-computer_move: Der Computer spielt den nächsten Zug
 tie: Das Spiel ist unentschieden
 between: Der Wert sollte zwischen und sein
 and: und

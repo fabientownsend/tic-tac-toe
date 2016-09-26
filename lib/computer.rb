@@ -12,7 +12,6 @@ class Computer < Player
   end
 
   def next_move
-    ui.computer_move
     best_move
   end
 

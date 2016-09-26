@@ -102,6 +102,7 @@ class GamePlay
   end
 
   def play_move
+    ui.display_next_player(@current_player.mark)
     position = @current_player.next_move
 
     if !in_range?(position)

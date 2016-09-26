@@ -3,7 +3,6 @@ which_game: Choisir un type de jeux
 not_free: Cette position n'est pas libre
 winner: Le gagnant est
 integer: La valeur doit etre un chiffre
-computer_move: L'ordinateur va jouer le prochain tour
 tie: aexeco
 between: La valeur doit etre entre
 and: et

@@ -43,8 +43,8 @@ class CliInterface
     board.each { |line| display_line(line) }
   end
 
-  def next_move(mark)
-    write("#{mark} #{get_from_file('next_move')} ")
+  def display_next_player(mark)
+    write("#{mark} #{get_from_file('next_move')}\n")
   end
 
   def type_game
@@ -62,10 +62,6 @@ class CliInterface
 
   def tie
     write("#{get_from_file('tie')}\n")
-  end
-
-  def computer_move
-    write("#{get_from_file('computer_move')}\n")
   end
 
   def must_be_integer
