@@ -4,10 +4,11 @@ require_relative './lib/computer'
 require_relative './lib/board'
 require_relative './lib/game_play'
 
-ui = CliInterface.new(Kernel, Kernel)
+ui = CliInterface.new(Kernel, Kernel, "lang/")
 board = Board.new
 game_play = GamePlay.new(board, ui)
 
+game_play.language
 game_play.game_selection
 game_play.select_first_player
 game_play.play

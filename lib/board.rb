@@ -11,16 +11,13 @@ class Board
   end
 
   def set_mark(mark, position)
-    position = Integer(position)
-    valid?(position)
-    free?(position)
-
     board[get_row(position)][get_column(position)] = mark
     @counter += 1
   end
 
-  def empty?
-    @counter == 0
+  def remove_mark(mark, position)
+    board[get_row(position)][get_column(position)] = mark
+    @counter -= 1
   end
 
   def win?(mark)
@@ -31,19 +28,11 @@ class Board
     @counter == @POSITION_MAX && !win?(Mark::CROSS) && !win?(Mark::ROUND)
   end
 
+  def free_positions
+    board.flatten.select { |cell| cell.is_a?(Integer) }
+  end
+
   private
-
-  def free?(position)
-    if not board[get_row(position)][get_column(position)].is_a? Integer
-      raise OccupiedPositionError
-    end
-  end
-
-  def valid?(position)
-    if position < @POSITION_MIN || position >= @POSITION_MAX
-      raise OutOfRangeError
-    end
-  end
 
   def get_column(position)
     position % board.size
@@ -80,10 +69,4 @@ class Board
   def backward_index(index)
     board.size - index - 1
   end
-end
-
-class OutOfRangeError < Exception
-end
-
-class OccupiedPositionError < Exception
 end

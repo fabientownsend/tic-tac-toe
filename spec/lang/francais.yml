@@ -1,0 +1,14 @@
+next_move: Prochaine position ?
+which_game: Choisir un type de jeux
+not_free: Cette position n'est pas libre
+winner: Le gagnant est
+computer_move: L'ordinateur va jouer le prochain tour
+tie: aexeco
+between: La valeur doit etre entre
+and: et
+menu_type_games: |
+  Selectionnez votre type de jeux:
+   1 - Humain vs. Humain
+   2 - Humain vs. Ordinateur
+   3 - Ordinateur vs. Ordinateur
+menu_lang: Selectionner la langue

@@ -1,5 +1,4 @@
-require_relative 'human'
-require_relative 'computer'
+require_relative 'players_factory'
 
 module GameType
   HUMAN_VS_HUMAN = 1
@@ -7,14 +6,7 @@ module GameType
   COMPUTER_VS_COMPUTER = 3
 end
 
-module Mark
-  ROUND = "O"
-  CROSS = "X"
-end
-
 class GamePlay
-  attr_reader :player_one
-  attr_reader :player_two
   attr_reader :current_player
 
   def initialize(board, ui)
@@ -22,10 +14,16 @@ class GamePlay
     @ui = ui
   end
 
+  def language
+    @ui.menu_lang
+    selection = get_user_selection_between(1, @ui.count_lang)
+    @ui.set_lang(selection)
+  end
+
   def game_selection
     @ui.menu_game
     selection = get_user_selection_between(1, 3)
-    creation_type_game(selection)
+    create_players_for_game(selection)
   end
 
   def select_first_player
@@ -52,16 +50,16 @@ class GamePlay
 
   def set_next_player(selection)
     if selection == 1
-      @current_player = @player_two
-      @players = [@player_two, @player_one]
+      @current_player = @players[1]
+      @players.reverse!
     else
       @current_player = @player_one
-      @players = [@player_one, @player_two]
+      @current_player = @players[0]
     end
   end
 
   def get_user_selection_between(min, max)
-    value = get_user_selection
+    value = @ui.get_int
 
     if !value.between?(min, max)
       @ui.between(min, max)
@@ -71,27 +69,15 @@ class GamePlay
     value
   end
 
-  def get_user_selection
-    begin
-      selection = Integer(@ui.read)
-    rescue
-      @ui.must_be_integer
-      selection = get_user_selection
-    end
+  def create_players_for_game(type_selected)
+    players_factory = PlayersFactory.new(ui, board)
 
-    selection
-  end
-
-  def creation_type_game(type_selected)
     if type_selected == GameType::HUMAN_VS_HUMAN
-      @player_one = Human.new(Mark::CROSS, ui)
-      @player_two = Human.new(Mark::ROUND, ui)
+      @players = players_factory.create_human_vs_human
     elsif type_selected == GameType::HUMAN_VS_COMPUTER
-      @player_one = Human.new(Mark::CROSS, ui)
-      @player_two = Computer.new(Mark::ROUND, ui, board)
+      @players = players_factory.create_human_vs_computer
     elsif type_selected == GameType::COMPUTER_VS_COMPUTER
-      @player_one = Computer.new(Mark::CROSS, ui, board)
-      @player_two = Computer.new(Mark::ROUND, ui, board)
+      @players = players_factory.create_computer_vs_computer
     end
   end
 
@@ -118,17 +104,14 @@ class GamePlay
   def play_move
     position = @current_player.next_move
 
-    begin
-      board.set_mark(@current_player.mark, position)
-    rescue OccupiedPositionError
-      ui.occupied_position
-      play_move
-    rescue OutOfRangeError
+    if position > board.POSITION_MAX - 1 || position < board.POSITION_MIN
       ui.between(board.POSITION_MIN, board.POSITION_MAX - 1)
       play_move
-    rescue ArgumentError
-      ui.must_be_integer
+    elsif !@board.free_positions.include?(position)
+      ui.occupied_position
       play_move
+    else
+      board.set_mark(@current_player.mark, position)
     end
   end
 end

@@ -2,10 +2,14 @@ require 'spec_helper'
 require 'cli_interface'
 require 'board'
 
+module Lang
+  FRENCH = 2
+end
+
 RSpec.describe CliInterface do
   let(:input) {StringIO.new("1\n")}
   let(:output) {StringIO.new}
-  let(:interface) {CliInterface.new(input, output)}
+  let(:interface) {CliInterface.new(input, output, "spec/lang/")}
 
   it "should display the board" do
     board = Board.new
@@ -16,58 +20,62 @@ RSpec.describe CliInterface do
     expect(output.string).to eq(board_result)
   end
 
-  it "should return a value" do
+  it "should return a value input" do
     expect(interface.read).to eq("1\n")
   end
 
-  it "should display text when ask for the next move" do
-    interface.next_move(Mark::CROSS)
-    expect(output.string).to eq("X what is your next move? ")
+  it "should print text from output interface" do
+    interface.write("test")
+
+    expect(output.string).to eq("test")
   end
 
-  it "should display the message when position occupied" do
-    interface.occupied_position
-    expect(output.string).to eq("This position isn't free\n")
+  it "shoudl raise an exception when file doesn't exist" do
+    expect {  CliInterface.new(input, output, "random/link") }.to raise_error(NoDefaultLangError)
   end
 
-  it "should display the winner" do
-    interface.winner(Mark::CROSS)
-    expect(output.string).to eq("The winner is: X!\n")
-  end
+  it "should display lang based on .yml files in the folder lang" do
+    menu = "Select the language\n 1 - English\n 2 - Francais\n 3 - Z_last_yml\n"
 
-  it "should display tie result" do
-    interface.tie
-    expect(output.string).to eq("It's a tie!\n")
-  end
+    interface.menu_lang
 
-  it "should display computer move" do
-    interface.computer_move
-    expect(output.string).to eq("The computer will play its next move\n")
-  end
-
-  it "should return the next move of the player" do
-    expect(interface.next_move(Mark::CROSS)).to eq("1\n")
-  end
-
-  it "should display computer move" do
-    interface.between(1, 2)
-    expect(output.string).to eq("The value should be between 1 and 2\n")
-  end
-
-  it "should display a menu with different game" do
-    menu = "Select your game:\n 1 - Human vs. Human\n 2 - Human vs. Computer\n 3 - Computer vs. Computer\n"
-    interface.menu_game
     expect(output.string).to eq(menu)
   end
 
-  it "should return the next move of the player" do
-    expect(interface.type_game).to eq("1\n")
-    expect(output.string).to eq("Which game do you want?\n")
+  it "should return the total of yml file in the folder lang" do
+    interface.menu_lang
+    expect(interface.count_lang).to eq(3)
   end
 
-  it "should display the menu for the first player selection" do
-    menu = "Select the first player:\n 1 - Player one\n 2 - Player two\n"
-    interface.menu_first_player
-    expect(output.string).to eq (menu)
+  it "shoud be english language by default" do
+    interface.occupied_position
+
+    expect(output.string).to eq("This position isn't free\n")
+  end
+
+  it "shoud display in french when you selected french" do
+    expect do
+      interface.set_lang(Lang::FRENCH)
+      interface.occupied_position
+    end.to change { output.string }.to eq("Cette position n'est pas libre\n")
+  end
+
+  it "should use the default language when a sentence is missed in the curent file" do
+    expect do
+      interface.set_lang(Lang::FRENCH)
+      interface.must_be_integer
+    end.to change { output.string }.to eq("The value must be an integer: ")
+  end
+
+  it "should return the next move from the player" do
+    expect do
+    expect(interface.type_game).to eq("1\n")
+    end.to change { output.string }.to eq("Which game do you want?\n")
+  end
+
+  it "should displaly blank when the text isn't find in any files" do
+    expect do
+    expect(interface.menu_first_player)
+    end.to change { output.string }.to eq("blank")
   end
 end

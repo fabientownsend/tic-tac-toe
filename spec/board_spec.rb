@@ -4,33 +4,19 @@ require 'board'
 RSpec.describe Board do
   let(:board) {Board.new}
 
-  it "should have an empty board" do
-    expect(board.empty?).to be true
+  it "should return all the position" do
+    expect(board.board).to eq([[0, 1, 2], [3, 4, 5], [6, 7, 8]])
   end
 
-  it "should not be empty" do
-    board.set_mark(Mark::CROSS, 2)
-
-    expect(board.empty?).to be false
+  it "should be free position when it never been set" do
+    position = 0
+    expect(board.free_positions.include?(position)).to be true
   end
 
-  it "should raise an error when it's not a int" do
-    expect { board.set_mark(Mark::CROSS, "a string") }.to raise_error(ArgumentError)
-  end
-
-  it "should raise an error when you set a mark to an occupied position" do
+  it "should shouldn't get the spot after it set" do
     position = 0
     board.set_mark(Mark::CROSS, position)
-
-    expect { board.set_mark(Mark::CROSS, position) }.to raise_error(OccupiedPositionError)
-  end
-
-  it "should raise an error when position lower than expected" do
-    expect { board.set_mark(Mark::CROSS, board.POSITION_MIN - 1) }.to raise_error(OutOfRangeError)
-  end
-
-  it "should raise an error when position bigger than expected" do
-    expect { board.set_mark(Mark::CROSS, board.POSITION_MAX + 1) }.to raise_error(OutOfRangeError)
+    expect(board.free_positions.include?(position)).to be false
   end
 
   it "should win for each columns" do

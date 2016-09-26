@@ -3,11 +3,40 @@ require 'yaml'
 class CliInterface
   attr_accessor :input
   attr_accessor :output
+  attr_reader :count_lang
 
-  def initialize(input, output)
+  def initialize(input, output, source)
     @input = input
     @output = output
-    @text_file = YAML::load(File.open('en_text.yml'))
+    @source = source
+    @count_lang = 0
+    @FILE_EXTENTION = ".yml"
+
+    begin
+      @default_file = YAML::load(File.open("#{source}english.yml"))
+    rescue
+      raise NoDefaultLangError
+    end
+
+    @text_file = @default_file
+  end
+
+  def set_lang(input)
+    file = Dir.glob("#{@source}*#{@FILE_EXTENTION}")[input - 1].to_s
+    @text_file = YAML::load(File.open(file))
+  end
+
+  def menu_game
+    write("#{get_from_file('menu_type_games')}")
+  end
+
+  def menu_lang
+    write("#{get_from_file('menu_lang')}\n")
+    display_lang_files
+  end
+
+  def menu_first_player
+    write("#{get_from_file('menu_first_player')}")
   end
 
   def display_board(board)
@@ -15,59 +44,74 @@ class CliInterface
   end
 
   def next_move(mark)
-    write("#{mark} #{text_file['next_move']} ")
-    read
+    write("#{mark} #{get_from_file('next_move')} ")
   end
 
   def type_game
-    write("#{text_file['which_game']}\n")
+    write("#{get_from_file('which_game')}\n")
     read
   end
 
   def occupied_position
-    write("#{text_file['not_free']}\n")
+    write("#{get_from_file('not_free')}\n")
   end
 
   def winner(mark)
-    write("#{text_file['winner']}: #{mark}!\n")
+    write("#{get_from_file('winner')}: #{mark}!\n")
   end
 
   def tie
-    write("#{text_file['tie']}\n")
+    write("#{get_from_file('tie')}\n")
   end
 
   def computer_move
-    write("#{text_file['computer_move']}\n")
-  end
-
-  def menu_game
-    write("#{text_file['menu_type_games']}")
-  end
-
-  def menu_first_player
-    write("#{text_file['menu_first_player']}")
+    write("#{get_from_file('computer_move')}\n")
   end
 
   def must_be_integer
-    write("#{text_file['integer']}: ")
+    write("#{get_from_file('integer')}: ")
   end
 
   def between(min, max)
-    write("#{text_file['between']} #{min} #{@text_file['and']} #{max}\n")
+    write("#{get_from_file('between')} #{min} #{get_from_file('and')} #{max}\n")
   end
 
   def read
     input.gets
   end
 
+  def write(text)
+    output.print(text)
+  end
+
+  def get_int
+    begin
+      selection = Integer(read)
+    rescue
+      must_be_integer
+      selection = get_int
+    end
+
+    selection
+  end
+
   private
 
   attr_reader :text_file
 
-  def write(text)
-    output.print(text)
+  def get_from_file(text)
+    result = text_file[text]
+
+    if result == nil
+      result = @default_file[text]
+      if result == nil
+        result = "blank"
+      end
+    end
+
+    result
   end
-  
+
   def display_line(row)
     row.each_with_index do |e, index|
       if index == row.size - 1
@@ -77,4 +121,16 @@ class CliInterface
       end
     end
   end
+
+  def display_lang_files
+    Dir.entries(@source).each do |item, i|
+      if item.end_with?("#{@FILE_EXTENTION}")
+        @count_lang += 1
+        write(" #{@count_lang} - #{item.chomp("#{@FILE_EXTENTION}").capitalize}\n")
+      end
+    end
+  end
+end
+
+class NoDefaultLangError < Exception
 end
