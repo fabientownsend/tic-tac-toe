@@ -72,7 +72,7 @@ class CliInterface
     write("#{get_from_file('integer')}: ")
   end
 
-  def between(min, max)
+  def should_be_between(min, max)
     write("#{get_from_file('between')} #{min} #{get_from_file('and')} #{max}\n")
   end
 

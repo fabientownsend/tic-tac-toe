@@ -62,7 +62,7 @@ class GamePlay
     value = @ui.get_int
 
     if !value.between?(min, max)
-      @ui.between(min, max)
+      @ui.should_be_between(min, max)
       value = get_user_selection_between(min, max)
     end
 
@@ -104,14 +104,22 @@ class GamePlay
   def play_move
     position = @current_player.next_move
 
-    if position > board.POSITION_MAX - 1 || position < board.POSITION_MIN
-      ui.between(board.POSITION_MIN, board.POSITION_MAX - 1)
+    if !in_range?(position)
+      ui.should_be_between(board.POSITION_MIN, board.POSITION_MAX - 1)
       play_move
-    elsif !@board.free_positions.include?(position)
+    elsif available?(position)
       ui.occupied_position
       play_move
     else
       board.set_mark(@current_player.mark, position)
     end
+  end
+
+  def in_range?(position)
+    position >= board.POSITION_MIN && position < board.POSITION_MAX
+  end
+
+  def available?(position)
+    !@board.free_positions.include?(position)
   end
 end
