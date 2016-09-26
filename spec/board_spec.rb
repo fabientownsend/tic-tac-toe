@@ -1,5 +1,6 @@
 require 'spec_helper'
 require 'board'
+require 'marks'
 
 RSpec.describe Board do
   let(:board) {Board.new}

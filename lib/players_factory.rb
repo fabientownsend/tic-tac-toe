@@ -1,10 +1,6 @@
 require_relative 'human'
 require_relative 'computer'
-
-module Mark
-  ROUND = "O"
-  CROSS = "X"
-end
+require_relative 'marks'
 
 class PlayersFactory
   def initialize(ui, board)

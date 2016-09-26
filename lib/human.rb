@@ -1,4 +1,5 @@
 require_relative 'player'
+require_relative 'marks'
 
 class Human < Player
   def next_move

@@ -1,6 +1,7 @@
 require_relative 'player'
 require_relative 'board'
 require_relative 'cli_interface'
+require_relative 'marks'
 
 class Computer < Player
   attr_reader :board
