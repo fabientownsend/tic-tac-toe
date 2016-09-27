@@ -7,8 +7,8 @@ require_relative 'move_evaluator'
 class Computer < Player
   attr_reader :board
 
-  def initialize(mark, ui, board)
-    super(mark, ui)
+  def initialize(mark, board)
+    super(mark)
     @board = board
     @move_evaluator = MoveEvaluator.new
   end

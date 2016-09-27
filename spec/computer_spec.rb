@@ -11,7 +11,7 @@ RSpec.describe Computer do
   it "should return position that make the computer win" do
     [0, 1, 5].each { |position| board.set_mark(Mark::CROSS, position) }
     [2, 3, 4].each { |position| board.set_mark(Mark::ROUND, position) }
-    computer = Computer.new(Mark::ROUND, ui, board)
+    computer = Computer.new(Mark::ROUND, board)
 
     expect(computer.next_move).to eq(6)
   end
@@ -19,7 +19,7 @@ RSpec.describe Computer do
   it "should return the position which block the other palyer to win" do
     [0, 4, 2].each { |position| board.set_mark(Mark::CROSS, position) }
     [8, 3].each { |position| board.set_mark(Mark::ROUND, position) }
-    computer = Computer.new(Mark::ROUND, ui, board)
+    computer = Computer.new(Mark::ROUND, board)
 
     expect(computer.next_move).to eq(1)
   end
