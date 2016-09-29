@@ -68,10 +68,6 @@ class MoveEvaluator
     return minimum_value
   end
 
-  def min(first, second)
-    first > second ? second : first
-  end
-
   def get_value_move(current_mark, alpha, beta,  position)
     board.set_mark(current_mark, position)
     result = alphabeta(current_mark, alpha, beta)
