@@ -40,8 +40,8 @@ class MoveEvaluator
     board.free_positions.each do |position|
       new_value = get_value_move(current_mark, alpha, beta, position)
 
-      maximum_value = max(maximum_value, new_value)
-      alpha = max(alpha, maximum_value)
+      maximum_value = [maximum_value, new_value].max
+      alpha = [alpha, maximum_value].max
 
       if alpha >= beta
         break
@@ -51,18 +51,14 @@ class MoveEvaluator
     return maximum_value
   end
 
-  def max(first, second)
-    first < second ? second : first
-  end
-
   def miniming_player(current_mark, alpha, beta)
     minimum_value = 100
 
     board.free_positions.each do |position|
       new_value = get_value_move(current_mark, alpha, beta, position)
 
-      minimum_value = min(minimum_value, new_value)
-      beta = min(beta, minimum_value)
+      minimum_value = [minimum_value, new_value].min
+      beta = [beta, minimum_value].min
 
       if alpha >= beta
         break
