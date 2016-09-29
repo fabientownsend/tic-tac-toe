@@ -30,7 +30,7 @@ class PlayersFactory
   private
 
   def create_computer(mark)
-    Computer.new(mark, @ui, @board)
+    Computer.new(mark, @board)
   end
 
   def create_human(mark)
