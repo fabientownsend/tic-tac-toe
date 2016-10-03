@@ -1,0 +1,16 @@
+#!/usr/bin/ruby
+
+require './lib/cli_interface'
+require './lib/human'
+require './lib/computer'
+require './lib/board'
+require './lib/game_play'
+
+interface = CliInterface.new(Kernel, Kernel, "./lang/")
+board = Board.new
+game_play = GamePlay.new(board, interface)
+
+game_play.language
+game_play.game_selection
+game_play.select_first_player
+game_play.play
