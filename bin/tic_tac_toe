@@ -1,10 +1,13 @@
 #!/usr/bin/ruby
 
+require './lib/player'
 require './lib/cli_interface'
 require './lib/human'
 require './lib/computer'
 require './lib/board'
 require './lib/game_play'
+require './lib/marks'
+require './lib/players_factory'
 
 interface = CliInterface.new(Kernel, Kernel, "./lang/")
 board = Board.new

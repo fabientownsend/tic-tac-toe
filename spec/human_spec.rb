@@ -1,4 +1,6 @@
 require 'spec_helper'
+require 'player'
+require 'marks'
 require 'human'
 require 'cli_interface'
 
