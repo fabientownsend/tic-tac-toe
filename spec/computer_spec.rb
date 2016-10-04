@@ -15,7 +15,8 @@ RSpec.describe Computer do
 
     computer = Computer.new(Mark::ROUND, ui, board)
 
-    expect(computer.next_move).to eq(6)
+    board.set_mark(computer.mark, computer.next_move)
+    assert_equal_board("OOX,XXO,O  ", board.board)
   end
 
   it "the computer will move to win" do
@@ -25,6 +26,27 @@ RSpec.describe Computer do
 
     computer = Computer.new(Mark::ROUND, ui, board)
 
-    expect(computer.next_move).to eq(5)
+    board.set_mark(computer.mark, computer.next_move)
+    assert_equal_board("XXO,OOO,   ", board.board)
+  end
+
+  def assert_equal_board(expected, got)
+    result = ""
+
+    got.flatten.each.with_index do |value, index|
+      if !value.is_a?(Integer)
+        result << value
+      else
+        result << " "
+      end
+
+      index += 1
+      if index % 3 == 0 && index != 0 && index != got.flatten.size
+        result << ","
+      end
+
+    end
+
+    expect(result).to eq(expected)
   end
 end
