@@ -1,13 +1,15 @@
 #!/usr/bin/ruby
 
-require './lib/player'
-require './lib/cli_interface'
-require './lib/human'
-require './lib/computer'
-require './lib/board'
-require './lib/game_play'
-require './lib/marks'
-require './lib/players_factory'
+$: << File.expand_path('../lib', File.dirname(__FILE__))
+
+require 'player'
+require 'cli_interface'
+require 'human'
+require 'computer'
+require 'board'
+require 'game_play'
+require 'marks'
+require 'players_factory'
 
 interface = CliInterface.new(Kernel, Kernel, "./lang/")
 board = Board.new
