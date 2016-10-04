@@ -2,14 +2,9 @@
 
 $: << File.expand_path('../lib', File.dirname(__FILE__))
 
-require 'player'
 require 'cli_interface'
-require 'human'
-require 'computer'
 require 'board'
 require 'game_play'
-require 'marks'
-require 'players_factory'
 
 interface = CliInterface.new(Kernel, Kernel, "./lang/")
 board = Board.new

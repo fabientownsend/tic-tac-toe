@@ -1,3 +1,6 @@
+require 'marks'
+require 'player'
+
 class Computer < Player
   attr_reader :board
 

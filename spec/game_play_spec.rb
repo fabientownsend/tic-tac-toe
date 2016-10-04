@@ -1,13 +1,7 @@
 require 'spec_helper'
-
-require 'player'
 require 'board'
 require 'cli_interface'
 require 'game_play'
-require 'human'
-require 'computer'
-require 'players_factory'
-require 'marks'
 
 RSpec.describe GamePlay do
   let(:board) { Board.new }

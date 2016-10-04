@@ -1,3 +1,7 @@
+require 'computer'
+require 'human'
+require 'marks'
+
 class PlayersFactory
   def initialize(ui, board)
     @ui = ui

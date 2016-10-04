@@ -1,3 +1,5 @@
+require 'players_factory'
+
 module GameType
   HUMAN_VS_HUMAN = 1
   HUMAN_VS_COMPUTER = 2

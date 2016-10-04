@@ -1,3 +1,5 @@
+require 'player'
+
 class Human < Player
   attr_reader :ui
 
