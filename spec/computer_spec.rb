@@ -23,7 +23,6 @@ RSpec.describe Computer do
     computer = Computer.new(Mark::ROUND, ui, board)
 
     board.set_mark(computer.mark, computer.next_move)
-    expect(result).to eq(expected)
     expect(board.to_s).to eq("XXO,OOO,   ")
   end
 end
