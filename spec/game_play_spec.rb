@@ -163,11 +163,13 @@ RSpec.describe GamePlay do
   end
 
   it "shoudl ask a second time when value is too low with menus" do
+    board_size = "3\n"
     lang = "asdfdsafhjkl\n2\n"
     type_game = "3\n"
-    game_play = create_game_play("#{lang}#{type_game}")
+    game_play = create_game_play("#{board_size}#{lang}#{type_game}")
 
     expect do
+      game_play.board_size
       game_play.language
       game_play.game_selection
     end.to change { output.string }.to include("Ordinateur vs. Ordinateur")

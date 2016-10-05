@@ -14,6 +14,12 @@ class GamePlay
     @ui = ui
   end
 
+  def board_size
+    @ui.board_size
+    selection = get_user_selection_between(3, 4)
+    @board = Board.new(selection)
+  end
+
   def language
     @ui.menu_lang
     selection = get_user_selection_between(1, @ui.count_lang)
