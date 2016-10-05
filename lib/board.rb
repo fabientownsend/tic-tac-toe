@@ -5,8 +5,8 @@ class Board
   attr_reader :POSITION_MIN
   attr_reader :POSITION_MAX
 
-  def initialize
-    @board = [[0, 1, 2], [3, 4, 5], [6, 7, 8]]
+  def initialize(board_size = 3)
+    @board = create_board(board_size)
     @POSITION_MIN = 0
     @POSITION_MAX = board.size ** 2
     @counter = 0
@@ -71,6 +71,20 @@ class Board
   end
 
   private
+
+  def create_board(board_size)
+    value = 0
+    new_board = Array.new
+    board_size.times do
+      new_row = Array.new
+      board_size.times do
+        new_row.push(value)
+        value += 1
+      end
+      new_board.push(new_row)
+    end
+    new_board
+  end
 
   def board_edge?(index)
     index % board.size == 0
