@@ -92,7 +92,7 @@ class CliInterface
   end
 
   def board_size
-    print("#{get_from_file('board_size')}: ")
+    write("#{get_from_file('board_size')}: ")
   end
 
   private
