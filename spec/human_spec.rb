@@ -1,6 +1,7 @@
 require 'spec_helper'
-require 'human'
 require 'cli_interface'
+require 'human'
+require 'marks'
 
 RSpec.describe Human do
   it "should give the human number" do

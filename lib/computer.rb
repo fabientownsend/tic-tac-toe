@@ -1,13 +1,11 @@
-require_relative 'player'
-require_relative 'board'
-require_relative 'cli_interface'
-require_relative 'marks'
+require 'marks'
+require 'player'
 
 class Computer < Player
   attr_reader :board
 
-  def initialize(mark, ui, board)
-    super(mark, ui)
+  def initialize(mark, board)
+    super(mark)
     @board = board
   end
 

@@ -1,4 +1,4 @@
-require_relative 'players_factory'
+require 'players_factory'
 
 module GameType
   HUMAN_VS_HUMAN = 1
