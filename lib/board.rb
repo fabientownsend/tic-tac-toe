@@ -101,11 +101,11 @@ class Board
   end
 
   def check_forward_diagonal?(mark)
-    [0, 1, 2].all? { |index| board[index][index] == mark }
+    board.size.times.all? { |index| board[index][index] == mark }
   end
 
   def check_backward_diagonal?(mark)
-    [0, 1, 2].all? { |index| board[index][backward_index(index)] == mark }
+    board.size.times.all? { |index| board[index][backward_index(index)] == mark }
   end
 
   def backward_index(index)
