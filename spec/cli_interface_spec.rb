@@ -1,6 +1,6 @@
 require 'spec_helper'
-require 'cli_interface'
 require 'board'
+require 'cli_interface'
 
 module Lang
   FRENCH = 2
@@ -10,15 +10,6 @@ RSpec.describe CliInterface do
   let(:input) {StringIO.new("1\n")}
   let(:output) {StringIO.new}
   let(:interface) {CliInterface.new(input, output, "spec/lang/")}
-
-  it "should display the board" do
-    board = Board.new
-    board_result = " 0 | 1 | 2 \n 3 | 4 | 5 \n 6 | 7 | 8 \n"
-
-    interface.display_board(board.board)
-
-    expect(output.string).to eq(board_result)
-  end
 
   it "should return a value input" do
     expect(interface.read).to eq("1\n")

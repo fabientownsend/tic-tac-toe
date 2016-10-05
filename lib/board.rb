@@ -17,8 +17,8 @@ class Board
     @counter += 1
   end
 
-  def remove_mark(mark, position)
-    board[get_row(position)][get_column(position)] = mark
+  def remove_mark(position)
+    board[get_row(position)][get_column(position)] = Mark::EMPTY
     @counter -= 1
   end
 
@@ -31,7 +31,8 @@ class Board
   end
 
   def free_positions
-    board.flatten.select { |cell| cell.is_a?(Integer) }
+    flat_board = board.flatten
+    flat_board.each_index.select { |index| empty?(flat_board[index]) }
   end
 
   def string_to_board(board_string)
@@ -54,7 +55,7 @@ class Board
     board_string = ""
 
     board.flatten.each.with_index do |value, index|
-      if !value.is_a?(Integer)
+      if value == Mark::CROSS || value == Mark::ROUND
         board_string << value
       else
         board_string << " "
@@ -72,14 +73,16 @@ class Board
 
   private
 
+  def empty?(spot)
+    spot != Mark::ROUND && spot != Mark::CROSS
+  end
+
   def create_board(board_size)
-    value = 0
     new_board = Array.new
     board_size.times do
       new_row = Array.new
       board_size.times do
-        new_row.push(value)
-        value += 1
+        new_row.push(Mark::EMPTY)
       end
       new_board.push(new_row)
     end
