@@ -1,4 +1,5 @@
 require 'players_factory'
+require 'board'
 
 module GameType
   HUMAN_VS_HUMAN = 1
@@ -9,8 +10,8 @@ end
 class GamePlay
   attr_reader :current_player
 
-  def initialize(board, ui)
-    @board = board
+  def initialize(ui)
+    @board = Board.new
     @ui = ui
   end
 

@@ -1,10 +1,8 @@
 require 'spec_helper'
-require 'board'
 require 'cli_interface'
 require 'game_play'
 
 RSpec.describe GamePlay do
-  let(:board) { Board.new }
   let(:output) { StringIO.new }
 
   it "should finish the game displaying a tie" do
@@ -178,6 +176,6 @@ RSpec.describe GamePlay do
   def create_game_play(input)
     input = StringIO.new(input)
     interface = CliInterface.new(input, output, "spec/lang/")
-    return GamePlay.new(Board.new, interface)
+    return GamePlay.new(interface)
   end
 end
