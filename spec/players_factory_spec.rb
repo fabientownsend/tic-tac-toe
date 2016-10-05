@@ -1,5 +1,6 @@
 require 'spec_helper'
 require 'players_factory'
+require 'marks'
 
 RSpec.describe PlayersFactory do
   let(:players_factory) { PlayersFactory.new(nil, nil) }

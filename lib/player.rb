@@ -1,9 +1,7 @@
 class Player
   attr_reader :mark
-  attr_reader :ui
 
-  def initialize(mark, ui)
+  def initialize(mark)
     @mark = mark
-    @ui = ui
   end
 end

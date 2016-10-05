@@ -18,7 +18,7 @@ $ bundle install --binstubs
 
 **Example**
 ```bash
-$ ruby tictactoe.rb
+$ ruby ./bin/tic_tac_toe
 $ 2 #select english language
 $ 2 #select Human vs. Computer type game
 $ 1 #let the player one start

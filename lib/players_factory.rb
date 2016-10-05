@@ -1,6 +1,6 @@
-require_relative 'human'
-require_relative 'computer'
-require_relative 'marks'
+require 'computer'
+require 'human'
+require 'marks'
 
 class PlayersFactory
   def initialize(ui, board)
@@ -30,7 +30,7 @@ class PlayersFactory
   private
 
   def create_computer(mark)
-    Computer.new(mark, @ui, @board)
+    Computer.new(mark, @board)
   end
 
   def create_human(mark)
