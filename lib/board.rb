@@ -12,21 +12,6 @@ class Board
     @counter = 0
   end
 
-  def new_board(ui_board)
-    ui_board.each_line.with_index do |line, line_index|
-      line.strip!.gsub!("|", "")
-      line.each_char.with_index do |column, column_index|
-        if column == "X"
-          @counter += 1
-          board[line_index][column_index] = Mark::CROSS
-        elsif column == "O"
-          @counter += 1
-          board[line_index][column_index] = Mark::ROUND
-        end
-      end
-    end
-  end
-
   def set_mark(mark, position)
     board[get_row(position)][get_column(position)] = mark
     @counter += 1
@@ -54,12 +39,12 @@ class Board
 
     board.size.times do |index_row|
       board.size.times do |index_column|
-        if rows[index_row].chars[index_column] == "X"
+        if rows[index_row].chars[index_column] == Mark::CROSS
           @counter += 1
-          board[index_row][index_column] = "X"
-        elsif rows[index_row].chars[index_column] == "O"
+          board[index_row][index_column] = Mark::CROSS
+        elsif rows[index_row].chars[index_column] == Mark::ROUND
           @counter += 1
-          board[index_row][index_column] = "O"
+          board[index_row][index_column] = Mark::ROUND
         end
       end
     end
