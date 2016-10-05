@@ -5,13 +5,13 @@ require 'marks'
 RSpec.describe Board do
   let(:board) {Board.new}
 
-  it "should be free position when it never been set" do
+  it "should be a free position when position free" do
     position = 0
     board.string_to_board("   ,   ,   ")
     expect(board.free_positions.include?(position)).to be true
   end
 
-  it "should shouldn't get the spot after it set" do
+  it "shouldn't be a free position when postion isn't free" do
     position = 0
     board.string_to_board("X  ,   ,   ")
 
@@ -54,13 +54,13 @@ RSpec.describe Board do
     expect(board.win?(Mark::CROSS)).to be true
   end
 
-  it "should be a win for forward diagonal" do
+  it "should be a win with the forward diagonal" do
     board.string_to_board("XO ,OX ,  X")
 
     expect(board.win?(Mark::CROSS)).to be true
   end
 
-  it "should be a win for backward diagonal" do
+  it "should be a win with the backward diagonal" do
     board.string_to_board(" OX,OX ,X  ")
 
     expect(board.win?(Mark::CROSS)).to be true
@@ -72,7 +72,7 @@ RSpec.describe Board do
     expect(board.tie?).to be true
   end
 
-  it "shoud not be a tie" do
+  it "shoud not be a tie when it's a win" do
     board.string_to_board("XXX,XXX,XXX")
 
     expect(board.tie?).to be false
