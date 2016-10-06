@@ -54,10 +54,6 @@ class Board
     new_board
   end
 
-  def board_edge?(index)
-    index % board.size == 0
-  end
-
   def get_column(position)
     position % board.size
   end
