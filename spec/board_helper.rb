@@ -23,11 +23,7 @@ class BoardHelper
     board_string = ""
 
     @board.board.flatten.each.with_index do |value, index|
-      if !value.is_a?(Integer)
-        board_string << value
-      else
-        board_string << " "
-      end
+      board_string << value
 
       index += 1
       if  board_edge?(index) && index != @board.POSITION_MAX
