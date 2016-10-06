@@ -7,62 +7,62 @@ RSpec.describe Board do
   let(:board) { Board.new }
   let(:board_helper) { BoardHelper.new(board) }
 
-  it "should be a free position when position free" do
+  it "the position 0 is free" do
     position = 0
     board_helper.string_to_board("   ,   ,   ")
     expect(board.free_positions.include?(position)).to be true
   end
 
-  it "shouldn't be a free position when postion isn't free" do
+  it "the position 0 isn't free" do
     position = 0
     board_helper.string_to_board("X  ,   ,   ")
 
     expect(board.free_positions.include?(position)).to be false
   end
 
-  it "should be win with the first column" do
+  it "is a win with the first column" do
     board_helper.string_to_board("XO ,XO ,X  ")
 
     expect(board.win?(Mark::CROSS)).to be true
   end
 
-  it "should be win with the second column" do
+  it "is a win with the second column" do
     board_helper.string_to_board(" XO, XO, X ")
 
     expect(board.win?(Mark::CROSS)).to be true
   end
 
-  it "should be win with the thirst column" do
+  it "is a win with the third column" do
     board_helper.string_to_board(" OX, OX,  X")
 
     expect(board.win?(Mark::CROSS)).to be true
   end
 
-  it "should be win with the first line" do
+  it "is a win with the first line" do
     board_helper.string_to_board("XXX, OO,   ")
 
     expect(board.win?(Mark::CROSS)).to be true
   end
 
-  it "should be win with the second line" do
+  it "is a win with the second line" do
     board_helper.string_to_board("   ,XXX,OO ")
 
     expect(board.win?(Mark::CROSS)).to be true
   end
 
-  it "should be win with the third line" do
+  it "is a win with the third line" do
     board_helper.string_to_board("   ,O  ,XXX")
 
     expect(board.win?(Mark::CROSS)).to be true
   end
 
-  it "should be a win with the forward diagonal" do
+  it "is a win with the forward diagonal" do
     board_helper.string_to_board("XO ,OX ,  X")
 
     expect(board.win?(Mark::CROSS)).to be true
   end
 
-  it "should be a win with the backward diagonal" do
+  it "is a win with the backward diagonal" do
     board_helper.string_to_board(" OX,OX ,X  ")
 
     expect(board.win?(Mark::CROSS)).to be true
