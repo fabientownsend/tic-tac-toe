@@ -1,90 +1,94 @@
 require 'spec_helper'
+require 'board_helper'
 require 'board'
 require 'marks'
 
 RSpec.describe Board do
-  let(:board) {Board.new}
+  let(:board) { Board.new }
+  let(:board_helper) { BoardHelper.new(board) }
 
-  it "should be a free position when position free" do
+  it "the position 0 is free" do
     position = 0
-    board.string_to_board("   ,   ,   ")
+    board_helper.string_to_board("   ,   ,   ")
     expect(board.free_positions.include?(position)).to be true
   end
 
-  it "shouldn't be a free position when postion isn't free" do
+  it "the position 0 isn't free" do
     position = 0
-    board.string_to_board("X  ,   ,   ")
+    board_helper.string_to_board("X  ,   ,   ")
 
     expect(board.free_positions.include?(position)).to be false
   end
 
-  it "should be win with the first column" do
-    board.string_to_board("XO ,XO ,X  ")
+  it "is a win with the first column" do
+    board_helper.string_to_board("XO ,XO ,X  ")
 
     expect(board.win?(Mark::CROSS)).to be true
   end
 
-  it "should be win with the second column" do
-    board.string_to_board(" XO, XO, X ")
+  it "is a win with the second column" do
+    board_helper.string_to_board(" XO, XO, X ")
 
     expect(board.win?(Mark::CROSS)).to be true
   end
 
-  it "should be win with the thirst column" do
-    board.string_to_board(" OX, OX,  X")
+  it "is a win with the third column" do
+    board_helper.string_to_board(" OX, OX,  X")
 
     expect(board.win?(Mark::CROSS)).to be true
   end
 
-  it "should be win with the first line" do
-    board.string_to_board("XXX, OO,   ")
+  it "is a win with the first line" do
+    board_helper.string_to_board("XXX, OO,   ")
 
     expect(board.win?(Mark::CROSS)).to be true
   end
 
-  it "should be win with the second line" do
-    board.string_to_board("   ,XXX,OO ")
+  it "is a win with the second line" do
+    board_helper.string_to_board("   ,XXX,OO ")
 
     expect(board.win?(Mark::CROSS)).to be true
   end
 
-  it "should be win with the third line" do
-    board.string_to_board("   ,O  ,XXX")
+  it "is a win with the third line" do
+    board_helper.string_to_board("   ,O  ,XXX")
 
     expect(board.win?(Mark::CROSS)).to be true
   end
 
-  it "should be a win with the forward diagonal" do
-    board.string_to_board("XO ,OX ,  X")
+  it "is a win with the forward diagonal" do
+    board_helper.string_to_board("XO ,OX ,  X")
 
     expect(board.win?(Mark::CROSS)).to be true
   end
 
-  it "should be a win with the backward diagonal" do
-    board.string_to_board(" OX,OX ,X  ")
+  it "is a win with the backward diagonal" do
+    board_helper.string_to_board(" OX,OX ,X  ")
 
     expect(board.win?(Mark::CROSS)).to be true
   end
 
   it "shoud be a tie" do
-    board.string_to_board("XOX,XOX,OXO")
+    board_helper.string_to_board("XOX,XOX,OXO")
 
     expect(board.tie?).to be true
   end
 
   it "shoud not be a tie when it's a win" do
-    board.string_to_board("XXX,XXX,XXX")
+    board_helper.string_to_board("XXX,XXX,XXX")
 
     expect(board.tie?).to be false
   end
 
   it "create a board 3x3" do
     board = Board.new(3)
-    expect(board.to_s).to eq("   ,   ,   ")
+    board_helper = BoardHelper.new(board)
+    expect(board_helper.board_to_string).to eq("   ,   ,   ")
   end
 
   it "create a board 4x4" do
     board = Board.new(4)
-    expect(board.to_s).to eq("    ,    ,    ,    ")
+    board_helper = BoardHelper.new(board)
+    expect(board_helper.board_to_string).to eq("    ,    ,    ,    ")
   end
 end

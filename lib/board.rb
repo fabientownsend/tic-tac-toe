@@ -4,6 +4,7 @@ class Board
   attr_reader :board
   attr_reader :POSITION_MIN
   attr_reader :POSITION_MAX
+  attr_accessor :counter
 
   def initialize(board_size = 3)
     @board = create_board(board_size)
@@ -33,42 +34,6 @@ class Board
   def free_positions
     flat_board = board.flatten
     flat_board.each_index.select { |index| empty?(flat_board[index]) }
-  end
-
-  def string_to_board(board_string)
-    rows = board_string.split(",")
-
-    board.size.times do |index_row|
-      board.size.times do |index_column|
-        if rows[index_row].chars[index_column] == Mark::CROSS
-          @counter += 1
-          board[index_row][index_column] = Mark::CROSS
-        elsif rows[index_row].chars[index_column] == Mark::ROUND
-          @counter += 1
-          board[index_row][index_column] = Mark::ROUND
-        end
-      end
-    end
-  end
-
-  def to_s
-    board_string = ""
-
-    board.flatten.each.with_index do |value, index|
-      if value == Mark::CROSS || value == Mark::ROUND
-        board_string << value
-      else
-        board_string << " "
-      end
-
-      index += 1
-      if  board_edge?(index) && index != @POSITION_MAX
-        board_string << ","
-      end
-
-    end
-
-    board_string
   end
 
   private
