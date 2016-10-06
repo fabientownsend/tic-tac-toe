@@ -1,4 +1,5 @@
 require 'players_factory'
+require 'board'
 
 module GameType
   HUMAN_VS_HUMAN = 1
@@ -9,9 +10,15 @@ end
 class GamePlay
   attr_reader :current_player
 
-  def initialize(board, ui)
-    @board = board
+  def initialize(ui)
+    @board = Board.new
     @ui = ui
+  end
+
+  def board_size
+    @ui.board_size
+    selection = get_user_selection_between(3, 4)
+    @board = Board.new(selection)
   end
 
   def language

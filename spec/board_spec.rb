@@ -79,4 +79,16 @@ RSpec.describe Board do
 
     expect(board.tie?).to be false
   end
+
+  it "create a board 3x3" do
+    board = Board.new(3)
+    board_helper = BoardHelper.new(board)
+    expect(board_helper.board_to_string).to eq("   ,   ,   ")
+  end
+
+  it "create a board 4x4" do
+    board = Board.new(4)
+    board_helper = BoardHelper.new(board)
+    expect(board_helper.board_to_string).to eq("    ,    ,    ,    ")
+  end
 end

@@ -6,8 +6,8 @@ class Board
   attr_reader :POSITION_MAX
   attr_accessor :counter
 
-  def initialize
-    @board = [[0, 1, 2], [3, 4, 5], [6, 7, 8]]
+  def initialize(board_size = 3)
+    @board = create_board(board_size)
     @POSITION_MIN = 0
     @POSITION_MAX = board.size ** 2
     @counter = 0
@@ -18,8 +18,8 @@ class Board
     @counter += 1
   end
 
-  def remove_mark(mark, position)
-    board[get_row(position)][get_column(position)] = mark
+  def remove_mark(position)
+    board[get_row(position)][get_column(position)] = Mark::EMPTY
     @counter -= 1
   end
 
@@ -32,10 +32,27 @@ class Board
   end
 
   def free_positions
-    board.flatten.select { |cell| cell.is_a?(Integer) }
+    flat_board = board.flatten
+    flat_board.each_index.select { |index| empty?(flat_board[index]) }
   end
 
   private
+
+  def empty?(spot)
+    spot != Mark::ROUND && spot != Mark::CROSS
+  end
+
+  def create_board(board_size)
+    new_board = Array.new
+    board_size.times do
+      new_row = Array.new
+      board_size.times do
+        new_row.push(Mark::EMPTY)
+      end
+      new_board.push(new_row)
+    end
+    new_board
+  end
 
   def get_column(position)
     position % board.size
@@ -62,11 +79,11 @@ class Board
   end
 
   def check_forward_diagonal?(mark)
-    [0, 1, 2].all? { |index| board[index][index] == mark }
+    board.size.times.all? { |index| board[index][index] == mark }
   end
 
   def check_backward_diagonal?(mark)
-    [0, 1, 2].all? { |index| board[index][backward_index(index)] == mark }
+    board.size.times.all? { |index| board[index][backward_index(index)] == mark }
   end
 
   def backward_index(index)
