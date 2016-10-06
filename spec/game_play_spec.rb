@@ -1,10 +1,8 @@
 require 'spec_helper'
-require 'board'
 require 'cli_interface'
 require 'game_play'
 
 RSpec.describe GamePlay do
-  let(:board) { Board.new }
   let(:output) { StringIO.new }
 
   it "should finish the game displaying a tie" do
@@ -163,11 +161,13 @@ RSpec.describe GamePlay do
   end
 
   it "shoudl ask a second time when value is too low with menus" do
+    board_size = "3\n"
     lang = "asdfdsafhjkl\n2\n"
     type_game = "3\n"
-    game_play = create_game_play("#{lang}#{type_game}")
+    game_play = create_game_play("#{board_size}#{lang}#{type_game}")
 
     expect do
+      game_play.board_size
       game_play.language
       game_play.game_selection
     end.to change { output.string }.to include("Ordinateur vs. Ordinateur")
@@ -176,6 +176,6 @@ RSpec.describe GamePlay do
   def create_game_play(input)
     input = StringIO.new(input)
     interface = CliInterface.new(input, output, "spec/lang/")
-    return GamePlay.new(Board.new, interface)
+    return GamePlay.new(interface)
   end
 end

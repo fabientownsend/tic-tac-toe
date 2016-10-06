@@ -3,13 +3,12 @@
 $: << File.expand_path('../lib', File.dirname(__FILE__))
 
 require 'cli_interface'
-require 'board'
 require 'game_play'
 
 interface = CliInterface.new(Kernel, Kernel, "./lang/")
-board = Board.new
-game_play = GamePlay.new(board, interface)
+game_play = GamePlay.new(interface)
 
+game_play.board_size
 game_play.language
 game_play.game_selection
 game_play.select_first_player
