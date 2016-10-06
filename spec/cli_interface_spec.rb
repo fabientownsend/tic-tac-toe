@@ -3,7 +3,7 @@ require 'board'
 require 'cli_interface'
 
 module Lang
-  FRENCH = 1
+  FRENCH = 2
 end
 
 RSpec.describe CliInterface do
