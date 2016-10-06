@@ -63,14 +63,14 @@ class Board
   end
 
   def win_with_columns?(mark)
-    board.transpose.any? { |column| same_symbole?(column, mark) }
+    board.transpose.any? { |column| same_symbol?(column, mark) }
   end
 
   def win_with_rows?(mark)
-    board.any? { |row| same_symbole?(row, mark) }
+    board.any? { |row| same_symbol?(row, mark) }
   end
 
-  def same_symbole?(rows, mark)
+  def same_symbol?(rows, mark)
     rows.all? { |row| row == mark }
   end
 
