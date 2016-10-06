@@ -4,6 +4,7 @@ class Board
   attr_reader :board
   attr_reader :POSITION_MIN
   attr_reader :POSITION_MAX
+  attr_accessor :counter
 
   def initialize
     @board = [[0, 1, 2], [3, 4, 5], [6, 7, 8]]
@@ -52,8 +53,8 @@ class Board
     board.any? { |row| same_symbole?(row, mark) }
   end
 
-  def same_symbole?(array, mark)
-    array.all? { |row| row == mark }
+  def same_symbole?(rows, mark)
+    rows.all? { |row| row == mark }
   end
 
   def win_with_diagonal?(mark)
