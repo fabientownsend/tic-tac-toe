@@ -4,6 +4,7 @@ class Board
   attr_reader :board
   attr_reader :POSITION_MIN
   attr_reader :POSITION_MAX
+  attr_accessor :counter
 
   def initialize
     @board = [[0, 1, 2], [3, 4, 5], [6, 7, 8]]
@@ -34,47 +35,7 @@ class Board
     board.flatten.select { |cell| cell.is_a?(Integer) }
   end
 
-  def string_to_board(board_string)
-    rows = board_string.split(",")
-
-    board.size.times do |index_row|
-      board.size.times do |index_column|
-        if rows[index_row].chars[index_column] == Mark::CROSS
-          @counter += 1
-          board[index_row][index_column] = Mark::CROSS
-        elsif rows[index_row].chars[index_column] == Mark::ROUND
-          @counter += 1
-          board[index_row][index_column] = Mark::ROUND
-        end
-      end
-    end
-  end
-
-  def to_s
-    board_string = ""
-
-    board.flatten.each.with_index do |value, index|
-      if !value.is_a?(Integer)
-        board_string << value
-      else
-        board_string << " "
-      end
-
-      index += 1
-      if  board_edge?(index) && index != @POSITION_MAX
-        board_string << ","
-      end
-
-    end
-
-    board_string
-  end
-
   private
-
-  def board_edge?(index)
-    index % board.size == 0
-  end
 
   def get_column(position)
     position % board.size
