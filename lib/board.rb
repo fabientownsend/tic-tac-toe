@@ -1,26 +1,23 @@
 require 'marks'
 
+
 class Board
   attr_reader :board
   attr_reader :POSITION_MIN
   attr_reader :POSITION_MAX
-  attr_accessor :counter
 
   def initialize(board_size = 3)
     @board = create_board(board_size)
     @POSITION_MIN = 0
     @POSITION_MAX = board.size ** 2
-    @counter = 0
   end
 
   def set_mark(mark, position)
     board[get_row(position)][get_column(position)] = mark
-    @counter += 1
   end
 
   def remove_mark(position)
     board[get_row(position)][get_column(position)] = Mark::EMPTY
-    @counter -= 1
   end
 
   def win?(mark)
@@ -28,7 +25,7 @@ class Board
   end
 
   def tie?
-    @counter == @POSITION_MAX && !win?(Mark::CROSS) && !win?(Mark::ROUND)
+    @board.flatten.none? { |mark| mark == Mark::EMPTY } && !win?(Mark::CROSS) && !win?(Mark::ROUND)
   end
 
   def free_positions

@@ -9,10 +9,8 @@ class BoardHelper
     @board.board.size.times do |index_row|
       @board.board.size.times do |index_column|
         if rows[index_row].chars[index_column] == Mark::CROSS
-          @board.counter += 1
           @board.board[index_row][index_column] = Mark::CROSS
         elsif rows[index_row].chars[index_column] == Mark::ROUND
-          @board.counter += 1
           @board.board[index_row][index_column] = Mark::ROUND
         end
       end
