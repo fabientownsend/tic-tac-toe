@@ -26,7 +26,7 @@ RSpec.describe CliInterface do
   end
 
   it "should display lang based on .yml files in the folder lang" do
-    menu = "Select the language\n 1 - English\n 2 - Francais\n 3 - Z_last_yml\n"
+    menu = "Select the language\n[X] - 1 English\n[ ] - 2 Francais\n[ ] - 3 Z_last_yml\n"
 
     interface.menu_lang
 

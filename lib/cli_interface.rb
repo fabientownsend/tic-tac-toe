@@ -26,17 +26,17 @@ class CliInterface
     @text_file = YAML::load(File.open(file))
   end
 
-  def menu_game
-    write("#{get_from_file('menu_type_games')}")
+  def menu_game(default = 1)
+    display_menu(get_from_file('menu_type_games'), default)
   end
 
-  def menu_lang
-    write("#{get_from_file('menu_lang')}\n")
-    display_lang_files
+  def menu_lang(default = 1)
+    languages = get_list_languages
+    display_menu(languages, default)
   end
 
-  def menu_first_player
-    write("#{get_from_file('menu_first_player')}")
+  def menu_first_player(default = 1)
+    display_menu(get_from_file('menu_first_player'), default)
   end
 
   def display_board(board)
@@ -100,13 +100,25 @@ class CliInterface
     read
   end
 
-  def board_size
-    write("#{get_from_file('board_size')}: ")
+  def board_size(default = 1)
+    display_menu(get_from_file('board_size'), default)
   end
 
   private
 
   attr_reader :text_file
+
+  def display_menu(menu, default)
+    menu.each_line.with_index do |line, index|
+      if index == 0
+        write(line)
+      elsif index == default
+        write("[X] - #{index} " + line)
+      else
+        write("[ ] - #{index} " + line)
+      end
+    end
+  end
 
   def get_from_file(text)
     result = text_file[text]
@@ -141,13 +153,17 @@ class CliInterface
       (row.size ** 2).to_s.size + 2
   end
 
-  def display_lang_files
+  def get_list_languages
+    languages = "#{get_from_file('menu_lang')}\n"
+
     Dir.entries(@source).each do |item, i|
       if item.end_with?("#{@FILE_EXTENTION}")
         @count_lang += 1
-        write(" #{@count_lang} - #{item.chomp("#{@FILE_EXTENTION}").capitalize}\n")
+        languages << "#{item.chomp("#{@FILE_EXTENTION}").capitalize}\n"
       end
     end
+
+    languages
   end
 end
 

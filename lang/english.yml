@@ -1,4 +1,7 @@
-board_size: Select the board size
+board_size: |
+  Select the board size:
+  Size 3x3
+  Size 4x4
 next_move: what is your next move?
 which_game: Which game do you want?
 not_free: This position isn't free
