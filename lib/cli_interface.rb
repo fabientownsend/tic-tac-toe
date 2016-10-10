@@ -96,6 +96,10 @@ class CliInterface
     selection
   end
 
+  def get_value
+    read
+  end
+
   def board_size
     write("#{get_from_file('board_size')}: ")
   end

@@ -17,7 +17,12 @@ class GamePlay
 
   def board_size
     @ui.board_size
-    selection = get_user_selection_between(3, 10)
+    selection = get_user_value(3, 10)
+
+    if selection == "\n"
+      selection = 3
+    end
+
     @board = Board.new(selection)
   end
 
@@ -54,6 +59,30 @@ class GamePlay
 
   attr_reader :board
   attr_reader :ui
+
+  def get_user_value(min, max)
+    value = @ui.get_value
+
+    if value == "\n"
+      return value
+    elsif !is_integer(value)
+      @ui.must_be_integer
+      value = get_user_value(min, max)
+    elsif !Integer(value).between?(min, max)
+      @ui.should_be_between(min, max)
+      value = get_user_value(min, max)
+    end
+
+    value
+  end
+
+  def is_integer(value)
+    begin
+      Integer(value)
+    rescue
+      return false
+    end
+  end
 
   def set_next_player(selection)
     if selection == 1
