@@ -17,7 +17,7 @@ class GamePlay
 
   def board_size
     @ui.board_size
-    selection = get_user_selection_between(3, 4)
+    selection = get_user_selection_between(3, 10)
     @board = Board.new(selection)
   end
 

@@ -40,7 +40,12 @@ class CliInterface
   end
 
   def display_board(board)
-    board.each { |line| display_line(line) }
+    board.each_with_index do |line, index|
+      display_line(line)
+      if board.size - 1 != index
+        display_interline(line)
+      end
+    end
   end
 
   def display_next_player(mark)
@@ -113,13 +118,23 @@ class CliInterface
   end
 
   def display_line(row)
+    content = " "
+
     row.each_with_index do |e, index|
       if index == row.size - 1
-        write(" #{e} \n")
+        write("#{e}".center(margin(row), content)  + "\n")
       else
-        write(" #{e} |")
+        write("#{e}".center(margin(row), content)  + "|")
       end
     end
+  end
+
+  def display_interline(row)
+    write( "-" * (row.size + margin(row) * row.size - 1) + "\n")
+  end
+
+  def margin(row)
+      (row.size ** 2).to_s.size + 2
   end
 
   def display_lang_files
