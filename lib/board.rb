@@ -16,8 +16,8 @@ class Board
     board[get_row(position)][get_column(position)] = mark
   end
 
-  def remove_mark(position)
-    board[get_row(position)][get_column(position)] = Mark::EMPTY
+  def remove_mark(position, value)
+    board[get_row(position)][get_column(position)] = value
   end
 
   def win?(mark)
@@ -25,7 +25,7 @@ class Board
   end
 
   def tie?
-    @board.flatten.none? { |mark| mark == Mark::EMPTY } && !win?(Mark::CROSS) && !win?(Mark::ROUND)
+    @board.flatten.none? { |mark| mark.is_a?(Integer) } && !win?(Mark::CROSS) && !win?(Mark::ROUND)
   end
 
   def free_positions
@@ -40,11 +40,14 @@ class Board
   end
 
   def create_board(board_size)
+    id = 0
+
     new_board = Array.new
     board_size.times do
       new_row = Array.new
       board_size.times do
-        new_row.push(Mark::EMPTY)
+        new_row.push(id)
+        id += 1
       end
       new_board.push(new_row)
     end
