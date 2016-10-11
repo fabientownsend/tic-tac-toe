@@ -20,7 +20,7 @@ class CliInterface
   end
 
   def set_lang(input)
-    file = Dir.glob("#{@source}*#{@FILE_EXTENTION}")[input - 1].to_s
+    file = Dir.glob("#{@source}*#{@FILE_EXTENTION}").sort[input - 1].to_s
     @text_file = YAML::load(File.open(file))
   end
 
