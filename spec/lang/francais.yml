@@ -1,3 +1,7 @@
+board_size: |
+  Select the board size:
+  Size 3x3
+  Size 4x4
 next_move: Prochaine position ?
 which_game: Choisir un type de jeux
 not_free: Cette position n'est pas libre

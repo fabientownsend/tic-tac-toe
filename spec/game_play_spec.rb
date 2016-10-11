@@ -161,10 +161,10 @@ RSpec.describe GamePlay do
   end
 
   it "shoudl ask a second time when value is too low with menus" do
-    board_size = "3\n"
+    menu_board_size = "2\n"
     lang = "asdfdsafhjkl\n2\n"
     type_game = "3\n"
-    game_play = create_game_play("#{board_size}#{lang}#{type_game}")
+    game_play = create_game_play("#{menu_board_size}#{lang}#{type_game}")
 
     expect do
       game_play.board_size

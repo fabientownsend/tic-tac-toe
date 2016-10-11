@@ -16,53 +16,42 @@ class GamePlay
   end
 
   def board_size
-    default_selection = 1
+    default_size = 1
 
-    @ui.board_size(default_selection)
-    selection = get_user_value(3, 10)
+    @ui.display_menu_board(default_size)
+    menu_size = @ui.menu_board_size
+    selection = get_user_value(1, menu_size, default_size)
 
-    if selection == "\n"
-      selection = default_selection + 2
-    end
+    selection += 2
 
     @board = Board.new(selection)
   end
 
   def language
-    default_selection = 2
+    default_lang = 2
 
-    @ui.menu_lang(default_selection)
-    selection = get_user_value(1, @ui.count_lang)
-
-    if selection == "\n"
-      selection = default_selection
-    end
+    @ui.display_menu_lang(default_lang)
+    menu_size = @ui.menu_lang_size
+    selection = get_user_value(1, menu_size, default_lang)
 
     @ui.set_lang(selection)
   end
 
   def game_selection
-    default_selection = 2
+    default_game = 2
 
-    @ui.menu_game(default_selection)
-    selection = get_user_value(1, 3)
-
-    if selection == "\n"
-      selection = default_selection
-    end
+    @ui.display_menu_type_game(default_game)
+    menu_size = @ui.menu_type_game_size
+    selection = get_user_value(1, menu_size, default_game)
 
     create_players_for_game(selection)
   end
 
   def select_first_player
-    default_selection = 1
+    default_first_player = 1
 
-    @ui.menu_first_player(default_selection)
-    selection = get_user_value(1, 2)
-
-    if selection == "\n"
-      selection = default_selection
-    end
+    @ui.menu_first_player(default_first_player)
+    selection = get_user_value(1, 2, default_first_player)
 
     set_next_player(selection)
   end
@@ -83,11 +72,11 @@ class GamePlay
   attr_reader :board
   attr_reader :ui
 
-  def get_user_value(min, max)
+  def get_user_value(min, max, default = 1)
     value = @ui.get_value
 
     if value == "\n"
-      return value
+      return default
     elsif !is_integer(value)
       @ui.must_be_integer
       value = get_user_value(min, max)
