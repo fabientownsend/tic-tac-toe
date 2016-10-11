@@ -164,16 +164,16 @@ class CliInterface
   end
 
   def get_list_languages
-    languages = "#{get_from_file('menu_lang')}\n"
-    temp = ""
+    menu_lang = "#{get_from_file('menu_lang')}\n"
+    languages = ""
 
     Dir.entries(@source).each do |item, i|
       if item.end_with?("#{@FILE_EXTENTION}")
-        temp  << "#{item.chomp("#{@FILE_EXTENTION}").capitalize}\n"
+        languages  << "#{item.chomp("#{@FILE_EXTENTION}").capitalize}\n"
       end
     end
 
-    languages << temp.lines.sort.join
+    menu_lang << languages.lines.sort.join
   end
 end
 
