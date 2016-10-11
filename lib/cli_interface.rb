@@ -33,12 +33,12 @@ class CliInterface
   end
 
   def display_menu_lang(default_lang = 1)
-    languages = get_list_languages
+    languages = get_menu_lang
     display_menu(languages, default_lang)
   end
 
   def menu_lang_size
-    get_list_languages.lines.size - 1
+    get_menu_lang.lines.size - 1
   end
 
   def menu_first_player(default_first_player = 1)
@@ -163,7 +163,7 @@ class CliInterface
       (row.size ** 2).to_s.size + 2
   end
 
-  def get_list_languages
+  def get_menu_lang
     menu_lang = "#{get_from_file('menu_lang')}\n"
     languages = ""
 
