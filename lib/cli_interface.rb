@@ -20,7 +20,7 @@ class CliInterface
   end
 
   def set_lang(input)
-    file = Dir.glob("#{@source}*#{@FILE_EXTENTION}")[input - 1].to_s
+    file = Dir.glob("#{@source}*#{@FILE_EXTENTION}").sort[input - 1].to_s
     @text_file = YAML::load(File.open(file))
   end
 
@@ -36,7 +36,7 @@ class CliInterface
     languages = get_list_languages
     display_menu(languages, default_lang)
   end
-  
+
   def menu_lang_size
     get_list_languages.lines.size - 1
   end
@@ -165,14 +165,15 @@ class CliInterface
 
   def get_list_languages
     languages = "#{get_from_file('menu_lang')}\n"
+    temp = ""
 
     Dir.entries(@source).each do |item, i|
       if item.end_with?("#{@FILE_EXTENTION}")
-        languages << "#{item.chomp("#{@FILE_EXTENTION}").capitalize}\n"
+        temp  << "#{item.chomp("#{@FILE_EXTENTION}").capitalize}\n"
       end
     end
 
-    languages
+    languages << temp.lines.sort.join
   end
 end
 
