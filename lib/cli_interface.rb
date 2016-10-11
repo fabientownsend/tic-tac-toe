@@ -36,7 +36,7 @@ class CliInterface
     languages = get_list_languages
     display_menu(languages, default_lang)
   end
-  
+
   def menu_lang_size
     get_list_languages.lines.size - 1
   end
@@ -166,7 +166,9 @@ class CliInterface
   def get_list_languages
     languages = "#{get_from_file('menu_lang')}\n"
 
-    Dir.entries(@source).each do |item, i|
+    source = Dir.entries(@source)
+    source.sort
+    source.each do |item, i|
       if item.end_with?("#{@FILE_EXTENTION}")
         languages << "#{item.chomp("#{@FILE_EXTENTION}").capitalize}\n"
       end
