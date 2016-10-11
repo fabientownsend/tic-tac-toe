@@ -173,8 +173,7 @@ class CliInterface
       end
     end
 
-    temp.lines.sort!
-    languages << temp
+    languages << temp.lines.sort.join
   end
 end
 
