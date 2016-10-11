@@ -1,6 +1,5 @@
 require 'marks'
 
-
 class Board
   attr_reader :board
   attr_reader :POSITION_MIN
