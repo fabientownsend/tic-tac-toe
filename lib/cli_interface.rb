@@ -24,31 +24,31 @@ class CliInterface
     @text_file = YAML::load(File.open(file))
   end
 
-  def display_menu_type_game(default_type_game = 1)
-    display_menu(get_from_file('menu_type_games'), default_type_game)
+  def display_menu_type_game(default_checked_type = 1)
+    display_menu(get_from_file('menu_type_games'), default_checked_type)
   end
 
   def menu_type_game_size
     get_from_file('menu_type_games').lines.size - 1
   end
 
-  def display_menu_lang(default_lang = 1)
-    languages = get_menu_lang
-    display_menu(languages, default_lang)
+  def display_menu_lang(default_checked_lang = 1)
+    menu_lang = get_menu_lang
+    display_menu(menu_lang, default_checked_lang)
   end
 
   def menu_lang_size
     get_menu_lang.lines.size - 1
   end
 
-  def menu_first_player(default_first_player = 1)
-    display_menu(get_from_file('menu_first_player'), default_first_player)
+  def menu_first_player(default_checked_first_player = 1)
+    display_menu(get_from_file('menu_first_player'), default_checked_first_player)
   end
 
   def display_board(board)
     board.each_with_index do |line, index|
       display_line(line)
-      if board.size - 1 != index
+      if index != last_line(board)
         display_interline(line)
       end
     end
@@ -118,11 +118,15 @@ class CliInterface
 
   attr_reader :text_file
 
-  def display_menu(menu, default)
+  def last_line(board)
+    board.size - 1
+  end
+
+  def display_menu(menu, checked_menu)
     menu.each_line.with_index do |line, index|
       if index == 0
         write(line)
-      elsif index == default
+      elsif index == checked_menu
         write("[X] - #{index} " + line)
       else
         write("[ ] - #{index} " + line)
