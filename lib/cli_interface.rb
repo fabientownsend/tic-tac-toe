@@ -22,7 +22,7 @@ class CliInterface
   end
 
   def set_lang(input)
-    file = Dir.glob("#{@source}*#{@FILE_EXTENTION}")[input - 1].to_s
+    file = Dir.glob("#{@source}*#{@FILE_EXTENTION}").sort[input - 1].to_s
     @text_file = YAML::load(File.open(file))
   end
 
@@ -31,7 +31,6 @@ class CliInterface
   end
 
   def menu_lang
-    write("#{get_from_file('menu_lang')}\n")
     display_lang_files
   end
 
@@ -123,12 +122,18 @@ class CliInterface
   end
 
   def display_lang_files
+    menu = "#{get_from_file('menu_lang')}\n"
+    language = ""
+
     Dir.entries(@source).each do |item, i|
       if item.end_with?("#{@FILE_EXTENTION}")
         @count_lang += 1
-        write(" #{@count_lang} - #{item.chomp("#{@FILE_EXTENTION}").capitalize}\n")
+        language << " #{@count_lang} - #{item.chomp("#{@FILE_EXTENTION}").capitalize}\n"
       end
     end
+
+    menu << language.lines.sort.join
+    write(menu)
   end
 end
 

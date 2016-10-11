@@ -7,13 +7,13 @@ RSpec.describe Board do
   let(:board) { Board.new }
   let(:board_helper) { BoardHelper.new(board) }
 
-  it "the position 0 is free" do
+  it "is a free spot when the spot isn't used" do
     position = 0
     board_helper.string_to_board("   ,   ,   ")
     expect(board.free_positions.include?(position)).to be true
   end
 
-  it "the position 0 isn't free" do
+  it "isn't a free position when the spot is used" do
     position = 0
     board_helper.string_to_board("X  ,   ,   ")
 
