@@ -18,6 +18,16 @@ RSpec.describe GamePlay do
     end.to change { output.string }.to include("It's a tie!\n")
   end
 
+  it "type game Human vs. Computer when user use default value by typing enter" do
+    type_game = "\n"
+    first_player = "1\n"
+    game_play = create_game_play("#{type_game}#{first_player}")
+
+    game_play.game_selection
+    game_play.select_first_player
+    expect(game_play.current_player).to be_a(Computer)
+  end
+
   it "should be a computer as first player" do
     type_game = "2\n"
     first_player = "1\n"
