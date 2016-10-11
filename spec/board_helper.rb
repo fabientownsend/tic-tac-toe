@@ -9,10 +9,8 @@ class BoardHelper
     @board.board.size.times do |index_row|
       @board.board.size.times do |index_column|
         if rows[index_row].chars[index_column] == Mark::CROSS
-          @board.counter += 1
           @board.board[index_row][index_column] = Mark::CROSS
         elsif rows[index_row].chars[index_column] == Mark::ROUND
-          @board.counter += 1
           @board.board[index_row][index_column] = Mark::ROUND
         end
       end
@@ -23,7 +21,11 @@ class BoardHelper
     board_string = ""
 
     @board.board.flatten.each.with_index do |value, index|
-      board_string << value
+      if !value.is_a?(Integer)
+        board_string << value
+      else
+        board_string << " "
+      end
 
       index += 1
       if  board_edge?(index) && index != @board.POSITION_MAX

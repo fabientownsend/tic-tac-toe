@@ -1,26 +1,23 @@
 require 'marks'
 
+
 class Board
   attr_reader :board
   attr_reader :POSITION_MIN
   attr_reader :POSITION_MAX
-  attr_accessor :counter
 
   def initialize(board_size = 3)
     @board = create_board(board_size)
     @POSITION_MIN = 0
     @POSITION_MAX = board.size ** 2
-    @counter = 0
   end
 
   def set_mark(mark, position)
     board[get_row(position)][get_column(position)] = mark
-    @counter += 1
   end
 
-  def remove_mark(position)
-    board[get_row(position)][get_column(position)] = Mark::EMPTY
-    @counter -= 1
+  def remove_mark(position, value)
+    board[get_row(position)][get_column(position)] = value
   end
 
   def win?(mark)
@@ -28,7 +25,7 @@ class Board
   end
 
   def tie?
-    @counter == @POSITION_MAX && !win?(Mark::CROSS) && !win?(Mark::ROUND)
+    @board.flatten.none? { |mark| mark.is_a?(Integer) } && !win?(Mark::CROSS) && !win?(Mark::ROUND)
   end
 
   def free_positions
@@ -43,11 +40,14 @@ class Board
   end
 
   def create_board(board_size)
+    id = 0
+
     new_board = Array.new
     board_size.times do
       new_row = Array.new
       board_size.times do
-        new_row.push(Mark::EMPTY)
+        new_row.push(id)
+        id += 1
       end
       new_board.push(new_row)
     end
@@ -63,14 +63,14 @@ class Board
   end
 
   def win_with_columns?(mark)
-    board.transpose.any? { |column| same_symbole?(column, mark) }
+    board.transpose.any? { |column| same_symbol?(column, mark) }
   end
 
   def win_with_rows?(mark)
-    board.any? { |row| same_symbole?(row, mark) }
+    board.any? { |row| same_symbol?(row, mark) }
   end
 
-  def same_symbole?(rows, mark)
+  def same_symbol?(rows, mark)
     rows.all? { |row| row == mark }
   end
 
