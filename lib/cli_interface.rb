@@ -24,25 +24,24 @@ class CliInterface
     @text_file = YAML::load(File.open(file))
   end
 
-  def display_menu_type_game(default_checked_type = 1)
-    display_menu(get_from_file('menu_type_games'), default_checked_type)
+  def display_type_game_menu(default_checked_type = 1)
+    display_menu(from_file('menu_game_types'), default_checked_type)
   end
 
-  def menu_type_game_size
-    get_from_file('menu_type_games').lines.size - 1
+  def type_game_size_menu
+    from_file('menu_game_types').lines.size - 1
   end
 
-  def display_menu_lang(default_checked_lang = 1)
-    menu_lang = get_menu_lang
+  def display_lang_menu(default_checked_lang = 1)
     display_menu(menu_lang, default_checked_lang)
   end
 
-  def menu_lang_size
-    get_menu_lang.lines.size - 1
+  def lang_size_menu
+    menu_lang.lines.size - 1
   end
 
-  def menu_first_player(default_checked_first_player = 1)
-    display_menu(get_from_file('menu_first_player'), default_checked_first_player)
+  def first_player_menu(default_checked_first_player = 1)
+    display_menu(from_file('menu_first_player'), default_checked_first_player)
   end
 
   def display_board(board)
@@ -55,32 +54,32 @@ class CliInterface
   end
 
   def display_next_player(mark)
-    write("#{mark} #{get_from_file('next_move')}\n")
+    write("#{mark} #{from_file('next_move')}\n")
   end
 
   def type_game
-    write("#{get_from_file('which_game')}\n")
+    write("#{from_file('which_game')}\n")
     read
   end
 
   def occupied_position
-    write("#{get_from_file('not_free')}\n")
+    write("#{from_file('not_free')}\n")
   end
 
   def winner(mark)
-    write("#{get_from_file('winner')}: #{mark}!\n")
+    write("#{from_file('winner')}: #{mark}!\n")
   end
 
   def tie
-    write("#{get_from_file('tie')}\n")
+    write("#{from_file('tie')}\n")
   end
 
   def must_be_integer
-    write("#{get_from_file('integer')}: ")
+    write("#{from_file('integer')}: ")
   end
 
   def should_be_between(min, max)
-    write("#{get_from_file('between')} #{min} #{get_from_file('and')} #{max}\n")
+      write("#{from_file('between')} #{min} #{from_file('and')} #{max}\n")
   end
 
   def read
@@ -106,12 +105,12 @@ class CliInterface
     read
   end
 
-  def display_menu_board(default_size = 1)
-    display_menu(get_from_file('board_size'), default_size)
+  def display_board_menu(default_size = 1)
+    display_menu(from_file('board_size'), default_size)
   end
 
-  def menu_board_size
-    get_from_file('board_size').lines.size - 1
+  def board_size_menu
+    from_file('board_size').lines.size - 1
   end
 
   private
@@ -134,7 +133,7 @@ class CliInterface
     end
   end
 
-  def get_from_file(text)
+  def from_file(text)
     result = text_file[text]
 
     if result == nil
@@ -150,34 +149,46 @@ class CliInterface
   def display_line(row)
     content = " "
 
-    row.each_with_index do |e, index|
-      if index == row.size - 1
-        write("#{e}".center(margin(row), content)  + "\n")
+    row.each_with_index do |mark, index|
+      if end_of_row?(index, row)
+        write("#{mark}".center(width_margin(row), content)  + "\n")
       else
-        write("#{e}".center(margin(row), content)  + "|")
+        write("#{mark}".center(width_margin(row), content)  + "|")
       end
     end
   end
 
-  def display_interline(row)
-    write( "-" * (row.size + margin(row) * row.size - 1) + "\n")
+  def end_of_row?(index, row)
+    index == row.size - 1
   end
 
-  def margin(row)
+  def display_interline(row)
+    write( "-" * board_width(row) + "\n")
+  end
+
+  def board_width(row)
+    row.size + width_margin(row) * row.size - 1
+  end
+
+  def width_margin(row)
       (row.size ** 2).to_s.size + 2
   end
 
-  def get_menu_lang
-    menu_lang = "#{get_from_file('menu_lang')}\n"
+  def menu_lang
+    menu_lang = "#{from_file('menu_lang')}\n"
     languages = ""
 
-    Dir.entries(@source).each do |item, i|
-      if item.end_with?("#{@FILE_EXTENTION}")
-        languages  << "#{item.chomp("#{@FILE_EXTENTION}").capitalize}\n"
+    Dir.entries(@source).each do |language|
+      if language.end_with?("#{@FILE_EXTENTION}")
+        languages  << format_language_name(language)
       end
     end
 
     menu_lang << languages.lines.sort.join
+  end
+
+  def format_language_name(language)
+    "#{language.chomp("#{@FILE_EXTENTION}").capitalize}\n"
   end
 end
 

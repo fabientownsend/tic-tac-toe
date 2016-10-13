@@ -10,7 +10,7 @@ computer_move: The computer will play its next move
 tie: It's a tie!
 between: The value should be between
 and: and
-menu_type_games: |
+menu_game_types: |
   Select your game:
    1 - Human vs. Human
    2 - Human vs. Computer
