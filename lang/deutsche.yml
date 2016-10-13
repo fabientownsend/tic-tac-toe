@@ -6,7 +6,7 @@ integer: Der Wert muss eine ganze Zahl sein
 tie: Das Spiel ist unentschieden
 between: Der Wert sollte zwischen und sein
 and: und
-menu_type_games: |
+menu_game_types: |
   Wählen Sie Ihr Spiel:
    1 - Mensch gegen Mensch
    2 - Mensch gegen Computer

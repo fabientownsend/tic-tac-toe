@@ -13,29 +13,47 @@ class GamePlay
   def initialize(ui)
     @board = Board.new
     @ui = ui
+    @VALUE_MIN = 1
   end
 
   def board_size
-    @ui.board_size
-    selection = get_user_selection_between(3, 4)
+    default_size = 1
+
+    @ui.display_board_menu(default_size)
+    menu_size = @ui.board_size_menu
+    selection = get_user_value(@VALUE_MIN, menu_size, default_size)
+
+    selection += 2
+
     @board = Board.new(selection)
   end
 
   def language
-    @ui.menu_lang
-    selection = get_user_selection_between(1, @ui.count_lang)
+    default_lang = 2
+
+    @ui.display_lang_menu(default_lang)
+    menu_size = @ui.lang_size_menu
+    selection = get_user_value(@VALUE_MIN, menu_size, default_lang)
+
     @ui.set_lang(selection)
   end
 
   def game_selection
-    @ui.menu_game
-    selection = get_user_selection_between(1, 3)
+    default_game = 2
+
+    @ui.display_type_game_menu(default_game)
+    menu_size = @ui.type_game_size_menu
+    selection = get_user_value(@VALUE_MIN, menu_size, default_game)
+
     create_players_for_game(selection)
   end
 
   def select_first_player
-    @ui.menu_first_player
-    selection = get_user_selection_between(1, 2)
+    default_first_player = 1
+
+    @ui.first_player_menu(default_first_player)
+    selection = get_user_value(@VALUE_MIN, @players.size, default_first_player)
+
     set_next_player(selection)
   end
 
@@ -55,6 +73,30 @@ class GamePlay
   attr_reader :board
   attr_reader :ui
 
+  def get_user_value(min, max, default = 1)
+    value = @ui.get_value
+
+    if value == "\n"
+      return default
+    elsif !is_integer(value)
+      @ui.must_be_integer
+      value = get_user_value(min, max)
+    elsif !Integer(value).between?(min, max)
+      @ui.should_be_between(min, max)
+      value = get_user_value(min, max)
+    end
+
+    Integer(value)
+  end
+
+  def is_integer(value)
+    begin
+      Integer(value)
+    rescue
+      return false
+    end
+  end
+
   def set_next_player(selection)
     if selection == 1
       @current_player = @players[1]
@@ -63,17 +105,6 @@ class GamePlay
       @current_player = @player_one
       @current_player = @players[0]
     end
-  end
-
-  def get_user_selection_between(min, max)
-    value = @ui.get_int
-
-    if !value.between?(min, max)
-      @ui.should_be_between(min, max)
-      value = get_user_selection_between(min, max)
-    end
-
-    value
   end
 
   def create_players_for_game(type_selected)

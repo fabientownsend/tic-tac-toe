@@ -6,7 +6,7 @@ integer: La valeur doit etre un chiffre
 tie: aexeco
 between: La valeur doit etre entre
 and: et
-menu_type_games: |
+menu_game_types: |
   Selectionnez votre type de jeux:
    1 - Humain vs. Humain
    2 - Humain vs. Ordinateur

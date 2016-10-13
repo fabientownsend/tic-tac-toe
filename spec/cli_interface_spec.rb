@@ -26,16 +26,16 @@ RSpec.describe CliInterface do
   end
 
   it "should display lang based on .yml files in the folder lang" do
-    menu = "Select the language\n 1 - English\n 2 - Francais\n 3 - Z_last_yml\n"
+    menu = "Select the language\n[ ] - 1 English\n[X] - 2 Francais\n[ ] - 3 Z_last_yml\n"
 
-    interface.menu_lang
+    checked = 2
+    interface.display_lang_menu(checked)
 
     expect(output.string).to eq(menu)
   end
 
   it "should return the total of yml file in the folder lang" do
-    interface.menu_lang
-    expect(interface.count_lang).to eq(3)
+    expect(interface.lang_size_menu).to eq(3)
   end
 
   it "shoud be english language by default" do
@@ -66,7 +66,7 @@ RSpec.describe CliInterface do
 
   it "should displaly blank when the text isn't find in any files" do
     expect do
-    expect(interface.menu_first_player)
+    expect(interface.first_player_menu)
     end.to change { output.string }.to eq("blank")
   end
 end
